@@ -1,0 +1,218 @@
+[
+  {
+    "id": "q-children",
+    "statId": "people-children",
+    "prompt": "How many of our 1,000 people are children under 15?",
+    "hint": "Think about birth rates — are there more young or old people in the world?",
+    "reasoningOptions": [
+      "I know roughly what share of people are young globally",
+      "I estimated from birth rates or family sizes I know",
+      "I compared it to the proportion in my own country",
+      "Pure guess"
+    ]
+  },
+  {
+    "id": "q-elderly",
+    "statId": "people-elderly",
+    "prompt": "How many of our 1,000 people are over 65 years old?",
+    "hint": "The world's population is getting older, but it's still a young world overall.",
+    "reasoningOptions": [
+      "I know roughly what share of people are elderly globally",
+      "I thought about rising life expectancy trends",
+      "I estimated based on developed vs. developing world balance",
+      "Pure guess"
+    ]
+  },
+  {
+    "id": "q-urban",
+    "statId": "people-urban",
+    "prompt": "How many of our 1,000 people live in cities?",
+    "hint": "In the past 200 years, humanity has gone from mostly rural to mostly urban.",
+    "reasoningOptions": [
+      "I know urbanization has been rising steadily",
+      "I estimated from what I know about megacities and rural populations",
+      "I compared it to my own country's urban-rural split",
+      "Pure guess"
+    ]
+  },
+  {
+    "id": "q-doctors",
+    "statId": "people-doctors",
+    "prompt": "How many of our 1,000 people are doctors?",
+    "hint": "Medical training takes 8–12 years. How long do you think it takes to train enough doctors for 1,000 people?",
+    "reasoningOptions": [
+      "I know roughly how common doctors are per population",
+      "I estimated from healthcare systems I'm familiar with",
+      "I used the ratio: if 1,000 people need X doctors, then...",
+      "Pure guess"
+    ]
+  },
+  {
+    "id": "q-nurses",
+    "statId": "people-nurses",
+    "prompt": "How many nurses and midwives serve our 1,000-person world?",
+    "hint": "There are typically 2–3 nurses for every doctor.",
+    "reasoningOptions": [
+      "I estimated from the doctor ratio I know",
+      "I know how large nursing workforces typically are",
+      "I compared to healthcare systems I've seen",
+      "Pure guess"
+    ]
+  },
+  {
+    "id": "q-teachers",
+    "statId": "people-teachers",
+    "prompt": "How many primary school teachers are there in our 1,000-person world?",
+    "hint": "A typical primary class has 20–30 students. How many classes would 1,000 people need?",
+    "reasoningOptions": [
+      "I calculated from average class sizes",
+      "I know roughly what share of adults work as teachers",
+      "I estimated from school-age children in the 1,000",
+      "Pure guess"
+    ]
+  },
+  {
+    "id": "q-farmers",
+    "statId": "people-farmers",
+    "prompt": "How many of our 1,000 people work in agriculture (farming, fishing, forestry)?",
+    "hint": "In wealthy nations this is under 5%, but globally many more depend on agriculture.",
+    "reasoningOptions": [
+      "I know many developing nations are still heavily agricultural",
+      "I estimated from global food production needs",
+      "I compared it to workforce data I know",
+      "Pure guess"
+    ]
+  },
+  {
+    "id": "q-poverty",
+    "statId": "people-poverty",
+    "prompt": "How many of our 1,000 people live in extreme poverty (under $2.15/day)?",
+    "hint": "Extreme poverty has fallen dramatically but is still widespread in sub-Saharan Africa and parts of Asia.",
+    "reasoningOptions": [
+      "I know extreme poverty has fallen but is still significant",
+      "I estimated from news about global poverty numbers",
+      "I thought about the distribution across continents",
+      "Pure guess"
+    ]
+  },
+  {
+    "id": "q-internet",
+    "statId": "people-internet",
+    "prompt": "How many of our 1,000 people have access to the internet?",
+    "hint": "Think about how rapidly internet access has grown — and where most of humanity still lacks it.",
+    "reasoningOptions": [
+      "I know roughly two-thirds of the world is online",
+      "I estimated from smartphone penetration rates",
+      "I thought about which regions still lack connectivity",
+      "Pure guess"
+    ]
+  },
+  {
+    "id": "q-smartphones",
+    "statId": "people-smartphones",
+    "prompt": "How many of our 1,000 people own a smartphone?",
+    "hint": "Mobile phones have leapfrogged fixed internet infrastructure in many countries.",
+    "reasoningOptions": [
+      "I estimated from internet access figures",
+      "I know smartphones have spread remarkably fast globally",
+      "I thought about wealthy vs. developing world penetration",
+      "Pure guess"
+    ]
+  },
+  {
+    "id": "q-literate",
+    "statId": "people-literate",
+    "prompt": "How many of our 1,000 adults can read and write?",
+    "hint": "Literacy rates have improved dramatically over the past century.",
+    "reasoningOptions": [
+      "I know global literacy is quite high now",
+      "I thought about illiteracy being concentrated in specific regions",
+      "I estimated from education enrollment trends",
+      "Pure guess"
+    ]
+  },
+  {
+    "id": "q-clean-water",
+    "statId": "water-no-clean",
+    "prompt": "How many of our 1,000 people lack access to safe drinking water?",
+    "hint": "This is still one of the world's biggest health challenges.",
+    "reasoningOptions": [
+      "I know this is still a major problem in many countries",
+      "I estimated from news and global health data",
+      "I thought about which regions still lack clean water infrastructure",
+      "Pure guess"
+    ]
+  },
+  {
+    "id": "q-homeless",
+    "statId": "housing-homeless",
+    "prompt": "How many of our 1,000 people live in inadequate housing or slums?",
+    "hint": "Rapid urbanization has created vast informal settlements in cities across Asia, Africa and Latin America.",
+    "reasoningOptions": [
+      "I know many city-dwellers live in informal settlements",
+      "I estimated from slum populations I've heard about",
+      "I thought about rapid urbanization in developing nations",
+      "Pure guess"
+    ]
+  },
+  {
+    "id": "q-cars",
+    "statId": "transportation-cars",
+    "prompt": "How many cars are there in our 1,000-person world?",
+    "hint": "Car ownership is heavily concentrated in wealthy nations — think USA vs. India.",
+    "reasoningOptions": [
+      "I know car ownership varies hugely by wealth",
+      "I estimated from global vehicle production rates",
+      "I compared US car ownership vs. global average",
+      "Pure guess"
+    ]
+  },
+  {
+    "id": "q-flights",
+    "statId": "transportation-flights-daily",
+    "prompt": "How many commercial flights take off in our 1,000-person world each day?",
+    "hint": "About 4 billion air passengers travel per year globally.",
+    "reasoningOptions": [
+      "I calculated from annual passenger numbers",
+      "I know how many flights I see in busy airspaces daily",
+      "I estimated from major airports' flight schedules",
+      "Pure guess"
+    ]
+  },
+  {
+    "id": "q-no-electricity",
+    "statId": "energy-no-electricity",
+    "prompt": "How many of our 1,000 people have no access to electricity?",
+    "hint": "This number has dropped sharply in recent decades but is still significant.",
+    "reasoningOptions": [
+      "I know electrification has been a major development goal",
+      "I estimated from which regions still lack power grids",
+      "I thought about sub-Saharan Africa's electrification rate",
+      "Pure guess"
+    ]
+  },
+  {
+    "id": "q-refugees",
+    "statId": "people-refugees",
+    "prompt": "How many of our 1,000 people are forcibly displaced — refugees or internally displaced?",
+    "hint": "This number has been rising steadily and hit a record high recently.",
+    "reasoningOptions": [
+      "I know displacement is at a record high globally",
+      "I estimated from news about refugee crises",
+      "I thought about conflicts in Syria, Ukraine, Sudan and elsewhere",
+      "Pure guess"
+    ]
+  },
+  {
+    "id": "q-out-of-school",
+    "statId": "education-school-age",
+    "prompt": "How many children in our 1,000-person world are not in school?",
+    "hint": "Despite massive progress in education, many children are still excluded.",
+    "reasoningOptions": [
+      "I know most children globally do attend school now",
+      "I estimated from literacy and enrollment rates",
+      "I thought about conflict zones and very rural areas",
+      "Pure guess"
+    ]
+  }
+]

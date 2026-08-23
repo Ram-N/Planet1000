@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Planet1000
 
-## Getting Started
+An educational game that scales the entire world down to **1,000 people**, building intuitive understanding of global statistics.
 
-First, run the development server:
+> *"Let's shrink the world until you can understand it."*
+
+## What is Planet1000?
+
+The world has ~8 billion people. 8,000,000,000 is too large to reason about. But if the world had exactly 1,000 people — every number becomes tangible.
+
+- **257** children under 15
+- **4** doctors
+- **570** city-dwellers
+- **87** people in extreme poverty
+- **670** with internet access
+
+These are real numbers, scaled from actual world data.
+
+## Game Modes
+
+### 1. The World of 1,000
+Classic estimation: guess how many of 1,000 people share a given trait. Scored by proximity — being within 5% earns 100 points.
+
+### 2. Estimate → Explain → Reveal
+Extends Mode 1 with a reasoning step. After entering your estimate, you explain *why* before the reveal. Good reasoning earns bonus points even if your number is off.
+
+### 3. The World in a Box
+Visual rectangle = 1,000 people. Drag sliders to divide it progressively — children/adults, urban/rural, employed/not. Reveals how the real world subdivides.
+
+### 4. Daily World Question
+One topic per day, explored through a chain of 3–5 connected questions (e.g., aviation → fuel → CO₂ → climate). Progress saved in localStorage; returns to your spot on reload.
+
+## Local Development
 
 ```bash
+cd planet1000
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# → http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Next.js 16** (App Router, TypeScript)
+- **Tailwind CSS** — utility styling
+- **Framer Motion** — animations
+- **Static JSON** — all world data in `data/` — no backend, no database
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Data Sources
 
-## Learn More
+All statistics in `data/stats.json` are sourced from World Bank, UN Population Division, WHO, IEA, UNHCR, and ITU. Scale factor: `value_1k = value_world / (world_pop / 1000)` using ~10B world population.
 
-To learn more about Next.js, take a look at the following resources:
+## Project Structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+planet1000/
+├── app/                    # Next.js App Router
+│   ├── page.tsx            # Home page
+│   ├── layout.tsx          # Root layout + nav
+│   ├── play/
+│   │   ├── world-of-1000/  # Mechanic 1
+│   │   ├── estimate-explain/ # Mechanic 2
+│   │   ├── world-in-a-box/ # Mechanic 3
+│   │   └── daily/          # Mechanic 4
+│   └── stats/              # Score/streak summary
+├── components/             # Shared UI components
+│   └── ui/                 # Primitives (Button, Card, etc.)
+├── data/                   # Static JSON (stats, questions, chains)
+├── lib/                    # Utilities (scoring, questions, daily logic)
+└── types/                  # TypeScript interfaces
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deployment
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+vercel --prod
+```

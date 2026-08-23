@@ -1,0 +1,408 @@
+[
+  {
+    "id": "chain-flights",
+    "title": "The Daily Flight",
+    "topic": "aviation",
+    "questions": [
+      {
+        "id": "cq-flights-1",
+        "statId": "transportation-flights-daily",
+        "prompt": "In our 1,000-person world, how many commercial flights take off today?",
+        "hint": "About 102,000 flights depart globally every day.",
+        "followUpIntro": "Those flights carry a lot of fuel. Let's follow the chain..."
+      },
+      {
+        "id": "cq-flights-2",
+        "statId": "people-internet",
+        "prompt": "Of those 10 flights in our world, how many passengers do they carry in total?",
+        "hint": "A typical commercial flight carries 150–200 passengers.",
+        "followUpIntro": "All that travel has a carbon cost..."
+      },
+      {
+        "id": "cq-flights-3",
+        "statId": "environment-co2",
+        "prompt": "How much CO₂ does our 1,000-person world emit per year from all sources?",
+        "hint": "Think about 4.6 tonnes per person × 1,000 people.",
+        "followUpIntro": "Now let's zoom out to the whole world..."
+      }
+    ]
+  },
+  {
+    "id": "chain-food",
+    "title": "Feeding the World",
+    "topic": "food",
+    "questions": [
+      {
+        "id": "cq-food-1",
+        "statId": "people-farmers",
+        "prompt": "How many of our 1,000 people work in farming, fishing, or forestry?",
+        "hint": "In developing nations the share is much higher than in wealthy ones.",
+        "followUpIntro": "Those farmers need land. How much?"
+      },
+      {
+        "id": "cq-food-2",
+        "statId": "food-calories-daily",
+        "prompt": "How many calories per day are available to each person in our world?",
+        "hint": "The world actually produces more than enough food for everyone.",
+        "followUpIntro": "But not all food makes it to the table..."
+      },
+      {
+        "id": "cq-food-3",
+        "statId": "food-waste",
+        "prompt": "How many tonnes of food does our 1,000-person world waste each year?",
+        "hint": "About one-third of all food produced globally is wasted.",
+        "followUpIntro": "Hunger persists despite this abundance..."
+      },
+      {
+        "id": "cq-food-4",
+        "statId": "people-poverty",
+        "prompt": "How many of our 1,000 people live on less than $2.15 a day?",
+        "hint": "Poverty — not food scarcity — is the main driver of hunger.",
+        "followUpIntro": "This is the heart of global food inequality."
+      }
+    ]
+  },
+  {
+    "id": "chain-water",
+    "title": "The Water Crisis",
+    "topic": "water",
+    "questions": [
+      {
+        "id": "cq-water-1",
+        "statId": "water-no-clean",
+        "prompt": "How many of our 1,000 people lack safe drinking water?",
+        "hint": "This is still one of humanity's biggest solvable problems.",
+        "followUpIntro": "Those without clean water face daily risks. But even those who have it use it unequally..."
+      },
+      {
+        "id": "cq-water-2",
+        "statId": "water-freshwater-daily",
+        "prompt": "How many liters of freshwater does the average person use per day?",
+        "hint": "This includes drinking, cooking, sanitation, and agriculture. Americans use ~500L.",
+        "followUpIntro": "Water access is closely tied to electricity access..."
+      },
+      {
+        "id": "cq-water-3",
+        "statId": "energy-no-electricity",
+        "prompt": "How many of our 1,000 people have no access to electricity?",
+        "hint": "Without power, pumping clean water is much harder.",
+        "followUpIntro": "Infrastructure deprivation compounds itself."
+      }
+    ]
+  },
+  {
+    "id": "chain-education",
+    "title": "The Knowledge Gap",
+    "topic": "education",
+    "questions": [
+      {
+        "id": "cq-edu-1",
+        "statId": "people-children",
+        "prompt": "How many of our 1,000 people are children under 15?",
+        "hint": "About 1 in 4 people globally is under 15.",
+        "followUpIntro": "Those children need teachers..."
+      },
+      {
+        "id": "cq-edu-2",
+        "statId": "people-teachers",
+        "prompt": "How many primary school teachers serve our 1,000-person world?",
+        "hint": "Average class sizes globally are around 24 students.",
+        "followUpIntro": "But not all children reach a classroom..."
+      },
+      {
+        "id": "cq-edu-3",
+        "statId": "education-school-age",
+        "prompt": "How many children in our 1,000-person world are not in school?",
+        "hint": "Progress has been huge, but exclusion persists in the most vulnerable communities.",
+        "followUpIntro": "Literacy shows us the legacy of past exclusion..."
+      },
+      {
+        "id": "cq-edu-4",
+        "statId": "people-literate",
+        "prompt": "How many of our 1,000 adults can read and write?",
+        "hint": "Global literacy has improved dramatically but illiteracy is still concentrated in specific regions.",
+        "followUpIntro": "Literacy unlocks digital access..."
+      },
+      {
+        "id": "cq-edu-5",
+        "statId": "people-internet",
+        "prompt": "How many of our 1,000 people have access to the internet?",
+        "hint": "Connectivity requires both infrastructure and the skills to use it.",
+        "followUpIntro": "The internet is the great equalizer — when you can reach it."
+      }
+    ]
+  },
+  {
+    "id": "chain-inequality",
+    "title": "The Wealth Gap",
+    "topic": "money",
+    "questions": [
+      {
+        "id": "cq-ineq-1",
+        "statId": "money-gdp-per-capita",
+        "prompt": "What is the average annual income per person in our 1,000-person world (in USD)?",
+        "hint": "The global average hides huge variation — the median is much lower.",
+        "followUpIntro": "But averages can be misleading when wealth is concentrated..."
+      },
+      {
+        "id": "cq-ineq-2",
+        "statId": "money-top10-wealth",
+        "prompt": "Out of every 1,000 units of global wealth, how many does the richest 10% hold?",
+        "hint": "Wealth inequality is far more extreme than income inequality.",
+        "followUpIntro": "This concentration has real consequences..."
+      },
+      {
+        "id": "cq-ineq-3",
+        "statId": "people-poverty",
+        "prompt": "How many of our 1,000 people survive on under $2.15 a day?",
+        "hint": "Extreme poverty has fallen dramatically but remains concentrated in specific regions.",
+        "followUpIntro": "Poverty and lack of shelter go hand in hand..."
+      },
+      {
+        "id": "cq-ineq-4",
+        "statId": "housing-homeless",
+        "prompt": "How many of our 1,000 people live in inadequate housing or slums?",
+        "hint": "Rapid urbanization has outpaced housing construction in many cities.",
+        "followUpIntro": "Housing, income, water — the deprivations cluster together."
+      }
+    ]
+  },
+  {
+    "id": "chain-health",
+    "title": "Healthcare for 1,000",
+    "topic": "healthcare",
+    "questions": [
+      {
+        "id": "cq-health-1",
+        "statId": "people-doctors",
+        "prompt": "How many doctors serve our 1,000-person world?",
+        "hint": "Global average is 4.3 doctors per 1,000 — but inequality is enormous.",
+        "followUpIntro": "Doctors need nurses and midwives to support them..."
+      },
+      {
+        "id": "cq-health-2",
+        "statId": "people-nurses",
+        "prompt": "How many nurses and midwives work in our 1,000-person world?",
+        "hint": "There are typically 2–3 nurses for every doctor globally.",
+        "followUpIntro": "Even with healthcare workers, access depends on clean water..."
+      },
+      {
+        "id": "cq-health-3",
+        "statId": "water-no-clean",
+        "prompt": "How many of our 1,000 people lack safe drinking water?",
+        "hint": "Waterborne disease is one of the biggest killers preventable through clean water.",
+        "followUpIntro": "Health outcomes show up in life expectancy..."
+      },
+      {
+        "id": "cq-health-4",
+        "statId": "healthcare-life-expectancy",
+        "prompt": "What is the average life expectancy in our 1,000-person world (in years)?",
+        "hint": "Global life expectancy has risen dramatically — from 48 in 1950 to 73 today.",
+        "followUpIntro": "The world is aging as it gets healthier."
+      }
+    ]
+  },
+  {
+    "id": "chain-climate",
+    "title": "Carbon and the Climate",
+    "topic": "environment",
+    "questions": [
+      {
+        "id": "cq-climate-1",
+        "statId": "environment-co2",
+        "prompt": "How many kg of CO₂ does the average person emit per year?",
+        "hint": "This average hides a 30× gap between richest and poorest countries.",
+        "followUpIntro": "Cars are a major source of emissions..."
+      },
+      {
+        "id": "cq-climate-2",
+        "statId": "transportation-cars",
+        "prompt": "How many cars are there in our 1,000-person world?",
+        "hint": "The US has 800 cars per 1,000 people — but that's far above the global average.",
+        "followUpIntro": "Alongside carbon, forests are the other half of the equation..."
+      },
+      {
+        "id": "cq-climate-3",
+        "statId": "environment-forest-loss",
+        "prompt": "How many hectares of forest does our 1,000-person world lose per year?",
+        "hint": "47 million hectares lost globally — an area the size of Sweden.",
+        "followUpIntro": "Renewables offer hope..."
+      },
+      {
+        "id": "cq-climate-4",
+        "statId": "energy-renewables",
+        "prompt": "Out of every 1,000 kWh of electricity generated, how many come from renewable sources?",
+        "hint": "Wind, solar, hydro, and other renewables are growing fast.",
+        "followUpIntro": "The transition is underway — but uneven."
+      }
+    ]
+  },
+  {
+    "id": "chain-connectivity",
+    "title": "The Connected World",
+    "topic": "people",
+    "questions": [
+      {
+        "id": "cq-conn-1",
+        "statId": "people-smartphones",
+        "prompt": "How many of our 1,000 people own a smartphone?",
+        "hint": "Smartphones have spread faster than any technology in history.",
+        "followUpIntro": "Smartphones need internet to be truly useful..."
+      },
+      {
+        "id": "cq-conn-2",
+        "statId": "people-internet",
+        "prompt": "How many of our 1,000 people have internet access?",
+        "hint": "Slightly fewer than smartphone owners — some have phones but no data plan.",
+        "followUpIntro": "Internet access matters most to those who can read..."
+      },
+      {
+        "id": "cq-conn-3",
+        "statId": "people-literate",
+        "prompt": "How many of our 1,000 adults can read and write?",
+        "hint": "Literacy is the gateway to using digital technology effectively.",
+        "followUpIntro": "Urban areas drive connectivity..."
+      },
+      {
+        "id": "cq-conn-4",
+        "statId": "people-urban",
+        "prompt": "How many of our 1,000 people live in cities?",
+        "hint": "Urban areas have far better connectivity than rural ones.",
+        "followUpIntro": "The digital divide tracks the urban-rural divide."
+      }
+    ]
+  },
+  {
+    "id": "chain-displacement",
+    "title": "People on the Move",
+    "topic": "people",
+    "questions": [
+      {
+        "id": "cq-disp-1",
+        "statId": "people-refugees",
+        "prompt": "How many of our 1,000 people are forcibly displaced — refugees or displaced within their own country?",
+        "hint": "This figure hit a record high in 2023 and is still rising.",
+        "followUpIntro": "Displacement disrupts children's education..."
+      },
+      {
+        "id": "cq-disp-2",
+        "statId": "education-school-age",
+        "prompt": "How many children in our 1,000-person world are not in school?",
+        "hint": "Children in conflict zones are many times more likely to be out of school.",
+        "followUpIntro": "Displacement and poverty are deeply linked..."
+      },
+      {
+        "id": "cq-disp-3",
+        "statId": "people-poverty",
+        "prompt": "How many of our 1,000 people live in extreme poverty?",
+        "hint": "Conflict is one of the biggest drivers of poverty.",
+        "followUpIntro": "The world keeps moving — in more ways than one."
+      }
+    ]
+  },
+  {
+    "id": "chain-aging",
+    "title": "The Aging World",
+    "topic": "people",
+    "questions": [
+      {
+        "id": "cq-aging-1",
+        "statId": "people-elderly",
+        "prompt": "How many of our 1,000 people are over 65 years old?",
+        "hint": "This proportion will roughly double by 2050 as the global population ages.",
+        "followUpIntro": "An aging population needs more healthcare workers..."
+      },
+      {
+        "id": "cq-aging-2",
+        "statId": "people-doctors",
+        "prompt": "How many doctors serve our 1,000-person world?",
+        "hint": "Demand for doctors will grow as populations age.",
+        "followUpIntro": "An aging world also means fewer children relative to adults..."
+      },
+      {
+        "id": "cq-aging-3",
+        "statId": "people-children",
+        "prompt": "How many of our 1,000 people are under 15 years old?",
+        "hint": "The ratio of young to old is shifting — with profound economic consequences.",
+        "followUpIntro": "Life expectancy captures this whole story..."
+      },
+      {
+        "id": "cq-aging-4",
+        "statId": "healthcare-life-expectancy",
+        "prompt": "What is the global average life expectancy in years?",
+        "hint": "It rose from 48 years in 1950 to 73 today.",
+        "followUpIntro": "A longer-lived world is a richer, more complex world."
+      }
+    ]
+  },
+  {
+    "id": "chain-energy",
+    "title": "Powering the World",
+    "topic": "energy",
+    "questions": [
+      {
+        "id": "cq-energy-1",
+        "statId": "energy-no-electricity",
+        "prompt": "How many of our 1,000 people have no access to electricity?",
+        "hint": "This number has fallen from 120 per 1,000 in 2010 to under 75 today.",
+        "followUpIntro": "Those with electricity use very different amounts..."
+      },
+      {
+        "id": "cq-energy-2",
+        "statId": "energy-electricity",
+        "prompt": "How many kWh of electricity does the average person use per year?",
+        "hint": "Americans use ~12,000 kWh; Ethiopians use ~100 kWh.",
+        "followUpIntro": "Where does all that electricity come from?"
+      },
+      {
+        "id": "cq-energy-3",
+        "statId": "energy-renewables",
+        "prompt": "Out of every 1,000 kWh of electricity generated globally, how many come from renewables?",
+        "hint": "Wind, solar, and hydro are all growing fast.",
+        "followUpIntro": "Energy use is closely tied to carbon emissions..."
+      },
+      {
+        "id": "cq-energy-4",
+        "statId": "environment-co2",
+        "prompt": "How many kg of CO₂ does the average person emit per year?",
+        "hint": "Energy use is the biggest driver of CO₂ emissions.",
+        "followUpIntro": "The energy transition will reshape this number."
+      }
+    ]
+  },
+  {
+    "id": "chain-urbanization",
+    "title": "The Urban Century",
+    "topic": "people",
+    "questions": [
+      {
+        "id": "cq-urban-1",
+        "statId": "people-urban",
+        "prompt": "How many of our 1,000 people live in cities?",
+        "hint": "For the first time in history, over half of humanity is urban.",
+        "followUpIntro": "Cities concentrate cars and transportation..."
+      },
+      {
+        "id": "cq-urban-2",
+        "statId": "transportation-cars",
+        "prompt": "How many cars are there in our 1,000-person world?",
+        "hint": "Cars are concentrated in cities and wealthy suburbs.",
+        "followUpIntro": "Urban growth also creates housing pressure..."
+      },
+      {
+        "id": "cq-urban-3",
+        "statId": "housing-homeless",
+        "prompt": "How many of our 1,000 people live in inadequate housing?",
+        "hint": "Rapid urbanization has outpaced affordable housing in many developing cities.",
+        "followUpIntro": "Better housing brings better health..."
+      },
+      {
+        "id": "cq-urban-4",
+        "statId": "healthcare-life-expectancy",
+        "prompt": "What is the average global life expectancy in years?",
+        "hint": "Urban dwellers tend to live longer than rural ones on average.",
+        "followUpIntro": "The urban century is reshaping everything."
+      }
+    ]
+  }
+]
