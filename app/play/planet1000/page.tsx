@@ -89,7 +89,7 @@ export default function WorldOf1000Page() {
       <div className="flex items-center justify-between">
         <div>
           <Link href="/" className="text-sm text-slate-400 hover:text-slate-600">← Home</Link>
-          <h1 className="text-xl font-bold text-slate-800 mt-0.5">The World of 1,000</h1>
+          <h1 className="text-xl font-bold text-slate-800 mt-0.5">Planet1000</h1>
         </div>
         <ScoreBadge score={sessionScore} questionsAnswered={questionsAnswered} />
       </div>

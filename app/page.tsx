@@ -2,8 +2,8 @@ import Link from 'next/link';
 
 const mechanics = [
   {
-    href: '/play/world-of-1000',
-    title: 'The World of 1,000',
+    href: '/play/planet1000',
+    title: 'Planet1000',
     description:
       'Estimate how many of 1,000 people share a trait — children, farmers, internet users — and see how your intuition holds up.',
     icon: '🌍',
@@ -12,8 +12,8 @@ const mechanics = [
     badgeColor: 'bg-emerald-100 text-emerald-800',
   },
   {
-    href: '/play/estimate-explain',
-    title: 'Estimate → Explain → Reveal',
+    href: '/play/world-estimation',
+    title: 'WorldEstimation',
     description:
       'Make your estimate, then explain your reasoning before the answer is revealed. Good thinking gets rewarded even when your number is off.',
     icon: '🧠',
@@ -32,12 +32,12 @@ const mechanics = [
     badgeColor: 'bg-amber-100 text-amber-800',
   },
   {
-    href: '/play/daily',
-    title: 'Daily World Question',
+    href: '/play/chain-reaction',
+    title: 'Chain Reaction',
     description:
-      'One topic per day, explored through a chain of 3–5 connected questions. Come back tomorrow for a new chain.',
-    icon: '📅',
-    badge: 'Daily',
+      'One topic, five connected questions. Each answer unlocks the next — follow the chain to see how global facts link together.',
+    icon: '⛓️',
+    badge: 'Chain',
     color: 'border-rose-300 hover:border-rose-500',
     badgeColor: 'bg-rose-100 text-rose-800',
   },
@@ -62,16 +62,16 @@ export default function HomePage() {
       {/* Quick-start CTA */}
       <div className="flex justify-center gap-4 flex-wrap">
         <Link
-          href="/play/world-of-1000"
+          href="/play/planet1000"
           className="inline-flex items-center gap-2 bg-emerald-600 text-white px-6 py-3 rounded-xl font-semibold text-lg hover:bg-emerald-700 active:scale-95 transition-all"
         >
           Start Playing →
         </Link>
         <Link
-          href="/play/daily"
+          href="/play/chain-reaction"
           className="inline-flex items-center gap-2 bg-white text-emerald-700 border-2 border-emerald-600 px-6 py-3 rounded-xl font-semibold text-lg hover:bg-emerald-50 active:scale-95 transition-all"
         >
-          📅 Today&apos;s Chain
+          ⛓️ Today&apos;s Chain
         </Link>
       </div>
 

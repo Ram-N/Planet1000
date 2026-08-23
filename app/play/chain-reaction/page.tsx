@@ -106,7 +106,7 @@ export default function DailyPage() {
       <div className="max-w-xl mx-auto px-4 py-8 space-y-6">
         <div>
           <Link href="/" className="text-sm text-slate-400 hover:text-slate-600">← Home</Link>
-          <h1 className="text-xl font-bold text-slate-800 mt-0.5">Daily World Question</h1>
+          <h1 className="text-xl font-bold text-slate-800 mt-0.5">Chain Reaction</h1>
         </div>
         <Card>
           <DailyComplete
@@ -132,7 +132,7 @@ export default function DailyPage() {
       <div className="flex items-center justify-between">
         <div>
           <Link href="/" className="text-sm text-slate-400 hover:text-slate-600">← Home</Link>
-          <h1 className="text-xl font-bold text-slate-800 mt-0.5">Daily World Question</h1>
+          <h1 className="text-xl font-bold text-slate-800 mt-0.5">Chain Reaction</h1>
         </div>
         <div className="text-right">
           <p className="text-xs text-slate-400">Today&apos;s topic</p>

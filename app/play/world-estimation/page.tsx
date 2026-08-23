@@ -114,7 +114,7 @@ export default function EstimateExplainPage() {
       <div className="flex items-center justify-between">
         <div>
           <Link href="/" className="text-sm text-slate-400 hover:text-slate-600">← Home</Link>
-          <h1 className="text-xl font-bold text-slate-800 mt-0.5">Estimate → Explain → Reveal</h1>
+          <h1 className="text-xl font-bold text-slate-800 mt-0.5">WorldEstimation</h1>
         </div>
         <ScoreBadge score={sessionScore} questionsAnswered={questionsAnswered} />
       </div>
