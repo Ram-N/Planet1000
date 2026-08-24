@@ -14,7 +14,12 @@ import { getReasoningQuality, getReasoningFeedback } from '@/lib/reasoning';
 import { addScore } from '@/lib/stats';
 import type { Question, WorldStat } from '@/types';
 
-type Phase = 'estimate' | 'reasoning' | 'revealed' | 'done';
+// 'estimate' → player makes a first guess (no hint shown)
+// 'hint'     → hint revealed; player can refine before picking reasoning
+// 'reasoning' → player picks reasoning approach
+// 'revealed'  → answer and score shown
+// 'done'      → session complete
+type Phase = 'estimate' | 'hint' | 'reasoning' | 'revealed' | 'done';
 
 // Only use questions that have reasoningOptions
 function getExplainQuestions(all: Question[]): Question[] {
@@ -46,7 +51,11 @@ export default function EstimateExplainPage() {
   const currentQuestion = questions[currentIndex];
   const currentStat = currentQuestion ? getStatById(currentQuestion.statId) : undefined;
 
-  const handleEstimateSubmit = () => {
+  const handleFirstGuess = () => {
+    setPhase('hint');
+  };
+
+  const handleHintSubmit = () => {
     setPhase('reasoning');
   };
 
@@ -121,17 +130,17 @@ export default function EstimateExplainPage() {
 
       {/* Phase indicator */}
       <div className="flex gap-2 text-xs">
-        {(['estimate', 'reasoning', 'revealed'] as const).map((p, i) => (
+        {(['estimate', 'hint', 'reasoning', 'revealed'] as const).map((p, i) => (
           <div key={p} className="flex items-center gap-2">
             {i > 0 && <span className="text-slate-300">→</span>}
             <span className={`font-medium ${phase === p ? 'text-emerald-600' : 'text-slate-400'}`}>
-              {p === 'estimate' ? 'Estimate' : p === 'reasoning' ? 'Explain' : 'Reveal'}
+              {p === 'estimate' ? 'Guess' : p === 'hint' ? 'Refine' : p === 'reasoning' ? 'Explain' : 'Reveal'}
             </span>
           </div>
         ))}
       </div>
 
-      {/* Estimate phase */}
+      {/* Estimate phase — no hint shown */}
       {phase === 'estimate' && currentQuestion && currentStat && (
         <Card>
           <div className="space-y-6">
@@ -142,12 +151,37 @@ export default function EstimateExplainPage() {
               <h2 className="text-xl font-semibold text-slate-800 leading-snug">
                 {currentQuestion.prompt}
               </h2>
-              {currentQuestion.hint && (
-                <p className="mt-2 text-sm text-slate-500 italic">{currentQuestion.hint}</p>
-              )}
             </div>
             <EstimateInput value={guess} onChange={setGuess} max={1000} unit="out of 1,000 people" />
-            <Button size="lg" className="w-full" onClick={handleEstimateSubmit}>
+            <Button size="lg" className="w-full" onClick={handleFirstGuess}>
+              Take a Guess →
+            </Button>
+          </div>
+        </Card>
+      )}
+
+      {/* Hint phase — hint revealed, player can refine before picking reasoning */}
+      {phase === 'hint' && currentQuestion && currentStat && (
+        <Card>
+          <div className="space-y-6">
+            <div>
+              <p className="text-xs uppercase tracking-wide text-slate-400 mb-1">
+                {currentStat.domain} · {currentStat.dimension}
+              </p>
+              <h2 className="text-xl font-semibold text-slate-800 leading-snug">
+                {currentQuestion.prompt}
+              </h2>
+            </div>
+
+            {currentQuestion.hint && (
+              <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3">
+                <p className="text-xs font-semibold text-amber-700 uppercase tracking-wide mb-1">Hint</p>
+                <p className="text-sm text-amber-900 leading-relaxed">{currentQuestion.hint}</p>
+              </div>
+            )}
+
+            <EstimateInput value={guess} onChange={setGuess} max={1000} unit="out of 1,000 people" />
+            <Button size="lg" className="w-full" onClick={handleHintSubmit}>
               Lock in Estimate →
             </Button>
           </div>

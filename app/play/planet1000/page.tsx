@@ -12,13 +12,17 @@ import { scoreEstimate } from '@/lib/scoring';
 import { addScore } from '@/lib/stats';
 import type { Question, WorldStat } from '@/types';
 
-type Phase = 'question' | 'revealed' | 'done';
+// 'guess'  → player makes a first estimate (no hint shown)
+// 'hint'   → hint is revealed; player can refine before committing
+// 'revealed' → answer shown, score based on final estimate
+// 'done'   → session complete
+type Phase = 'guess' | 'hint' | 'revealed' | 'done';
 
 export default function WorldOf1000Page() {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [guess, setGuess] = useState(100);
-  const [phase, setPhase] = useState<Phase>('question');
+  const [phase, setPhase] = useState<Phase>('guess');
   const [sessionScore, setSessionScore] = useState(0);
   const [questionsAnswered, setQuestionsAnswered] = useState(0);
   const [lastResult, setLastResult] = useState<{
@@ -36,6 +40,12 @@ export default function WorldOf1000Page() {
   const currentQuestion = questions[currentIndex];
   const currentStat = currentQuestion ? getStatById(currentQuestion.statId) : undefined;
 
+  // First guess locks in nothing — just reveals the hint
+  const handleFirstGuess = () => {
+    setPhase('hint');
+  };
+
+  // Final submission scores the estimate
   const handleSubmit = () => {
     if (!currentStat) return;
     const result = scoreEstimate(guess, currentStat.value_1k);
@@ -53,7 +63,7 @@ export default function WorldOf1000Page() {
     } else {
       setCurrentIndex(nextIndex);
       setGuess(100);
-      setPhase('question');
+      setPhase('guess');
     }
   };
 
@@ -73,7 +83,11 @@ export default function WorldOf1000Page() {
         <p className="text-slate-600">You answered all {questionsAnswered} questions.</p>
         <p className="text-4xl font-bold text-emerald-600">{sessionScore.toLocaleString()} pts</p>
         <div className="flex gap-3 justify-center flex-wrap">
-          <Button onClick={() => { setCurrentIndex(0); setGuess(100); setSessionScore(0); setQuestionsAnswered(0); setPhase('question'); setQuestions(getShuffledQuestions()); }}>
+          <Button onClick={() => {
+            setCurrentIndex(0); setGuess(100); setSessionScore(0);
+            setQuestionsAnswered(0); setPhase('guess');
+            setQuestions(getShuffledQuestions());
+          }}>
             Play Again
           </Button>
           <Link href="/"><Button variant="secondary">Home</Button></Link>
@@ -99,7 +113,8 @@ export default function WorldOf1000Page() {
         Question {currentIndex + 1} of {questions.length}
       </div>
 
-      {phase === 'question' && currentQuestion && currentStat && (
+      {/* Phase: first guess — no hint shown */}
+      {phase === 'guess' && currentQuestion && currentStat && (
         <Card>
           <div className="space-y-6">
             <div>
@@ -109,25 +124,48 @@ export default function WorldOf1000Page() {
               <h2 className="text-xl font-semibold text-slate-800 leading-snug">
                 {currentQuestion.prompt}
               </h2>
-              {currentQuestion.hint && (
-                <p className="mt-2 text-sm text-slate-500 italic">{currentQuestion.hint}</p>
-              )}
             </div>
 
-            <EstimateInput
-              value={guess}
-              onChange={setGuess}
-              max={1000}
-              unit="out of 1,000 people"
-            />
+            <EstimateInput value={guess} onChange={setGuess} max={1000} unit="out of 1,000 people" />
 
-            <Button size="lg" className="w-full" onClick={handleSubmit}>
-              Submit Estimate
+            <Button size="lg" className="w-full" onClick={handleFirstGuess}>
+              Take a Guess →
             </Button>
           </div>
         </Card>
       )}
 
+      {/* Phase: hint revealed — player can refine */}
+      {phase === 'hint' && currentQuestion && currentStat && (
+        <Card>
+          <div className="space-y-6">
+            <div>
+              <p className="text-xs uppercase tracking-wide text-slate-400 mb-1">
+                {currentStat.domain} · {currentStat.dimension}
+              </p>
+              <h2 className="text-xl font-semibold text-slate-800 leading-snug">
+                {currentQuestion.prompt}
+              </h2>
+            </div>
+
+            {/* Hint revealed after first guess */}
+            {currentQuestion.hint && (
+              <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3">
+                <p className="text-xs font-semibold text-amber-700 uppercase tracking-wide mb-1">Hint</p>
+                <p className="text-sm text-amber-900 leading-relaxed">{currentQuestion.hint}</p>
+              </div>
+            )}
+
+            <EstimateInput value={guess} onChange={setGuess} max={1000} unit="out of 1,000 people" />
+
+            <Button size="lg" className="w-full" onClick={handleSubmit}>
+              Submit Final Answer →
+            </Button>
+          </div>
+        </Card>
+      )}
+
+      {/* Phase: revealed */}
       {phase === 'revealed' && lastResult && (
         <Card>
           <div className="space-y-6">

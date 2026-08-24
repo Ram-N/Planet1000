@@ -27,7 +27,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
 
   return (
     <html lang="en" className={`${geist.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-slate-50 font-sans">
+      <body className="min-h-full flex flex-col bg-slate-50 font-sans" data-gramm="false">
         <nav className="bg-white border-b border-slate-200 sticky top-0 z-50">
           <div className="max-w-3xl mx-auto px-4 h-14 flex items-center justify-between">
             <Link href="/" className="font-bold text-lg text-emerald-700 tracking-tight">
