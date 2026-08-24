@@ -71,6 +71,8 @@ export interface Observation {
   entity: Entity;
   metric: Metric;
   unit: Unit;
+  /** Curated facts ordered for hint selection (scale_anchor/geographic first, then inequality/comparison, trend, general) */
+  facts: string[];
 }
 
 export interface ScaleArgs {

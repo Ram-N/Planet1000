@@ -384,6 +384,7 @@ export function generateQuestions(options: GenerateOptions): Question[] {
         prompt: template.prompt(obs),
         hint: template.hint(obs, per1k),
         reasoningOptions: template.reasoningOptions(obs),
+        facts: obs.facts ?? [],
       });
     }
   }

@@ -427,7 +427,10 @@
         "name": "People",
         "symbol": "people",
         "conversion_factor_to_base": 1
-      }
+      },
+      "facts": [
+        "Children under 15 make up about 1 in 4 people globally, but the proportion varies hugely — from over 40% in some African countries to under 15% in aging European nations"
+      ]
     },
     {
       "id": "people-elderly",
@@ -459,7 +462,10 @@
         "name": "People",
         "symbol": "people",
         "conversion_factor_to_base": 1
-      }
+      },
+      "facts": [
+        "The share of people over 65 is rising in almost every country — driven by falling birth rates and longer lives — creating new pressures on pension and healthcare systems"
+      ]
     },
     {
       "id": "people-urban",
@@ -491,7 +497,12 @@
         "name": "People",
         "symbol": "people",
         "conversion_factor_to_base": 1
-      }
+      },
+      "facts": [
+        "Lagos, Dhaka, and Delhi each add millions of residents every year — cities in the global south now account for most of the world's urban population",
+        "In 1950 only about 30 in every 100 people lived in cities; by 2050 that figure is expected to reach 68 — urbanisation is one of the defining shifts of the modern era",
+        "More than half of humanity now lives in cities, a proportion that was under 30% in 1950 — and urbanisation continues fastest in Africa and Asia"
+      ]
     },
     {
       "id": "people-doctors",
@@ -523,7 +534,14 @@
         "name": "People",
         "symbol": "people",
         "conversion_factor_to_base": 1
-      }
+      },
+      "facts": [
+        "The US alone has more registered doctors than all of sub-Saharan Africa combined",
+        "Most of the world's doctors are clustered in wealthy countries — sub-Saharan Africa has less than 3% of global physicians despite 16% of the world's population",
+        "Norway has 40 doctors per 1,000 people; Niger has fewer than 0.1",
+        "Global physician numbers have grown 60% since 2000, but mostly in countries that were already well-supplied",
+        "The world has about 4 doctors per 1,000 people on average, but this average hides enormous inequality between wealthy and low-income nations"
+      ]
     },
     {
       "id": "people-nurses",
@@ -555,7 +573,11 @@
         "name": "People",
         "symbol": "people",
         "conversion_factor_to_base": 1
-      }
+      },
+      "facts": [
+        "Sub-Saharan Africa faces a shortage of over 4 million nurses — its healthcare systems rely heavily on community health workers who have no formal nursing qualification",
+        "Nurses and midwives outnumber doctors roughly two to one globally, and in many rural areas they are the only healthcare providers that communities ever see"
+      ]
     },
     {
       "id": "people-teachers",
@@ -587,7 +609,11 @@
         "name": "People",
         "symbol": "people",
         "conversion_factor_to_base": 1
-      }
+      },
+      "facts": [
+        "Sub-Saharan Africa will need to hire around 17 million more teachers by 2030 just to achieve universal primary education — a goal many countries are far from reaching",
+        "About 70 million primary school teachers serve the world's youngest learners, but shortages are acute in sub-Saharan Africa where some schools have one teacher for 60 or more children"
+      ]
     },
     {
       "id": "people-farmers",
@@ -619,7 +645,11 @@
         "name": "People",
         "symbol": "people",
         "conversion_factor_to_base": 1
-      }
+      },
+      "facts": [
+        "More than 90% of the world's farms are smallholdings under 2 hectares — most are in Asia and sub-Saharan Africa, where agriculture remains the primary livelihood for billions",
+        "Despite making up over a quarter of the global workforce, farmers — mostly smallholders in Asia and Africa — are disproportionately represented among the world's poorest people"
+      ]
     },
     {
       "id": "people-poverty",
@@ -651,7 +681,12 @@
         "name": "People",
         "symbol": "people",
         "conversion_factor_to_base": 1
-      }
+      },
+      "facts": [
+        "More than 90% of people in extreme poverty live in sub-Saharan Africa or South Asia — in some countries more than half the population lives below the $2.15-a-day line",
+        "The share of people in extreme poverty fell from nearly 40% in 1990 to under 10% by 2019 — then stalled as COVID-19, conflict, and climate disruption reversed progress in many regions",
+        "About 9 in 10 extremely poor people live in sub-Saharan Africa or South Asia — a geographic concentration that shapes where foreign aid and development programs focus"
+      ]
     },
     {
       "id": "people-internet",
@@ -683,7 +718,12 @@
         "name": "People",
         "symbol": "people",
         "conversion_factor_to_base": 1
-      }
+      },
+      "facts": [
+        "India crossed 800 million internet users in 2023 — a single country now has more people online than the entire world did in 2005",
+        "Internet access grew from fewer than 2% of the global population in 1997 to about 67% today — one of the fastest diffusions of any technology in history",
+        "Internet access has grown faster than almost any technology in history — from fewer than 1 in 50 people in 1997 to roughly 2 in 3 today — yet the last third remain largely offline"
+      ]
     },
     {
       "id": "people-smartphones",
@@ -715,7 +755,11 @@
         "name": "People",
         "symbol": "people",
         "conversion_factor_to_base": 1
-      }
+      },
+      "facts": [
+        "China and India together account for roughly a third of all smartphone users on Earth — scale in just two countries that dwarfs most continents",
+        "More people now own a smartphone than have access to safely managed drinking water — a striking illustration of how consumer technology has outpaced basic infrastructure"
+      ]
     },
     {
       "id": "people-literate",
@@ -747,7 +791,11 @@
         "name": "People",
         "symbol": "people",
         "conversion_factor_to_base": 1
-      }
+      },
+      "facts": [
+        "About two-thirds of the world's 770 million illiterate adults are women — and most are concentrated in South Asia and sub-Saharan Africa",
+        "Global adult literacy has risen from roughly 56% in 1970 to 87% today, one of the most consistent improvements in human capability over the past half-century"
+      ]
     },
     {
       "id": "food-calories-daily",
@@ -779,7 +827,11 @@
         "name": "Calories",
         "symbol": "kcal",
         "conversion_factor_to_base": 1
-      }
+      },
+      "facts": [
+        "The United States throws away enough food each year to provide every American with 1,400 calories a day — while 700 million people globally go to bed hungry",
+        "The world produces enough calories to feed every person — the challenge is that food is unevenly distributed, with wealthy populations consuming far more than they need while hundreds of millions go hungry"
+      ]
     },
     {
       "id": "food-waste",
@@ -811,7 +863,13 @@
         "name": "Tonnes",
         "symbol": "t",
         "conversion_factor_to_base": 1
-      }
+      },
+      "facts": [
+        "The food wasted globally each year would be enough to feed every hungry person on Earth more than twice over",
+        "In high-income countries, most food is wasted at the retail and consumer stage; in low-income countries, losses happen mostly at harvest, storage, and transport",
+        "North Americans and Europeans waste roughly 95–115 kg of food per person per year, compared to just 6–11 kg per person in sub-Saharan Africa and South Asia",
+        "Food waste has barely declined in wealthy nations despite decades of awareness campaigns — reducing it remains one of the cheapest ways to cut agricultural emissions"
+      ]
     },
     {
       "id": "water-freshwater-daily",
@@ -843,7 +901,12 @@
         "name": "Liters",
         "symbol": "L",
         "conversion_factor_to_base": 1
-      }
+      },
+      "facts": [
+        "Agriculture accounts for about 70% of all freshwater withdrawals globally — meaning the water footprint of food production dwarfs household consumption",
+        "Americans use roughly 500 litres of water per day; people in Mozambique or Niger typically use under 20 litres — enough for drinking but little else",
+        "About 70% of all freshwater humans use goes to agriculture — meaning the water footprint of food is far larger than what comes out of household taps"
+      ]
     },
     {
       "id": "water-no-clean",
@@ -875,7 +938,11 @@
         "name": "People",
         "symbol": "people",
         "conversion_factor_to_base": 1
-      }
+      },
+      "facts": [
+        "Sub-Saharan Africa accounts for about a third of the global population without safe water, followed by South Asia — together these two regions hold most of the world's water-insecure people",
+        "Most people without safe water live in sub-Saharan Africa and South Asia — and the burden falls disproportionately on women and girls who walk hours daily to collect it"
+      ]
     },
     {
       "id": "energy-electricity",
@@ -907,7 +974,13 @@
         "name": "Kilowatt-hours",
         "symbol": "kWh",
         "conversion_factor_to_base": 1
-      }
+      },
+      "facts": [
+        "If the world's electricity were divided equally, each person's share would be enough for basic lighting and a phone charger — but far less than a typical American household uses",
+        "Sub-Saharan Africa generates about 1% of global electricity despite holding roughly 15% of the world's population",
+        "An average American uses about 10 times more electricity per year than an average person in Ethiopia",
+        "Global electricity demand has more than doubled since 1990, driven by population growth, industrialisation in Asia, and the rise of consumer electronics"
+      ]
     },
     {
       "id": "energy-renewables",
@@ -939,7 +1012,12 @@
         "name": "Per 1000 kWh",
         "symbol": "per 1k kWh",
         "conversion_factor_to_base": 1
-      }
+      },
+      "facts": [
+        "China installed more solar capacity in 2023 than the entire world had installed in all years up to 2022 — the energy transition is accelerating faster than most forecasts predicted",
+        "The share of renewables in global electricity has roughly doubled since 2010, driven mostly by the dramatic fall in wind and solar costs — both now cheaper than new coal in most markets",
+        "Solar energy is growing faster than any fuel in history — capacity added globally in 2023 exceeded all previous records, mostly driven by China, the US, and Europe"
+      ]
     },
     {
       "id": "energy-no-electricity",
@@ -971,7 +1049,11 @@
         "name": "People",
         "symbol": "people",
         "conversion_factor_to_base": 1
-      }
+      },
+      "facts": [
+        "About 80% of people without electricity live in sub-Saharan Africa — a region with some of the best solar resources on Earth yet the least access to modern energy",
+        "The 730 million people without electricity are concentrated in sub-Saharan Africa and South Asia — and for many, cooking with solid fuels causes more immediate harm than lack of light"
+      ]
     },
     {
       "id": "housing-homeless",
@@ -1003,7 +1085,11 @@
         "name": "People",
         "symbol": "people",
         "conversion_factor_to_base": 1
-      }
+      },
+      "facts": [
+        "Mumbai's Dharavi neighbourhood — one of the world's largest slums — packs over a million people into less than 2 square kilometres, illustrating how acute urban housing pressure can become",
+        "An estimated 1.6 billion people live in inadequate housing, including slums and informal settlements — yet only about 100 million are literally without any shelter"
+      ]
     },
     {
       "id": "transportation-cars",
@@ -1035,7 +1121,12 @@
         "name": "Cars",
         "symbol": "cars",
         "conversion_factor_to_base": 1
-      }
+      },
+      "facts": [
+        "The US has about 800 cars for every 1,000 people; India has about 30 — a ratio that reflects not just wealth but also the quality of public transport infrastructure",
+        "The wealthiest 10% of countries account for roughly 70% of all cars on the road — car ownership remains heavily concentrated in North America, Europe, and parts of East Asia",
+        "There are more cars on Earth than there are people in China and India combined, yet the vast majority are owned by people in just a handful of wealthy nations"
+      ]
     },
     {
       "id": "transportation-flights-annual",
@@ -1067,7 +1158,12 @@
         "name": "People",
         "symbol": "people",
         "conversion_factor_to_base": 1
-      }
+      },
+      "facts": [
+        "The US alone accounts for roughly a quarter of all commercial passengers globally — more than all of Africa, South America, and the Middle East combined",
+        "About 80% of the world's population has never been on a plane — flying is overwhelmingly the activity of a relatively small, relatively wealthy global minority",
+        "Flying remains one of the most unequally distributed activities on Earth — the majority of flights are taken by a small minority of frequent flyers, mostly in wealthy countries"
+      ]
     },
     {
       "id": "money-gdp-per-capita",
@@ -1099,7 +1195,12 @@
         "name": "US dollars per year",
         "symbol": "USD/yr",
         "conversion_factor_to_base": 1
-      }
+      },
+      "facts": [
+        "Luxembourg's GDP per capita exceeds $120,000 per year; Burundi's is under $300 — a 400-fold gap that illustrates how little the global average tells you about any individual country",
+        "The average person in the world's 10 richest countries earns roughly 50 times more than the average person in the 10 poorest — a gap that has barely narrowed in decades",
+        "The global average GDP per capita is pulled up by high-income countries — the median person on Earth earns far less, closer to $5,000–6,000 per year"
+      ]
     },
     {
       "id": "money-top10-wealth",
@@ -1131,7 +1232,13 @@
         "name": "Per 1000 wealth units",
         "symbol": "per 1k wealth",
         "conversion_factor_to_base": 1
-      }
+      },
+      "facts": [
+        "The wealth of the world's ten richest individuals exceeds the combined wealth of the poorest 40% of humanity",
+        "North America and Europe together hold more than 60% of all global household wealth, despite containing less than 20% of the world's population",
+        "The bottom 50% of humanity — about 4 billion people — collectively hold less than 2% of all global wealth",
+        "Wealth inequality worsened after the 2008 financial crisis as stock and property prices recovered faster than wages, benefiting those who already owned assets"
+      ]
     },
     {
       "id": "environment-forest-loss",
@@ -1163,7 +1270,12 @@
         "name": "Hectares",
         "symbol": "ha",
         "conversion_factor_to_base": 1
-      }
+      },
+      "facts": [
+        "Brazil, Indonesia, and the Democratic Republic of Congo together account for more than half of all tropical deforestation — three countries defining the pace of global forest loss",
+        "Brazil's Amazon deforestation fell by roughly 80% between 2004 and 2012 under strong enforcement policies — then rebounded sharply when those policies weakened, showing deforestation is a political choice",
+        "Tropical forests are disappearing fastest — Brazil, Indonesia, and the Democratic Republic of Congo account for a large share of global deforestation, mostly driven by agriculture"
+      ]
     },
     {
       "id": "environment-co2",
@@ -1195,7 +1307,12 @@
         "name": "Kilograms of CO2",
         "symbol": "kg CO₂",
         "conversion_factor_to_base": 1
-      }
+      },
+      "facts": [
+        "A return economy-class flight from London to New York emits roughly 1 tonne of CO₂ per passenger — about as much as an average person in Rwanda emits in an entire year",
+        "The richest 10% of people are responsible for about half of all global carbon emissions, while the poorest 50% produce less than 10% — climate change is driven mostly by the wealthy",
+        "The richest 10% of people are responsible for about half of all global carbon emissions, while the poorest 50% produce less than 10%"
+      ]
     },
     {
       "id": "healthcare-life-expectancy",
@@ -1227,7 +1344,12 @@
         "name": "Years",
         "symbol": "yrs",
         "conversion_factor_to_base": 1
-      }
+      },
+      "facts": [
+        "Japan leads global life expectancy at around 84 years; Chad sits at around 54 years — a 30-year gap that reflects differences in healthcare, nutrition, water, and conflict",
+        "Global life expectancy rose from 48 years in 1950 to 73 today — one of the most dramatic improvements in human welfare ever measured, driven mainly by reductions in child mortality",
+        "Life expectancy at birth has risen by 25 years globally since 1950, mostly due to better child survival — but the gap between the richest and poorest countries remains over 20 years"
+      ]
     },
     {
       "id": "education-school-age",
@@ -1259,7 +1381,11 @@
         "name": "Children",
         "symbol": "children",
         "conversion_factor_to_base": 1
-      }
+      },
+      "facts": [
+        "More than half of out-of-school children live in conflict-affected countries — places where schools have been destroyed, teachers have fled, and families are displaced",
+        "About 260 million children are out of school globally, most concentrated in sub-Saharan Africa and South Asia — regions where poverty, conflict, and gender inequality compound one another"
+      ]
     },
     {
       "id": "people-refugees",
@@ -1291,9 +1417,14 @@
         "name": "People",
         "symbol": "people",
         "conversion_factor_to_base": 1
-      }
+      },
+      "facts": [
+        "Sudan alone has produced over 8 million internally displaced people since 2023 — a single conflict creating displacement on a scale that strains the entire global humanitarian system",
+        "The number of forcibly displaced people has more than doubled since 2012, driven by prolonged conflicts that show no sign of resolution — displacement is increasingly long-term, not temporary",
+        "Over 114 million people are forcibly displaced globally — including 36 million refugees who have fled their home countries — the highest figure ever recorded"
+      ]
     }
   ],
   "world_population": 10000000000,
-  "generated_at": "2026-08-24T17:43:14.643Z"
+  "generated_at": "2026-08-24T18:21:36.460Z"
 }

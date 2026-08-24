@@ -73,3 +73,27 @@ export function shuffleQuestions(qs: Question[]): Question[] {
 export function getShuffledQuestions(): Question[] {
   return shuffleQuestions(getAllQuestions());
 }
+
+/**
+ * Return `count` questions deterministically for today's date.
+ * Same date always returns the same questions for all users.
+ * Questions are picked from a stable sorted pool (by ID) using a date hash.
+ */
+export function getDailyQuestions(count = 3): Question[] {
+  // Stable order: sort by question ID so the pool is deterministic
+  const allQs = getAllQuestions().slice().sort((a, b) => a.id.localeCompare(b.id));
+
+  // Hash today's ISO date string (YYYY-MM-DD) to an integer
+  const dateStr = new Date().toISOString().slice(0, 10);
+  let hash = 0;
+  for (let i = 0; i < dateStr.length; i++) {
+    hash = (hash * 31 + dateStr.charCodeAt(i)) & 0x7fffffff;
+  }
+
+  const startIndex = hash % allQs.length;
+  const result: Question[] = [];
+  for (let i = 0; i < count; i++) {
+    result.push(allQs[(startIndex + i) % allQs.length]);
+  }
+  return result;
+}

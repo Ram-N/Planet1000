@@ -36,6 +36,7 @@ export interface Question {
   prompt: string;
   hint?: string;
   reasoningOptions?: string[];
+  facts?: string[];
 }
 
 export interface ChainQuestion {

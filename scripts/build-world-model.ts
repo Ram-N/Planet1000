@@ -11,6 +11,9 @@ import { runAllValidations, type ParsedData } from './validate';
 const SOURCE_DIR = path.join(__dirname, '../data/source');
 const OUTPUT_FILE = path.join(__dirname, '../data/generated/world-model.json');
 
+// Ordered priority for fact types when selecting hints
+const FACT_TYPE_ORDER = ['scale_anchor', 'geographic', 'inequality', 'comparison', 'trend', 'general'];
+
 const WORLD_POPULATION = 10_000_000_000;
 
 // ---------------------------------------------------------------------------
@@ -67,6 +70,36 @@ function parseCSVLine(line: string): string[] {
 // Load all CSVs
 // ---------------------------------------------------------------------------
 
+interface FactRow { id: string; observation_id: string; type: string; text: string; }
+
+function loadFacts(): Map<string, string[]> {
+  const factsPath = path.join(SOURCE_DIR, 'facts.csv');
+  if (!fs.existsSync(factsPath)) return new Map();
+
+  const rows = parseCSV(factsPath) as unknown as FactRow[];
+
+  // Group by observation_id, preserving order defined by FACT_TYPE_ORDER
+  const grouped = new Map<string, FactRow[]>();
+  for (const row of rows) {
+    const obsId = row.observation_id?.trim();
+    if (!obsId) continue;
+    if (!grouped.has(obsId)) grouped.set(obsId, []);
+    grouped.get(obsId)!.push(row);
+  }
+
+  // Sort each group by fact type priority, then return just the text strings
+  const result = new Map<string, string[]>();
+  for (const [obsId, facts] of grouped) {
+    const sorted = facts.slice().sort((a, b) => {
+      const ai = FACT_TYPE_ORDER.indexOf(a.type ?? '');
+      const bi = FACT_TYPE_ORDER.indexOf(b.type ?? '');
+      return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
+    });
+    result.set(obsId, sorted.map((f) => f.text));
+  }
+  return result;
+}
+
 function loadData(): ParsedData {
   const load = (file: string) => parseCSV(path.join(SOURCE_DIR, file));
   return {
@@ -96,10 +129,10 @@ interface Observation {
   id: string; entity_id: string; metric_id: string; geography_id: string;
   time_period_id: string; population_group_id: string; value: number;
   unit_id: string; source_id: string; confidence: string; notes: string;
-  entity: Entity; metric: Metric; unit: Unit;
+  entity: Entity; metric: Metric; unit: Unit; facts: string[];
 }
 
-function buildWorldModel(data: ParsedData) {
+function buildWorldModel(data: ParsedData, factsMap: Map<string, string[]>) {
   const entities = data.entities.map((r) => ({
     id: String(r.id), name: String(r.name), domain: String(r.domain), description: String(r.description),
   })) as Entity[];
@@ -146,8 +179,9 @@ function buildWorldModel(data: ParsedData) {
       throw new Error(`Missing reference for observation "${r.id}"`);
     }
 
+    const obsId = String(r.id);
     return {
-      id: String(r.id),
+      id: obsId,
       entity_id: String(r.entity_id),
       metric_id: String(r.metric_id),
       geography_id: String(r.geography_id),
@@ -161,6 +195,7 @@ function buildWorldModel(data: ParsedData) {
       entity,
       metric,
       unit,
+      facts: factsMap.get(obsId) ?? [],
     } as Observation;
   });
 
@@ -190,6 +225,12 @@ function main() {
   const data = loadData();
   console.log(`   Loaded: ${data.entities.length} entities, ${data.metrics.length} metrics, ${data.observations.length} observations\n`);
 
+  // Load facts
+  console.log('📝 Loading facts.csv...');
+  const factsMap = loadFacts();
+  const totalFacts = Array.from(factsMap.values()).reduce((sum, arr) => sum + arr.length, 0);
+  console.log(`   Loaded: ${totalFacts} facts for ${factsMap.size} observations\n`);
+
   // Validate
   console.log('🔍 Validating data...');
   const errors = runAllValidations(data);
@@ -202,7 +243,7 @@ function main() {
 
   // Build output
   console.log('🔨 Building world-model.json...');
-  const worldModel = buildWorldModel(data);
+  const worldModel = buildWorldModel(data, factsMap);
 
   // Ensure output directory exists
   const outputDir = path.dirname(OUTPUT_FILE);
