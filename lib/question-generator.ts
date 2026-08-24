@@ -68,6 +68,9 @@ function stockHint(obs: Observation): string {
     return `Rapid urbanisation has outpaced housing construction in many developing cities — slums and informal settlements are common.`;
   }
   if (domain === 'transportation') {
+    if (obs.entity.id === 'commercial-flights') {
+      return `Flying is still largely a privilege of wealth — most people on Earth have never set foot on a plane. Think about which parts of the world drive almost all air travel.`;
+    }
     return `Ownership and usage of vehicles is heavily concentrated in wealthy nations — consider how different life looks in low-income countries.`;
   }
   if (domain === 'environment') {

@@ -122,9 +122,9 @@
     },
     {
       "id": "commercial-flights",
-      "name": "Daily commercial flights",
+      "name": "Annual air travelers",
       "domain": "transportation",
-      "description": "Commercial passenger flights departing each day globally"
+      "description": "People who took at least one commercial flight in the past year"
     },
     {
       "id": "gdp-per-capita",
@@ -1038,34 +1038,34 @@
       }
     },
     {
-      "id": "transportation-flights-daily",
+      "id": "transportation-flights-annual",
       "entity_id": "commercial-flights",
-      "metric_id": "daily-flow",
+      "metric_id": "population-count",
       "geography_id": "world",
       "time_period_id": "2023",
       "population_group_id": "all",
-      "value": 100000000,
-      "unit_id": "flights",
+      "value": 1500000000,
+      "unit_id": "people",
       "source_id": "world-bank",
       "confidence": "medium",
-      "notes": "About 102,000 commercial flights take off every day globally, carrying roughly 10 million passengers. In a 1,000-person world, that scales to about 10 flights per day.",
+      "notes": "About 1.5 billion people took at least one commercial flight in 2023 (IATA). That's 150 out of every 1,000 people on Earth — flying remains a minority activity, heavily concentrated in wealthy countries.",
       "entity": {
         "id": "commercial-flights",
-        "name": "Daily commercial flights",
+        "name": "Annual air travelers",
         "domain": "transportation",
-        "description": "Commercial passenger flights departing each day globally"
+        "description": "People who took at least one commercial flight in the past year"
       },
       "metric": {
-        "id": "daily-flow",
-        "name": "Daily activity count",
-        "measure_type": "flow",
-        "default_unit": "units",
-        "description": "Events or items occurring per day globally"
+        "id": "population-count",
+        "name": "Population count",
+        "measure_type": "stock",
+        "default_unit": "people",
+        "description": "Count of people with a given characteristic"
       },
       "unit": {
-        "id": "flights",
-        "name": "Flights",
-        "symbol": "flights",
+        "id": "people",
+        "name": "People",
+        "symbol": "people",
         "conversion_factor_to_base": 1
       }
     },
@@ -1295,5 +1295,5 @@
     }
   ],
   "world_population": 10000000000,
-  "generated_at": "2026-08-24T15:58:17.980Z"
+  "generated_at": "2026-08-24T17:42:34.824Z"
 }
