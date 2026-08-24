@@ -124,7 +124,7 @@
       "id": "commercial-flights",
       "name": "Annual air travelers",
       "domain": "transportation",
-      "description": "People who took at least one commercial flight in the past year"
+      "description": "People who take at least one commercial flight per year"
     },
     {
       "id": "gdp-per-capita",
@@ -1048,12 +1048,12 @@
       "unit_id": "people",
       "source_id": "world-bank",
       "confidence": "medium",
-      "notes": "About 1.5 billion people took at least one commercial flight in 2023 (IATA). That's 150 out of every 1,000 people on Earth — flying remains a minority activity, heavily concentrated in wealthy countries.",
+      "notes": "About 1.5 billion people took at least one commercial flight in 2023 (IATA). That's 150 out of every 1,000 people on Earth who fly at least once per year — flying remains a minority activity, heavily concentrated in wealthy countries.",
       "entity": {
         "id": "commercial-flights",
         "name": "Annual air travelers",
         "domain": "transportation",
-        "description": "People who took at least one commercial flight in the past year"
+        "description": "People who take at least one commercial flight per year"
       },
       "metric": {
         "id": "population-count",
@@ -1295,5 +1295,5 @@
     }
   ],
   "world_population": 10000000000,
-  "generated_at": "2026-08-24T17:42:34.824Z"
+  "generated_at": "2026-08-24T17:43:14.643Z"
 }

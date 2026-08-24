@@ -19,7 +19,7 @@ renewable-electricity,Renewable electricity share,energy,Share of electricity ge
 people-without-electricity,People without electricity access,energy,People lacking any access to electricity
 people-inadequate-housing,People in inadequate housing,housing,People living in slums informal settlements or without shelter
 cars,Passenger cars,transportation,Registered passenger cars worldwide
-commercial-flights,Annual air travelers,transportation,People who took at least one commercial flight in the past year
+commercial-flights,Annual air travelers,transportation,People who take at least one commercial flight per year
 gdp-per-capita,GDP per capita,money,Gross domestic product per person at purchasing power parity
 top10-wealth-share,Top 10% wealth share,money,Share of all global wealth held by the wealthiest 10%
 annual-forest-loss,Annual forest area lost,environment,Forest area permanently lost per year due to deforestation
