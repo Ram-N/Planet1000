@@ -1,0 +1,1299 @@
+{
+  "entities": [
+    {
+      "id": "children-under-15",
+      "name": "Children under 15",
+      "domain": "people",
+      "description": "People aged 0-14"
+    },
+    {
+      "id": "elderly-over-65",
+      "name": "People over 65",
+      "domain": "people",
+      "description": "People aged 65 and over"
+    },
+    {
+      "id": "urban-residents",
+      "name": "Urban residents",
+      "domain": "people",
+      "description": "People living in cities or urban areas"
+    },
+    {
+      "id": "doctors",
+      "name": "Doctors",
+      "domain": "healthcare",
+      "description": "Registered medical doctors worldwide"
+    },
+    {
+      "id": "nurses-midwives",
+      "name": "Nurses and midwives",
+      "domain": "healthcare",
+      "description": "Registered nurses and midwives worldwide"
+    },
+    {
+      "id": "primary-teachers",
+      "name": "Primary school teachers",
+      "domain": "education",
+      "description": "Teachers working at primary school level"
+    },
+    {
+      "id": "agricultural-workers",
+      "name": "Agricultural workers",
+      "domain": "food",
+      "description": "People working in agriculture farming fishing or forestry"
+    },
+    {
+      "id": "extreme-poor",
+      "name": "People in extreme poverty",
+      "domain": "money",
+      "description": "People living on under $2.15 per day"
+    },
+    {
+      "id": "internet-users",
+      "name": "Internet users",
+      "domain": "people",
+      "description": "People with access to the internet"
+    },
+    {
+      "id": "smartphone-owners",
+      "name": "Smartphone owners",
+      "domain": "people",
+      "description": "People who own a smartphone"
+    },
+    {
+      "id": "literate-adults",
+      "name": "Literate adults",
+      "domain": "education",
+      "description": "Adults who can read and write"
+    },
+    {
+      "id": "food-calories",
+      "name": "Daily food calories available",
+      "domain": "food",
+      "description": "Calories available per person per day from food supply"
+    },
+    {
+      "id": "food-waste",
+      "name": "Annual food wasted",
+      "domain": "food",
+      "description": "Food lost or wasted globally per year"
+    },
+    {
+      "id": "freshwater-use",
+      "name": "Daily freshwater consumption",
+      "domain": "water",
+      "description": "Freshwater used per person per day across all uses"
+    },
+    {
+      "id": "people-without-safe-water",
+      "name": "People without safe drinking water",
+      "domain": "water",
+      "description": "People lacking safely managed drinking water"
+    },
+    {
+      "id": "electricity-use",
+      "name": "Annual electricity consumed",
+      "domain": "energy",
+      "description": "Electricity consumed per person per year"
+    },
+    {
+      "id": "renewable-electricity",
+      "name": "Renewable electricity share",
+      "domain": "energy",
+      "description": "Share of electricity generated from renewable sources"
+    },
+    {
+      "id": "people-without-electricity",
+      "name": "People without electricity access",
+      "domain": "energy",
+      "description": "People lacking any access to electricity"
+    },
+    {
+      "id": "people-inadequate-housing",
+      "name": "People in inadequate housing",
+      "domain": "housing",
+      "description": "People living in slums informal settlements or without shelter"
+    },
+    {
+      "id": "cars",
+      "name": "Passenger cars",
+      "domain": "transportation",
+      "description": "Registered passenger cars worldwide"
+    },
+    {
+      "id": "commercial-flights",
+      "name": "Daily commercial flights",
+      "domain": "transportation",
+      "description": "Commercial passenger flights departing each day globally"
+    },
+    {
+      "id": "gdp-per-capita",
+      "name": "GDP per capita",
+      "domain": "money",
+      "description": "Gross domestic product per person at purchasing power parity"
+    },
+    {
+      "id": "top10-wealth-share",
+      "name": "Top 10% wealth share",
+      "domain": "money",
+      "description": "Share of all global wealth held by the wealthiest 10%"
+    },
+    {
+      "id": "annual-forest-loss",
+      "name": "Annual forest area lost",
+      "domain": "environment",
+      "description": "Forest area permanently lost per year due to deforestation"
+    },
+    {
+      "id": "co2-per-capita",
+      "name": "CO2 emissions per capita",
+      "domain": "environment",
+      "description": "Carbon dioxide emitted per person per year from all sources"
+    },
+    {
+      "id": "life-expectancy",
+      "name": "Life expectancy at birth",
+      "domain": "healthcare",
+      "description": "Average number of years a newborn is expected to live"
+    },
+    {
+      "id": "out-of-school-children",
+      "name": "Out-of-school children",
+      "domain": "education",
+      "description": "Children and youth not enrolled in primary or secondary school"
+    },
+    {
+      "id": "forcibly-displaced",
+      "name": "Forcibly displaced people",
+      "domain": "people",
+      "description": "People displaced by conflict persecution or disaster"
+    }
+  ],
+  "metrics": [
+    {
+      "id": "population-count",
+      "name": "Population count",
+      "measure_type": "stock",
+      "default_unit": "people",
+      "description": "Count of people with a given characteristic"
+    },
+    {
+      "id": "object-count",
+      "name": "Object count",
+      "measure_type": "stock",
+      "default_unit": "units",
+      "description": "Count of non-person objects (vehicles"
+    },
+    {
+      "id": "daily-flow",
+      "name": "Daily activity count",
+      "measure_type": "flow",
+      "default_unit": "units",
+      "description": "Events or items occurring per day globally"
+    },
+    {
+      "id": "annual-flow",
+      "name": "Annual total flow",
+      "measure_type": "flow",
+      "default_unit": "varies",
+      "description": "Total quantity produced or lost per year globally"
+    },
+    {
+      "id": "per-capita-daily",
+      "name": "Per-capita daily rate",
+      "measure_type": "rate",
+      "default_unit": "varies",
+      "description": "Quantity consumed or available per person per day"
+    },
+    {
+      "id": "per-capita-annual",
+      "name": "Per-capita annual rate",
+      "measure_type": "rate",
+      "default_unit": "varies",
+      "description": "Quantity consumed or available per person per year"
+    },
+    {
+      "id": "percentage-share",
+      "name": "Percentage share",
+      "measure_type": "share",
+      "default_unit": "percent",
+      "description": "Fraction of a whole expressed per 1000 units"
+    }
+  ],
+  "geographies": [
+    {
+      "id": "world",
+      "name": "World",
+      "level": "world",
+      "parent_id": null
+    }
+  ],
+  "time_periods": [
+    {
+      "id": "2023",
+      "type": "year",
+      "start_date": "2023-01-01",
+      "end_date": "2023-12-31"
+    },
+    {
+      "id": "2022",
+      "type": "year",
+      "start_date": "2022-01-01",
+      "end_date": "2022-12-31"
+    }
+  ],
+  "population_groups": [
+    {
+      "id": "all",
+      "name": "All people",
+      "description": "The entire global population"
+    },
+    {
+      "id": "adults",
+      "name": "Adults",
+      "description": "People aged 15 and over"
+    },
+    {
+      "id": "children",
+      "name": "Children",
+      "description": "People aged 0-14"
+    }
+  ],
+  "units": [
+    {
+      "id": "people",
+      "name": "People",
+      "symbol": "people",
+      "conversion_factor_to_base": 1
+    },
+    {
+      "id": "children",
+      "name": "Children",
+      "symbol": "children",
+      "conversion_factor_to_base": 1
+    },
+    {
+      "id": "cars",
+      "name": "Cars",
+      "symbol": "cars",
+      "conversion_factor_to_base": 1
+    },
+    {
+      "id": "flights",
+      "name": "Flights",
+      "symbol": "flights",
+      "conversion_factor_to_base": 1
+    },
+    {
+      "id": "hectares",
+      "name": "Hectares",
+      "symbol": "ha",
+      "conversion_factor_to_base": 1
+    },
+    {
+      "id": "tonnes",
+      "name": "Tonnes",
+      "symbol": "t",
+      "conversion_factor_to_base": 1
+    },
+    {
+      "id": "calories",
+      "name": "Calories",
+      "symbol": "kcal",
+      "conversion_factor_to_base": 1
+    },
+    {
+      "id": "liters",
+      "name": "Liters",
+      "symbol": "L",
+      "conversion_factor_to_base": 1
+    },
+    {
+      "id": "kwh",
+      "name": "Kilowatt-hours",
+      "symbol": "kWh",
+      "conversion_factor_to_base": 1
+    },
+    {
+      "id": "usd-per-year",
+      "name": "US dollars per year",
+      "symbol": "USD/yr",
+      "conversion_factor_to_base": 1
+    },
+    {
+      "id": "years",
+      "name": "Years",
+      "symbol": "yrs",
+      "conversion_factor_to_base": 1
+    },
+    {
+      "id": "kg-co2",
+      "name": "Kilograms of CO2",
+      "symbol": "kg CO₂",
+      "conversion_factor_to_base": 1
+    },
+    {
+      "id": "per-1000-kwh",
+      "name": "Per 1000 kWh",
+      "symbol": "per 1k kWh",
+      "conversion_factor_to_base": 1
+    },
+    {
+      "id": "per-1000-wealth",
+      "name": "Per 1000 wealth units",
+      "symbol": "per 1k wealth",
+      "conversion_factor_to_base": 1
+    }
+  ],
+  "sources": [
+    {
+      "id": "world-bank",
+      "url": "https://data.worldbank.org",
+      "title": "World Bank Open Data",
+      "publication_date": "2023-01-01",
+      "retrieval_date": "2024-01-01"
+    },
+    {
+      "id": "who",
+      "url": "https://www.who.int/data",
+      "title": "WHO Global Health Observatory",
+      "publication_date": "2023-01-01",
+      "retrieval_date": "2024-01-01"
+    },
+    {
+      "id": "un-pop",
+      "url": "https://population.un.org/wpp",
+      "title": "UN World Population Prospects",
+      "publication_date": "2022-07-11",
+      "retrieval_date": "2024-01-01"
+    },
+    {
+      "id": "iea",
+      "url": "https://www.iea.org/data-and-statistics",
+      "title": "IEA World Energy Statistics",
+      "publication_date": "2023-01-01",
+      "retrieval_date": "2024-01-01"
+    },
+    {
+      "id": "unhcr",
+      "url": "https://www.unhcr.org/refugee-statistics",
+      "title": "UNHCR Global Trends Report",
+      "publication_date": "2023-06-01",
+      "retrieval_date": "2024-01-01"
+    },
+    {
+      "id": "itu",
+      "url": "https://www.itu.int/en/ITU-D/Statistics",
+      "title": "ITU ICT Statistics",
+      "publication_date": "2023-01-01",
+      "retrieval_date": "2024-01-01"
+    },
+    {
+      "id": "fao",
+      "url": "https://www.fao.org/faostat",
+      "title": "FAO Food and Agriculture Statistics",
+      "publication_date": "2023-01-01",
+      "retrieval_date": "2024-01-01"
+    }
+  ],
+  "observations": [
+    {
+      "id": "people-children",
+      "entity_id": "children-under-15",
+      "metric_id": "population-count",
+      "geography_id": "world",
+      "time_period_id": "2023",
+      "population_group_id": "all",
+      "value": 2570000000,
+      "unit_id": "people",
+      "source_id": "un-pop",
+      "confidence": "high",
+      "notes": "About 1 in 4 people on Earth is under 15. High birth rates in Africa and South Asia keep this number significant, though it has fallen from 1 in 3 just 50 years ago.",
+      "entity": {
+        "id": "children-under-15",
+        "name": "Children under 15",
+        "domain": "people",
+        "description": "People aged 0-14"
+      },
+      "metric": {
+        "id": "population-count",
+        "name": "Population count",
+        "measure_type": "stock",
+        "default_unit": "people",
+        "description": "Count of people with a given characteristic"
+      },
+      "unit": {
+        "id": "people",
+        "name": "People",
+        "symbol": "people",
+        "conversion_factor_to_base": 1
+      }
+    },
+    {
+      "id": "people-elderly",
+      "entity_id": "elderly-over-65",
+      "metric_id": "population-count",
+      "geography_id": "world",
+      "time_period_id": "2023",
+      "population_group_id": "all",
+      "value": 1020000000,
+      "unit_id": "people",
+      "source_id": "un-pop",
+      "confidence": "high",
+      "notes": "Around 10% of the world is over 65 — a proportion that will double by 2050 as populations in wealthy nations age rapidly.",
+      "entity": {
+        "id": "elderly-over-65",
+        "name": "People over 65",
+        "domain": "people",
+        "description": "People aged 65 and over"
+      },
+      "metric": {
+        "id": "population-count",
+        "name": "Population count",
+        "measure_type": "stock",
+        "default_unit": "people",
+        "description": "Count of people with a given characteristic"
+      },
+      "unit": {
+        "id": "people",
+        "name": "People",
+        "symbol": "people",
+        "conversion_factor_to_base": 1
+      }
+    },
+    {
+      "id": "people-urban",
+      "entity_id": "urban-residents",
+      "metric_id": "population-count",
+      "geography_id": "world",
+      "time_period_id": "2023",
+      "population_group_id": "all",
+      "value": 5700000000,
+      "unit_id": "people",
+      "source_id": "un-pop",
+      "confidence": "high",
+      "notes": "For the first time in history, more than half of humanity lives in urban areas. By 2050 that will be closer to 700 out of 1,000.",
+      "entity": {
+        "id": "urban-residents",
+        "name": "Urban residents",
+        "domain": "people",
+        "description": "People living in cities or urban areas"
+      },
+      "metric": {
+        "id": "population-count",
+        "name": "Population count",
+        "measure_type": "stock",
+        "default_unit": "people",
+        "description": "Count of people with a given characteristic"
+      },
+      "unit": {
+        "id": "people",
+        "name": "People",
+        "symbol": "people",
+        "conversion_factor_to_base": 1
+      }
+    },
+    {
+      "id": "people-doctors",
+      "entity_id": "doctors",
+      "metric_id": "population-count",
+      "geography_id": "world",
+      "time_period_id": "2023",
+      "population_group_id": "all",
+      "value": 40000000,
+      "unit_id": "people",
+      "source_id": "who",
+      "confidence": "medium",
+      "notes": "The world has about 4 doctors per 1,000 people globally, but this hides enormous inequality — some wealthy nations have 35 per 1,000 while some low-income nations have fewer than 0.2.",
+      "entity": {
+        "id": "doctors",
+        "name": "Doctors",
+        "domain": "healthcare",
+        "description": "Registered medical doctors worldwide"
+      },
+      "metric": {
+        "id": "population-count",
+        "name": "Population count",
+        "measure_type": "stock",
+        "default_unit": "people",
+        "description": "Count of people with a given characteristic"
+      },
+      "unit": {
+        "id": "people",
+        "name": "People",
+        "symbol": "people",
+        "conversion_factor_to_base": 1
+      }
+    },
+    {
+      "id": "people-nurses",
+      "entity_id": "nurses-midwives",
+      "metric_id": "population-count",
+      "geography_id": "world",
+      "time_period_id": "2023",
+      "population_group_id": "all",
+      "value": 100000000,
+      "unit_id": "people",
+      "source_id": "who",
+      "confidence": "medium",
+      "notes": "There are roughly 10 nurses and midwives per 1,000 people globally, forming the backbone of healthcare in most of the world.",
+      "entity": {
+        "id": "nurses-midwives",
+        "name": "Nurses and midwives",
+        "domain": "healthcare",
+        "description": "Registered nurses and midwives worldwide"
+      },
+      "metric": {
+        "id": "population-count",
+        "name": "Population count",
+        "measure_type": "stock",
+        "default_unit": "people",
+        "description": "Count of people with a given characteristic"
+      },
+      "unit": {
+        "id": "people",
+        "name": "People",
+        "symbol": "people",
+        "conversion_factor_to_base": 1
+      }
+    },
+    {
+      "id": "people-teachers",
+      "entity_id": "primary-teachers",
+      "metric_id": "population-count",
+      "geography_id": "world",
+      "time_period_id": "2023",
+      "population_group_id": "all",
+      "value": 70000000,
+      "unit_id": "people",
+      "source_id": "world-bank",
+      "confidence": "medium",
+      "notes": "Roughly 70 million primary school teachers serve the world's 700 million primary-age students — an average class size of about 24, though in many regions classes have 50+ students.",
+      "entity": {
+        "id": "primary-teachers",
+        "name": "Primary school teachers",
+        "domain": "education",
+        "description": "Teachers working at primary school level"
+      },
+      "metric": {
+        "id": "population-count",
+        "name": "Population count",
+        "measure_type": "stock",
+        "default_unit": "people",
+        "description": "Count of people with a given characteristic"
+      },
+      "unit": {
+        "id": "people",
+        "name": "People",
+        "symbol": "people",
+        "conversion_factor_to_base": 1
+      }
+    },
+    {
+      "id": "people-farmers",
+      "entity_id": "agricultural-workers",
+      "metric_id": "population-count",
+      "geography_id": "world",
+      "time_period_id": "2023",
+      "population_group_id": "all",
+      "value": 2800000000,
+      "unit_id": "people",
+      "source_id": "fao",
+      "confidence": "medium",
+      "notes": "About 28% of the global workforce is in agriculture, mostly smallholder farmers in Asia and Africa. In wealthy nations this figure is under 5%.",
+      "entity": {
+        "id": "agricultural-workers",
+        "name": "Agricultural workers",
+        "domain": "food",
+        "description": "People working in agriculture farming fishing or forestry"
+      },
+      "metric": {
+        "id": "population-count",
+        "name": "Population count",
+        "measure_type": "stock",
+        "default_unit": "people",
+        "description": "Count of people with a given characteristic"
+      },
+      "unit": {
+        "id": "people",
+        "name": "People",
+        "symbol": "people",
+        "conversion_factor_to_base": 1
+      }
+    },
+    {
+      "id": "people-poverty",
+      "entity_id": "extreme-poor",
+      "metric_id": "population-count",
+      "geography_id": "world",
+      "time_period_id": "2023",
+      "population_group_id": "all",
+      "value": 870000000,
+      "unit_id": "people",
+      "source_id": "world-bank",
+      "confidence": "medium",
+      "notes": "Around 700–900 million people live on less than $2.15 per day (2017 PPP). This figure has fallen dramatically — it was over 1,900 per 1,000 in 1990.",
+      "entity": {
+        "id": "extreme-poor",
+        "name": "People in extreme poverty",
+        "domain": "money",
+        "description": "People living on under $2.15 per day"
+      },
+      "metric": {
+        "id": "population-count",
+        "name": "Population count",
+        "measure_type": "stock",
+        "default_unit": "people",
+        "description": "Count of people with a given characteristic"
+      },
+      "unit": {
+        "id": "people",
+        "name": "People",
+        "symbol": "people",
+        "conversion_factor_to_base": 1
+      }
+    },
+    {
+      "id": "people-internet",
+      "entity_id": "internet-users",
+      "metric_id": "population-count",
+      "geography_id": "world",
+      "time_period_id": "2023",
+      "population_group_id": "all",
+      "value": 6700000000,
+      "unit_id": "people",
+      "source_id": "itu",
+      "confidence": "high",
+      "notes": "About two-thirds of humanity is now online. The remaining third — mostly in rural sub-Saharan Africa and South Asia — are the focus of major connectivity efforts.",
+      "entity": {
+        "id": "internet-users",
+        "name": "Internet users",
+        "domain": "people",
+        "description": "People with access to the internet"
+      },
+      "metric": {
+        "id": "population-count",
+        "name": "Population count",
+        "measure_type": "stock",
+        "default_unit": "people",
+        "description": "Count of people with a given characteristic"
+      },
+      "unit": {
+        "id": "people",
+        "name": "People",
+        "symbol": "people",
+        "conversion_factor_to_base": 1
+      }
+    },
+    {
+      "id": "people-smartphones",
+      "entity_id": "smartphone-owners",
+      "metric_id": "population-count",
+      "geography_id": "world",
+      "time_period_id": "2023",
+      "population_group_id": "all",
+      "value": 5450000000,
+      "unit_id": "people",
+      "source_id": "itu",
+      "confidence": "medium",
+      "notes": "More than half of all people now carry a smartphone — a technology that barely existed 20 years ago. Mobile phones have leapfrogged wired infrastructure in the developing world.",
+      "entity": {
+        "id": "smartphone-owners",
+        "name": "Smartphone owners",
+        "domain": "people",
+        "description": "People who own a smartphone"
+      },
+      "metric": {
+        "id": "population-count",
+        "name": "Population count",
+        "measure_type": "stock",
+        "default_unit": "people",
+        "description": "Count of people with a given characteristic"
+      },
+      "unit": {
+        "id": "people",
+        "name": "People",
+        "symbol": "people",
+        "conversion_factor_to_base": 1
+      }
+    },
+    {
+      "id": "people-literate",
+      "entity_id": "literate-adults",
+      "metric_id": "population-count",
+      "geography_id": "world",
+      "time_period_id": "2023",
+      "population_group_id": "adults",
+      "value": 8650000000,
+      "unit_id": "people",
+      "source_id": "world-bank",
+      "confidence": "high",
+      "notes": "Global adult literacy stands at around 87%. The 13% who cannot read are concentrated in sub-Saharan Africa, South Asia, and among women in conservative regions.",
+      "entity": {
+        "id": "literate-adults",
+        "name": "Literate adults",
+        "domain": "education",
+        "description": "Adults who can read and write"
+      },
+      "metric": {
+        "id": "population-count",
+        "name": "Population count",
+        "measure_type": "stock",
+        "default_unit": "people",
+        "description": "Count of people with a given characteristic"
+      },
+      "unit": {
+        "id": "people",
+        "name": "People",
+        "symbol": "people",
+        "conversion_factor_to_base": 1
+      }
+    },
+    {
+      "id": "food-calories-daily",
+      "entity_id": "food-calories",
+      "metric_id": "per-capita-daily",
+      "geography_id": "world",
+      "time_period_id": "2023",
+      "population_group_id": "all",
+      "value": 2850,
+      "unit_id": "calories",
+      "source_id": "fao",
+      "confidence": "high",
+      "notes": "The world produces enough food — about 2,850 calories per person per day — to feed everyone. Hunger persists due to distribution failures, poverty, and waste, not global scarcity.",
+      "entity": {
+        "id": "food-calories",
+        "name": "Daily food calories available",
+        "domain": "food",
+        "description": "Calories available per person per day from food supply"
+      },
+      "metric": {
+        "id": "per-capita-daily",
+        "name": "Per-capita daily rate",
+        "measure_type": "rate",
+        "default_unit": "varies",
+        "description": "Quantity consumed or available per person per day"
+      },
+      "unit": {
+        "id": "calories",
+        "name": "Calories",
+        "symbol": "kcal",
+        "conversion_factor_to_base": 1
+      }
+    },
+    {
+      "id": "food-waste",
+      "entity_id": "food-waste",
+      "metric_id": "annual-flow",
+      "geography_id": "world",
+      "time_period_id": "2023",
+      "population_group_id": "all",
+      "value": 4000000000,
+      "unit_id": "tonnes",
+      "source_id": "fao",
+      "confidence": "medium",
+      "notes": "About 1.3 billion tonnes of food — roughly one-third of all food produced — is wasted each year. In wealthy nations most waste is at the consumer end; in poor nations it's mostly post-harvest losses.",
+      "entity": {
+        "id": "food-waste",
+        "name": "Annual food wasted",
+        "domain": "food",
+        "description": "Food lost or wasted globally per year"
+      },
+      "metric": {
+        "id": "annual-flow",
+        "name": "Annual total flow",
+        "measure_type": "flow",
+        "default_unit": "varies",
+        "description": "Total quantity produced or lost per year globally"
+      },
+      "unit": {
+        "id": "tonnes",
+        "name": "Tonnes",
+        "symbol": "t",
+        "conversion_factor_to_base": 1
+      }
+    },
+    {
+      "id": "water-freshwater-daily",
+      "entity_id": "freshwater-use",
+      "metric_id": "per-capita-daily",
+      "geography_id": "world",
+      "time_period_id": "2023",
+      "population_group_id": "all",
+      "value": 185,
+      "unit_id": "liters",
+      "source_id": "world-bank",
+      "confidence": "medium",
+      "notes": "The global average is about 185 liters per person per day across all uses (drinking, cooking, sanitation, agriculture). Americans use ~500 liters; many Africans survive on under 20 liters.",
+      "entity": {
+        "id": "freshwater-use",
+        "name": "Daily freshwater consumption",
+        "domain": "water",
+        "description": "Freshwater used per person per day across all uses"
+      },
+      "metric": {
+        "id": "per-capita-daily",
+        "name": "Per-capita daily rate",
+        "measure_type": "rate",
+        "default_unit": "varies",
+        "description": "Quantity consumed or available per person per day"
+      },
+      "unit": {
+        "id": "liters",
+        "name": "Liters",
+        "symbol": "L",
+        "conversion_factor_to_base": 1
+      }
+    },
+    {
+      "id": "water-no-clean",
+      "entity_id": "people-without-safe-water",
+      "metric_id": "population-count",
+      "geography_id": "world",
+      "time_period_id": "2023",
+      "population_group_id": "all",
+      "value": 2200000000,
+      "unit_id": "people",
+      "source_id": "who",
+      "confidence": "high",
+      "notes": "About 2.2 billion people lack access to safely managed drinking water. This is one of the most preventable causes of death and disease worldwide.",
+      "entity": {
+        "id": "people-without-safe-water",
+        "name": "People without safe drinking water",
+        "domain": "water",
+        "description": "People lacking safely managed drinking water"
+      },
+      "metric": {
+        "id": "population-count",
+        "name": "Population count",
+        "measure_type": "stock",
+        "default_unit": "people",
+        "description": "Count of people with a given characteristic"
+      },
+      "unit": {
+        "id": "people",
+        "name": "People",
+        "symbol": "people",
+        "conversion_factor_to_base": 1
+      }
+    },
+    {
+      "id": "energy-electricity",
+      "entity_id": "electricity-use",
+      "metric_id": "per-capita-annual",
+      "geography_id": "world",
+      "time_period_id": "2023",
+      "population_group_id": "all",
+      "value": 3300,
+      "unit_id": "kwh",
+      "source_id": "iea",
+      "confidence": "high",
+      "notes": "The average person uses about 3,300 kWh of electricity per year. Americans use ~12,000 kWh; the global average hides vast inequality — an American uses 10× more than someone in Ethiopia.",
+      "entity": {
+        "id": "electricity-use",
+        "name": "Annual electricity consumed",
+        "domain": "energy",
+        "description": "Electricity consumed per person per year"
+      },
+      "metric": {
+        "id": "per-capita-annual",
+        "name": "Per-capita annual rate",
+        "measure_type": "rate",
+        "default_unit": "varies",
+        "description": "Quantity consumed or available per person per year"
+      },
+      "unit": {
+        "id": "kwh",
+        "name": "Kilowatt-hours",
+        "symbol": "kWh",
+        "conversion_factor_to_base": 1
+      }
+    },
+    {
+      "id": "energy-renewables",
+      "entity_id": "renewable-electricity",
+      "metric_id": "percentage-share",
+      "geography_id": "world",
+      "time_period_id": "2023",
+      "population_group_id": "all",
+      "value": 300,
+      "unit_id": "per-1000-kwh",
+      "source_id": "iea",
+      "confidence": "high",
+      "notes": "About 30% of global electricity now comes from renewable sources (hydro, wind, solar, etc.). This share is rising rapidly — wind and solar alone exceeded 13% in 2023.",
+      "entity": {
+        "id": "renewable-electricity",
+        "name": "Renewable electricity share",
+        "domain": "energy",
+        "description": "Share of electricity generated from renewable sources"
+      },
+      "metric": {
+        "id": "percentage-share",
+        "name": "Percentage share",
+        "measure_type": "share",
+        "default_unit": "percent",
+        "description": "Fraction of a whole expressed per 1000 units"
+      },
+      "unit": {
+        "id": "per-1000-kwh",
+        "name": "Per 1000 kWh",
+        "symbol": "per 1k kWh",
+        "conversion_factor_to_base": 1
+      }
+    },
+    {
+      "id": "energy-no-electricity",
+      "entity_id": "people-without-electricity",
+      "metric_id": "population-count",
+      "geography_id": "world",
+      "time_period_id": "2023",
+      "population_group_id": "all",
+      "value": 730000000,
+      "unit_id": "people",
+      "source_id": "iea",
+      "confidence": "high",
+      "notes": "About 730 million people — mostly in sub-Saharan Africa and developing Asia — still have no access to electricity. This number has fallen from 1.2 billion in 2010.",
+      "entity": {
+        "id": "people-without-electricity",
+        "name": "People without electricity access",
+        "domain": "energy",
+        "description": "People lacking any access to electricity"
+      },
+      "metric": {
+        "id": "population-count",
+        "name": "Population count",
+        "measure_type": "stock",
+        "default_unit": "people",
+        "description": "Count of people with a given characteristic"
+      },
+      "unit": {
+        "id": "people",
+        "name": "People",
+        "symbol": "people",
+        "conversion_factor_to_base": 1
+      }
+    },
+    {
+      "id": "housing-homeless",
+      "entity_id": "people-inadequate-housing",
+      "metric_id": "population-count",
+      "geography_id": "world",
+      "time_period_id": "2023",
+      "population_group_id": "all",
+      "value": 1600000000,
+      "unit_id": "people",
+      "source_id": "world-bank",
+      "confidence": "medium",
+      "notes": "An estimated 1.6 billion people live in inadequate housing — slums, informal settlements, or without any shelter. This includes 100 million who are literally homeless.",
+      "entity": {
+        "id": "people-inadequate-housing",
+        "name": "People in inadequate housing",
+        "domain": "housing",
+        "description": "People living in slums informal settlements or without shelter"
+      },
+      "metric": {
+        "id": "population-count",
+        "name": "Population count",
+        "measure_type": "stock",
+        "default_unit": "people",
+        "description": "Count of people with a given characteristic"
+      },
+      "unit": {
+        "id": "people",
+        "name": "People",
+        "symbol": "people",
+        "conversion_factor_to_base": 1
+      }
+    },
+    {
+      "id": "transportation-cars",
+      "entity_id": "cars",
+      "metric_id": "object-count",
+      "geography_id": "world",
+      "time_period_id": "2023",
+      "population_group_id": "all",
+      "value": 1450000000,
+      "unit_id": "cars",
+      "source_id": "world-bank",
+      "confidence": "high",
+      "notes": "There are roughly 1.45 billion cars on Earth — about 1 for every 5 people. But car ownership is extremely unequal: the US has ~800 cars per 1,000 people; India has about 30.",
+      "entity": {
+        "id": "cars",
+        "name": "Passenger cars",
+        "domain": "transportation",
+        "description": "Registered passenger cars worldwide"
+      },
+      "metric": {
+        "id": "object-count",
+        "name": "Object count",
+        "measure_type": "stock",
+        "default_unit": "units",
+        "description": "Count of non-person objects (vehicles"
+      },
+      "unit": {
+        "id": "cars",
+        "name": "Cars",
+        "symbol": "cars",
+        "conversion_factor_to_base": 1
+      }
+    },
+    {
+      "id": "transportation-flights-daily",
+      "entity_id": "commercial-flights",
+      "metric_id": "daily-flow",
+      "geography_id": "world",
+      "time_period_id": "2023",
+      "population_group_id": "all",
+      "value": 100000000,
+      "unit_id": "flights",
+      "source_id": "world-bank",
+      "confidence": "medium",
+      "notes": "About 102,000 commercial flights take off every day globally, carrying roughly 10 million passengers. In a 1,000-person world, that scales to about 10 flights per day.",
+      "entity": {
+        "id": "commercial-flights",
+        "name": "Daily commercial flights",
+        "domain": "transportation",
+        "description": "Commercial passenger flights departing each day globally"
+      },
+      "metric": {
+        "id": "daily-flow",
+        "name": "Daily activity count",
+        "measure_type": "flow",
+        "default_unit": "units",
+        "description": "Events or items occurring per day globally"
+      },
+      "unit": {
+        "id": "flights",
+        "name": "Flights",
+        "symbol": "flights",
+        "conversion_factor_to_base": 1
+      }
+    },
+    {
+      "id": "money-gdp-per-capita",
+      "entity_id": "gdp-per-capita",
+      "metric_id": "per-capita-annual",
+      "geography_id": "world",
+      "time_period_id": "2023",
+      "population_group_id": "all",
+      "value": 13500,
+      "unit_id": "usd-per-year",
+      "source_id": "world-bank",
+      "confidence": "high",
+      "notes": "The global average GDP per capita is about $13,500/year, but the median person earns far less. The US average is ~$65,000; the average in low-income countries is under $1,000.",
+      "entity": {
+        "id": "gdp-per-capita",
+        "name": "GDP per capita",
+        "domain": "money",
+        "description": "Gross domestic product per person at purchasing power parity"
+      },
+      "metric": {
+        "id": "per-capita-annual",
+        "name": "Per-capita annual rate",
+        "measure_type": "rate",
+        "default_unit": "varies",
+        "description": "Quantity consumed or available per person per year"
+      },
+      "unit": {
+        "id": "usd-per-year",
+        "name": "US dollars per year",
+        "symbol": "USD/yr",
+        "conversion_factor_to_base": 1
+      }
+    },
+    {
+      "id": "money-top10-wealth",
+      "entity_id": "top10-wealth-share",
+      "metric_id": "percentage-share",
+      "geography_id": "world",
+      "time_period_id": "2023",
+      "population_group_id": "all",
+      "value": 760,
+      "unit_id": "per-1000-wealth",
+      "source_id": "world-bank",
+      "confidence": "high",
+      "notes": "The wealthiest 10% of people hold about 76% of all global wealth. The bottom 50% hold less than 2%. Wealth inequality is far more extreme than income inequality.",
+      "entity": {
+        "id": "top10-wealth-share",
+        "name": "Top 10% wealth share",
+        "domain": "money",
+        "description": "Share of all global wealth held by the wealthiest 10%"
+      },
+      "metric": {
+        "id": "percentage-share",
+        "name": "Percentage share",
+        "measure_type": "share",
+        "default_unit": "percent",
+        "description": "Fraction of a whole expressed per 1000 units"
+      },
+      "unit": {
+        "id": "per-1000-wealth",
+        "name": "Per 1000 wealth units",
+        "symbol": "per 1k wealth",
+        "conversion_factor_to_base": 1
+      }
+    },
+    {
+      "id": "environment-forest-loss",
+      "entity_id": "annual-forest-loss",
+      "metric_id": "annual-flow",
+      "geography_id": "world",
+      "time_period_id": "2023",
+      "population_group_id": "all",
+      "value": 47000000000,
+      "unit_id": "hectares",
+      "source_id": "fao",
+      "confidence": "medium",
+      "notes": "The world loses about 47 million hectares of forest each year — an area the size of Sweden — though reforestation efforts offset some of this.",
+      "entity": {
+        "id": "annual-forest-loss",
+        "name": "Annual forest area lost",
+        "domain": "environment",
+        "description": "Forest area permanently lost per year due to deforestation"
+      },
+      "metric": {
+        "id": "annual-flow",
+        "name": "Annual total flow",
+        "measure_type": "flow",
+        "default_unit": "varies",
+        "description": "Total quantity produced or lost per year globally"
+      },
+      "unit": {
+        "id": "hectares",
+        "name": "Hectares",
+        "symbol": "ha",
+        "conversion_factor_to_base": 1
+      }
+    },
+    {
+      "id": "environment-co2",
+      "entity_id": "co2-per-capita",
+      "metric_id": "per-capita-annual",
+      "geography_id": "world",
+      "time_period_id": "2023",
+      "population_group_id": "all",
+      "value": 4600,
+      "unit_id": "kg-co2",
+      "source_id": "iea",
+      "confidence": "high",
+      "notes": "The average person emits about 4.6 tonnes of CO₂ per year. Americans emit ~14 tonnes; people in the poorest countries emit under 0.5 tonnes — a 30× gap.",
+      "entity": {
+        "id": "co2-per-capita",
+        "name": "CO2 emissions per capita",
+        "domain": "environment",
+        "description": "Carbon dioxide emitted per person per year from all sources"
+      },
+      "metric": {
+        "id": "per-capita-annual",
+        "name": "Per-capita annual rate",
+        "measure_type": "rate",
+        "default_unit": "varies",
+        "description": "Quantity consumed or available per person per year"
+      },
+      "unit": {
+        "id": "kg-co2",
+        "name": "Kilograms of CO2",
+        "symbol": "kg CO₂",
+        "conversion_factor_to_base": 1
+      }
+    },
+    {
+      "id": "healthcare-life-expectancy",
+      "entity_id": "life-expectancy",
+      "metric_id": "per-capita-annual",
+      "geography_id": "world",
+      "time_period_id": "2023",
+      "population_group_id": "all",
+      "value": 73,
+      "unit_id": "years",
+      "source_id": "who",
+      "confidence": "high",
+      "notes": "The global average life expectancy is 73 years — up from 48 in 1950. Japan leads at 84; some low-income nations are still under 60.",
+      "entity": {
+        "id": "life-expectancy",
+        "name": "Life expectancy at birth",
+        "domain": "healthcare",
+        "description": "Average number of years a newborn is expected to live"
+      },
+      "metric": {
+        "id": "per-capita-annual",
+        "name": "Per-capita annual rate",
+        "measure_type": "rate",
+        "default_unit": "varies",
+        "description": "Quantity consumed or available per person per year"
+      },
+      "unit": {
+        "id": "years",
+        "name": "Years",
+        "symbol": "yrs",
+        "conversion_factor_to_base": 1
+      }
+    },
+    {
+      "id": "education-school-age",
+      "entity_id": "out-of-school-children",
+      "metric_id": "population-count",
+      "geography_id": "world",
+      "time_period_id": "2023",
+      "population_group_id": "children",
+      "value": 260000000,
+      "unit_id": "children",
+      "source_id": "world-bank",
+      "confidence": "medium",
+      "notes": "About 260 million children and youth are out of school. Most are in conflict-affected zones or the most remote rural areas of sub-Saharan Africa and South Asia.",
+      "entity": {
+        "id": "out-of-school-children",
+        "name": "Out-of-school children",
+        "domain": "education",
+        "description": "Children and youth not enrolled in primary or secondary school"
+      },
+      "metric": {
+        "id": "population-count",
+        "name": "Population count",
+        "measure_type": "stock",
+        "default_unit": "people",
+        "description": "Count of people with a given characteristic"
+      },
+      "unit": {
+        "id": "children",
+        "name": "Children",
+        "symbol": "children",
+        "conversion_factor_to_base": 1
+      }
+    },
+    {
+      "id": "people-refugees",
+      "entity_id": "forcibly-displaced",
+      "metric_id": "population-count",
+      "geography_id": "world",
+      "time_period_id": "2023",
+      "population_group_id": "all",
+      "value": 1140000000,
+      "unit_id": "people",
+      "source_id": "unhcr",
+      "confidence": "medium",
+      "notes": "Over 114 million people are forcibly displaced — including 36 million refugees who have fled their home countries — the highest figure ever recorded.",
+      "entity": {
+        "id": "forcibly-displaced",
+        "name": "Forcibly displaced people",
+        "domain": "people",
+        "description": "People displaced by conflict persecution or disaster"
+      },
+      "metric": {
+        "id": "population-count",
+        "name": "Population count",
+        "measure_type": "stock",
+        "default_unit": "people",
+        "description": "Count of people with a given characteristic"
+      },
+      "unit": {
+        "id": "people",
+        "name": "People",
+        "symbol": "people",
+        "conversion_factor_to_base": 1
+      }
+    }
+  ],
+  "world_population": 10000000000,
+  "generated_at": "2026-08-24T14:34:49.226Z"
+}

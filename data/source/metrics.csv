@@ -1,0 +1,8 @@
+id,name,measure_type,default_unit,description
+population-count,Population count,stock,people,Count of people with a given characteristic
+object-count,Object count,stock,units,Count of non-person objects (vehicles, etc.)
+daily-flow,Daily activity count,flow,units,Events or items occurring per day globally
+annual-flow,Annual total flow,flow,varies,Total quantity produced or lost per year globally
+per-capita-daily,Per-capita daily rate,rate,varies,Quantity consumed or available per person per day
+per-capita-annual,Per-capita annual rate,rate,varies,Quantity consumed or available per person per year
+percentage-share,Percentage share,share,percent,Fraction of a whole expressed per 1000 units

@@ -1,3 +1,5 @@
+export type { MeasureType, GeographyLevel, TimePeriodType, ConfidenceLevel, Entity, Metric, Geography, TimePeriod, PopulationGroup, Unit, Source, Observation, ScaleArgs, DerivedValue, ObservationQuery, WorldModel, WorldModelData } from './world-model';
+
 export type Domain =
   | 'people'
   | 'food'

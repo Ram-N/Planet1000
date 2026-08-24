@@ -1,0 +1,15 @@
+id,name,symbol,conversion_factor_to_base
+people,People,people,1
+children,Children,children,1
+cars,Cars,cars,1
+flights,Flights,flights,1
+hectares,Hectares,ha,1
+tonnes,Tonnes,t,1
+calories,Calories,kcal,1
+liters,Liters,L,1
+kwh,Kilowatt-hours,kWh,1
+usd-per-year,US dollars per year,USD/yr,1
+years,Years,yrs,1
+kg-co2,Kilograms of CO2,kg CO₂,1
+per-1000-kwh,Per 1000 kWh,per 1k kWh,1
+per-1000-wealth,Per 1000 wealth units,per 1k wealth,1

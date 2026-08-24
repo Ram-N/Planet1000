@@ -1,0 +1,29 @@
+id,name,domain,description
+children-under-15,Children under 15,people,People aged 0-14
+elderly-over-65,People over 65,people,People aged 65 and over
+urban-residents,Urban residents,people,People living in cities or urban areas
+doctors,Doctors,healthcare,Registered medical doctors worldwide
+nurses-midwives,Nurses and midwives,healthcare,Registered nurses and midwives worldwide
+primary-teachers,Primary school teachers,education,Teachers working at primary school level
+agricultural-workers,Agricultural workers,food,People working in agriculture farming fishing or forestry
+extreme-poor,People in extreme poverty,money,People living on under $2.15 per day
+internet-users,Internet users,people,People with access to the internet
+smartphone-owners,Smartphone owners,people,People who own a smartphone
+literate-adults,Literate adults,education,Adults who can read and write
+food-calories,Daily food calories available,food,Calories available per person per day from food supply
+food-waste,Annual food wasted,food,Food lost or wasted globally per year
+freshwater-use,Daily freshwater consumption,water,Freshwater used per person per day across all uses
+people-without-safe-water,People without safe drinking water,water,People lacking safely managed drinking water
+electricity-use,Annual electricity consumed,energy,Electricity consumed per person per year
+renewable-electricity,Renewable electricity share,energy,Share of electricity generated from renewable sources
+people-without-electricity,People without electricity access,energy,People lacking any access to electricity
+people-inadequate-housing,People in inadequate housing,housing,People living in slums informal settlements or without shelter
+cars,Passenger cars,transportation,Registered passenger cars worldwide
+commercial-flights,Daily commercial flights,transportation,Commercial passenger flights departing each day globally
+gdp-per-capita,GDP per capita,money,Gross domestic product per person at purchasing power parity
+top10-wealth-share,Top 10% wealth share,money,Share of all global wealth held by the wealthiest 10%
+annual-forest-loss,Annual forest area lost,environment,Forest area permanently lost per year due to deforestation
+co2-per-capita,CO2 emissions per capita,environment,Carbon dioxide emitted per person per year from all sources
+life-expectancy,Life expectancy at birth,healthcare,Average number of years a newborn is expected to live
+out-of-school-children,Out-of-school children,education,Children and youth not enrolled in primary or secondary school
+forcibly-displaced,Forcibly displaced people,people,People displaced by conflict persecution or disaster

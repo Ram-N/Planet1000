@@ -1,0 +1,8 @@
+id,url,title,publication_date,retrieval_date
+world-bank,https://data.worldbank.org,World Bank Open Data,2023-01-01,2024-01-01
+who,https://www.who.int/data,WHO Global Health Observatory,2023-01-01,2024-01-01
+un-pop,https://population.un.org/wpp,UN World Population Prospects,2022-07-11,2024-01-01
+iea,https://www.iea.org/data-and-statistics,IEA World Energy Statistics,2023-01-01,2024-01-01
+unhcr,https://www.unhcr.org/refugee-statistics,UNHCR Global Trends Report,2023-06-01,2024-01-01
+itu,https://www.itu.int/en/ITU-D/Statistics,ITU ICT Statistics,2023-01-01,2024-01-01
+fao,https://www.fao.org/faostat,FAO Food and Agriculture Statistics,2023-01-01,2024-01-01
