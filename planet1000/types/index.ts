@@ -1,4 +1,4 @@
-export type { MeasureType, GeographyLevel, TimePeriodType, ConfidenceLevel, Entity, Metric, Geography, TimePeriod, PopulationGroup, Unit, Source, Observation, ScaleArgs, DerivedValue, ObservationQuery, WorldModel, WorldModelData } from './world-model';
+export type { MeasureType, GeographyLevel, TimePeriodType, ConfidenceLevel, Entity, Metric, Geography, TimePeriod, PopulationGroup, Unit, Source, Observation, ScaleArgs, DerivedValue, ObservationQuery, WorldModel, WorldModelData, FactType, Fact } from './world-model';
 
 export type Domain =
   | 'people'
@@ -36,7 +36,7 @@ export interface Question {
   prompt: string;
   hint?: string;
   reasoningOptions?: string[];
-  facts?: string[];
+  facts?: import('./world-model').Fact[];
 }
 
 export interface ChainQuestion {

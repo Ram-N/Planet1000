@@ -58,7 +58,7 @@ export default function Planet1000Page() {
   const [currentStat, setCurrentStat] = useState<WorldStat | undefined>(undefined);
 
   useEffect(() => {
-    setQuestions(getDailyQuestions(3));
+    setQuestions(getDailyQuestions(1));
   }, []);
 
   const currentQuestion = questions[qIndex];

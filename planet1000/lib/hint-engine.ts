@@ -1,14 +1,18 @@
 /**
  * Hint Engine for the Planet1000 adaptive 3-guess challenge.
  *
- * THINK phase (guessNumber=1): no directional preamble — give educational facts only.
- * REFINE phase (guessNumber=2): directional preamble based on error magnitude + one more fact.
+ * THINK phase (guessNumber=1): no directional preamble — show relationship facts
+ *   (comparisons, ratios, historical trends; never a world total that divides to the answer).
+ * REFINE phase (guessNumber=2): directional preamble + one anchor fact
+ *   (a partial number for one region/group, not the global total).
  *
- * Facts in the pool are ordered by type:
- *   [0,1] scale_anchor / geographic   → preferred for THINK phase
- *   [2,3] inequality / comparison      → preferred for REFINE phase
- *   [4+]  trend / general              → fallbacks
+ * Fact selection is type-based:
+ *   relationship → preferred for THINK phase
+ *   anchor       → preferred for REFINE phase
+ *   Either type → fallback if preferred type is exhausted
  */
+
+import type { Fact } from '@/types/world-model';
 
 export interface HintResponse {
   preamble: string | null;
@@ -17,23 +21,23 @@ export interface HintResponse {
   selectedIndices: number[];
 }
 
-function pickIndices(
-  facts: string[],
-  preferred: number[],
+function pickByType(
+  facts: Fact[],
+  preferredType: Fact['type'],
   usedIndices: number[],
   wantCount: number,
 ): number[] {
   const picked: number[] = [];
 
-  // Try preferred indices first
-  for (const idx of preferred) {
+  // First: facts of the preferred type that haven't been used
+  for (let i = 0; i < facts.length; i++) {
     if (picked.length >= wantCount) break;
-    if (idx < facts.length && !usedIndices.includes(idx)) {
-      picked.push(idx);
+    if (!usedIndices.includes(i) && facts[i].type === preferredType) {
+      picked.push(i);
     }
   }
 
-  // Fallback: any remaining unused index
+  // Fallback: any unused fact (any type)
   if (picked.length < wantCount) {
     for (let i = 0; i < facts.length; i++) {
       if (picked.length >= wantCount) break;
@@ -64,25 +68,25 @@ function buildPreamble(guess: number, actual: number): string {
 export function selectHint(
   guess: number,
   actual: number,
-  facts: string[],
+  facts: Fact[],
   guessNumber: 1 | 2,
   usedIndices: number[],
 ): HintResponse {
   if (guessNumber === 1) {
-    // THINK phase: no preamble; prefer indices 0 and 1 (scale_anchor / geographic)
-    const selectedIndices = pickIndices(facts, [0, 1], usedIndices, 2);
+    // THINK phase: no preamble; prefer relationship facts (2 of them)
+    const selectedIndices = pickByType(facts, 'relationship', usedIndices, 2);
     return {
       preamble: null,
-      facts: selectedIndices.map((i) => facts[i]),
+      facts: selectedIndices.map((i) => facts[i].text),
       selectedIndices,
     };
   } else {
-    // REFINE phase: directional preamble + 1 fact from indices 2,3 (inequality / comparison)
+    // REFINE phase: directional preamble + 1 anchor fact
     const preamble = buildPreamble(guess, actual);
-    const selectedIndices = pickIndices(facts, [2, 3], usedIndices, 1);
+    const selectedIndices = pickByType(facts, 'anchor', usedIndices, 1);
     return {
       preamble,
-      facts: selectedIndices.map((i) => facts[i]),
+      facts: selectedIndices.map((i) => facts[i].text),
       selectedIndices,
     };
   }

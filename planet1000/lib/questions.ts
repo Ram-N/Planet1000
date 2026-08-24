@@ -79,7 +79,7 @@ export function getShuffledQuestions(): Question[] {
  * Same date always returns the same questions for all users.
  * Questions are picked from a stable sorted pool (by ID) using a date hash.
  */
-export function getDailyQuestions(count = 3): Question[] {
+export function getDailyQuestions(count = 1): Question[] {
   // Stable order: sort by question ID so the pool is deterministic
   const allQs = getAllQuestions().slice().sort((a, b) => a.id.localeCompare(b.id));
 

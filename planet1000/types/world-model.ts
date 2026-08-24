@@ -3,6 +3,14 @@ export type GeographyLevel = 'world' | 'continent' | 'country' | 'state' | 'city
 export type TimePeriodType = 'year' | 'quarter' | 'month';
 export type ConfidenceLevel = 'high' | 'medium' | 'low';
 
+/** Hint 1 facts show relationships/comparisons (no world totals). Hint 2 facts show a partial anchor number for one region/group. */
+export type FactType = 'relationship' | 'anchor';
+
+export interface Fact {
+  text: string;
+  type: FactType;
+}
+
 export interface Entity {
   id: string;
   name: string;
@@ -71,8 +79,8 @@ export interface Observation {
   entity: Entity;
   metric: Metric;
   unit: Unit;
-  /** Curated facts ordered for hint selection (scale_anchor/geographic first, then inequality/comparison, trend, general) */
-  facts: string[];
+  /** Curated facts for hint selection. relationship facts → Hint 1 (no world totals). anchor facts → Hint 2 (partial regional number). */
+  facts: Fact[];
 }
 
 export interface ScaleArgs {
