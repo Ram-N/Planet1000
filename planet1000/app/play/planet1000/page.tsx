@@ -177,51 +177,35 @@ export default function Planet1000Page() {
         <ScoreBadge score={sessionScore} questionsAnswered={questionsAnswered} />
       </div>
 
-      {/* Question tracker chips */}
-      <div className="flex items-center gap-2">
-        {questions.map((_, i) => {
-          const isDone   = i < qIndex || (i === qIndex && phase === 'revealed');
-          const isCurrent = i === qIndex && phase !== 'revealed';
+      {/* Guess progress bar — 3 segments, one per guess */}
+      <div className="flex gap-2">
+        {(['estimate', 'think', 'refine'] as const).map((segPhase, i) => {
+          // segment i maps to phase i: 0=estimate, 1=think, 2=refine
+          const phaseOrder = ['estimate', 'think', 'refine', 'revealed'];
+          const currentIdx = phaseOrder.indexOf(phase);
+          const isDone    = currentIdx > i;
+          const isCurrent = currentIdx === i;
+          const labels    = ['Guess 1', 'Guess 2', 'Guess 3'];
           return (
-            <div
-              key={i}
-              className={[
-                'h-2.5 flex-1 rounded-full transition-colors',
-                isDone   ? 'bg-emerald-500' :
+            <div key={segPhase} className="flex-1 space-y-1">
+              <div className={[
+                'h-2.5 rounded-full transition-colors duration-300',
+                isDone    ? 'bg-emerald-500' :
                 isCurrent ? 'bg-blue-500'    :
                             'bg-slate-200',
-              ].join(' ')}
-            />
+              ].join(' ')} />
+              <p className={[
+                'text-xs text-center font-medium',
+                isDone    ? 'text-emerald-600' :
+                isCurrent ? 'text-blue-600'    :
+                            'text-slate-300',
+              ].join(' ')}>
+                {labels[i]}
+              </p>
+            </div>
           );
         })}
-        <span className="text-xs text-slate-400 ml-1">
-          Q{qIndex + 1}/{questions.length}
-        </span>
       </div>
-
-      {/* Phase step labels */}
-      {phase !== 'revealed' && (
-        <div className="flex items-center gap-1 text-xs">
-          {PHASE_ORDER.map((p, i) => {
-            const currentPhaseIndex = PHASE_ORDER.indexOf(phase as Exclude<Phase, 'done'>);
-            const isPast    = i < currentPhaseIndex;
-            const isCurrent = i === currentPhaseIndex;
-            return (
-              <span key={p} className="flex items-center gap-1">
-                {i > 0 && <span className="text-slate-300">→</span>}
-                <span className={[
-                  'font-semibold uppercase tracking-wide',
-                  isCurrent ? 'text-blue-600' :
-                  isPast    ? 'text-emerald-600' :
-                              'text-slate-300',
-                ].join(' ')}>
-                  {PHASE_LABELS[p]}
-                </span>
-              </span>
-            );
-          })}
-        </div>
-      )}
 
       {/* ── ESTIMATE phase ─────────────────────────────────────────────────── */}
       <AnimatePresence mode="wait">
