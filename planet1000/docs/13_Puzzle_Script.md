@@ -2,7 +2,10 @@
 
 `scripts/puzzle.ts` is a creator tool for managing Planet1000 weekly puzzles.
 
-It provides three commands: **status**, **show**, and **new**. It reads puzzle files from `data/puzzles/` and artifact files from `data/artifacts/` but never writes to artifacts or the app itself — it only creates puzzle skeletons and displays existing content.
+It provides three commands: **status**, **show**, and **new**. Puzzles now follow a two-file model:
+
+- **Slim manifest** — `data/puzzles/<id>.json` — the source of truth you edit: observation_id, question, answer_explanation, artifact_id.
+- **Generated puzzle** — `data/generated/puzzles/<id>.json` — the full `WeeklyPuzzle` JSON built by `npm run build:puzzles`, imported by `lib/puzzle-loader.ts`.
 
 ---
 
@@ -13,6 +16,9 @@ npm run puzzle -- status
 npm run puzzle -- show puzzle_2026_w35
 npm run puzzle -- show next 3
 npm run puzzle -- new 2026-W36
+
+npm run build:puzzles                    # generate full puzzle JSONs from manifests
+npm run build:puzzles -- --allow-missing # warn instead of error on missing facts
 ```
 
 ---
@@ -21,29 +27,29 @@ npm run puzzle -- new 2026-W36
 
 ### `status`
 
-Lists every puzzle file found in `data/puzzles/`, with its publish date, domain, question preview, answer, and artifact link.
+Lists every puzzle manifest found in `data/puzzles/`, with its publish date, domain, observation_id, and resolved answer (from the generated file if available).
 
 ```
 Planet1000 Weekly Puzzles
 ──────────────────────────────────────────────────────────────────────
-2 puzzles on file
+1 puzzle on file
 
-  2026-W35  2026-08-25  [housing]
+  2026-W35  2026-08-25  [housing]  obs: housing-homeless
     Q: Out of every 1,000 people on Earth, how many are homeless…
-    A: 14 people  → artifact_global_homelessness
-
-  2026-W36  2026-09-01  [healthcare]
-    Q: Out of every 1,000 people on Earth, how many are doctors?
-    A: 4 people  → artifact_global_doctors  ✗ MISSING
+    A: 160 people  → artifact_global_homelessness
 ```
 
-The `✗ MISSING` flag means the puzzle's `artifact_id` does not have a corresponding file in `data/artifacts/`. Fix by running `npm run artifact -- new <artifact_id>` and filling in the content.
+If a generated file doesn't exist yet, the answer column shows:
+
+```
+    A: (not built — run: npm run build:puzzles)
+```
 
 ---
 
 ### `show <puzzle-id>`
 
-Pretty-prints the full content of one puzzle: question, all three facts with sources, answer with explanation, and artifact status.
+Pretty-prints the resolved full puzzle (from `data/generated/puzzles/`). Requires `build:puzzles` to have been run first.
 
 ```bash
 npm run puzzle -- show puzzle_2026_w35
@@ -55,29 +61,30 @@ Output:
 ── puzzle_2026_w35 ─────────────────────────────────────────
 Week:       2026-W35   (publishes 2026-08-25)
 Domain:     housing
+Observation: housing-homeless
 
 QUESTION
   Out of every 1,000 people on Earth, how many are homeless or living without adequate shelter?
 
 ANSWER
-  14 people out of 1,000
-  Roughly 14 out of every 1,000 people worldwide lack adequate shelter...
+  160 people out of 1,000
+  Roughly 160 out of every 1,000 people worldwide live in inadequate housing...
 
 HINT 1 — Relationship
-  Africa accounts for the largest share...
-  Source: UN-Habitat  <https://unhabitat.org>
+  In some sub-Saharan African cities, more than 60% of urban residents live in informal settlements...
 
 HINT 2 — Temporal
   Global homelessness has worsened since 2000...
   Source: IDMC / UN-Habitat
 
 HINT 3 — Anchor
-  There are approximately 8 billion people on Earth...
-  Source: UN World Population  <https://www.un.org/en/global-issues/population>
+  In Nigeria alone, an estimated 40–50 million people live in substandard housing...
 
 ARTIFACT
   artifact_global_homelessness  ✓
 ```
+
+If the generated file doesn't exist, the facts section shows a prompt to run `build:puzzles`.
 
 ---
 
@@ -89,26 +96,11 @@ Shows the next `n` puzzles counting from the current ISO week. Useful for verify
 npm run puzzle -- show next 3
 ```
 
-For weeks that have not been created yet, the script prints the scaffold command instead of puzzle content:
-
-```
-Next 3 puzzles from current week (2026-W35):
-
-── 2026-W36  2026-09-01  [puzzle_2026_w36]
-   ✗ Not created yet — run: npm run puzzle -- new 2026-W36
-
-── 2026-W37  2026-09-08  [puzzle_2026_w37]
-   ✗ Not created yet — run: npm run puzzle -- new 2026-W37
-
-── 2026-W38  2026-09-15  [puzzle_2026_w38]
-   ✗ Not created yet — run: npm run puzzle -- new 2026-W38
-```
-
 ---
 
 ### `new <week-id>`
 
-Scaffolds a new puzzle JSON file for the given ISO week.
+Scaffolds a new slim puzzle manifest for the given ISO week.
 
 ```bash
 npm run puzzle -- new 2026-W36
@@ -117,23 +109,22 @@ npm run puzzle -- new 2026-W36
 The script:
 1. Parses and validates the week ID
 2. Computes the Monday publish date
-3. Prompts for domain and question
-4. Writes a skeleton JSON to `data/puzzles/puzzle_2026_w36.json`
-5. Prints next steps including the suggested artifact ID
+3. Lists available observations from `world-model.json`
+4. Prompts for domain, `observation_id`, and question
+5. Writes a slim manifest to `data/puzzles/puzzle_2026_w36.json`
+6. Prints next steps
 
 **Week ID format:** `YYYY-WNN` — e.g. `2026-W36`, `2027-W01`.
 
-**Output path:** `data/puzzles/<puzzle_id>.json`
-
-After the script runs, open the file and fill in:
-- `answer_value_1k` and `answer_unit`
-- `answer_explanation`
-- All three facts (`relationship_fact`, `temporal_fact`, `anchor_fact`) with text and source details
-- `artifact_id` — replace the suggested placeholder with the real artifact ID once created
+After the script runs:
+1. Fill in `answer_explanation` in the manifest
+2. Author `relationship`, `temporal`, and `anchor` facts in `canonical-facts.csv` for the observation
+3. Run `npm run build:puzzles` to generate the full puzzle JSON
+4. Preview with `npm run puzzle -- show <id>`
 
 ---
 
-## Puzzle JSON structure
+## Slim manifest format
 
 ```json
 {
@@ -142,79 +133,89 @@ After the script runs, open the file and fill in:
   "publish_date": "2026-08-25",
   "domain": "housing",
   "question": "Out of every 1,000 people on Earth, how many are homeless or living without adequate shelter?",
-  "answer_value_1k": 14,
-  "answer_unit": "people",
-  "answer_explanation": "Roughly 14 out of every 1,000 people worldwide lack adequate shelter...",
-  "relationship_fact": {
-    "text": "Africa accounts for the largest share...",
-    "source_label": "UN-Habitat",
-    "source_url": "https://unhabitat.org"
-  },
-  "temporal_fact": {
-    "text": "Global homelessness has worsened since 2000...",
-    "source_label": "IDMC / UN-Habitat"
-  },
-  "anchor_fact": {
-    "text": "There are approximately 8 billion people on Earth...",
-    "source_label": "UN World Population",
-    "source_url": "https://www.un.org/en/global-issues/population"
-  },
+  "observation_id": "housing-homeless",
+  "answer_explanation": "Roughly 160 out of every 1,000 people worldwide live in inadequate housing...",
   "artifact_id": "artifact_global_homelessness"
 }
 ```
 
-### Fact fields
+| Field | Description |
+|-------|-------------|
+| `observation_id` | References an observation in `world-model.json`; the build script looks up its `value` and `unit` |
+| `answer_explanation` | Prose explanation shown after the game; should match the computed answer |
+| `artifact_id` | References a `KnowledgeArtifact` in `data/artifacts/` |
 
-Each of the three fact fields (`relationship_fact`, `temporal_fact`, `anchor_fact`) has the same shape:
+The build script computes `answer_value_1k = Math.round(obs.value / world_population * 1000)` and selects facts from `canonical-facts.csv` (first `relationship`, `temporal`, and `anchor` row for the observation_id).
 
-| Field | Required | Description |
-|-------|----------|-------------|
-| `text` | yes | One sentence. The hint text shown to the player. |
-| `source_label` | no | Short display name of the source (e.g. "UN-Habitat") |
-| `source_url` | no | Full URL to the primary source |
+---
 
-### Hint order
+## `build:puzzles`
 
-The three facts correspond to the three hint slots in the 4-guess game:
+```bash
+npm run build:puzzles
+```
 
-| Hint | Shown after | Fact field | Purpose |
-|------|-------------|------------|---------|
-| 1 | Guess 1 | `relationship_fact` | Comparative/geographic context |
-| 2 | Guess 2 | `temporal_fact` | Trend and direction over time |
-| 3 | Guess 3 | `anchor_fact` | Concrete number — best calibration before the final guess |
+Reads slim manifests from `data/puzzles/` and writes full `WeeklyPuzzle` JSONs to `data/generated/puzzles/`. Errors if any of the three fact types is missing for the observation.
 
-Write each fact with its slot in mind. The anchor fact should contain the most specific numerical reference — it is the last hint the player sees before their final guess.
+```bash
+npm run build:puzzles -- --allow-missing
+```
+
+Warns instead of erroring for missing facts; writes a placeholder for any missing fact. Useful for previewing work-in-progress puzzles.
+
+The generated files are committed to git (same pattern as `data/generated/world-model.json`) so Vercel can build without re-running the script.
+
+**Update workflow:**
+
+```
+Edit canonical-facts.csv or observation value
+  → npm run build:data        (if observation value changed)
+  → npm run build:puzzles
+  → commit both slim manifest and generated file
+  → push → Vercel deploys
+```
 
 ---
 
 ## Workflow: creating a new weekly puzzle
 
-1. **Scaffold the puzzle file**
+1. **Scaffold the manifest**
    ```bash
    npm run puzzle -- new 2026-W36
-   # Fill in data/puzzles/puzzle_2026_w36.json
+   # Fill answer_explanation in data/puzzles/puzzle_2026_w36.json
+   ```
+
+2. **Author facts in canonical-facts.csv**
+   Add at minimum one `relationship`, one `temporal`, and one `anchor` row for the observation_id.
+   ```bash
+   npm run fact-hunt -- status   # verify no missing fact types
+   ```
+
+3. **Build and preview**
+   ```bash
+   npm run build:puzzles
    npm run puzzle -- show puzzle_2026_w36
    ```
 
-2. **Create and fill the knowledge artifact**
+4. **Create the knowledge artifact**
    ```bash
-   npm run artifact -- new artifact_global_doctors
-   # Fill in data/artifacts/artifact_global_doctors.json
-   npm run artifact -- validate artifact_global_doctors
+   npm run artifact -- new artifact_<topic>
+   # Fill in data/artifacts/artifact_<topic>.json
+   npm run artifact -- validate artifact_<topic>
    ```
 
-3. **Set `artifact_id` in the puzzle to match**
-   Edit `data/puzzles/puzzle_2026_w36.json` and replace the `artifact_id` placeholder with `artifact_global_doctors`.
+5. **Set artifact_id** in the manifest to match the artifact you created.
 
-4. **Register both in `lib/puzzle-loader.ts`**
+6. **Register in `lib/puzzle-loader.ts`**
    ```ts
-   import puzzle_2026_w36         from '@/data/puzzles/puzzle_2026_w36.json';
-   import artifact_global_doctors from '@/data/artifacts/artifact_global_doctors.json';
+   import puzzle_2026_w36         from '@/data/generated/puzzles/puzzle_2026_w36.json';
+   import artifact_<topic>        from '@/data/artifacts/artifact_<topic>.json';
    ```
-   Add the puzzle to `ALL_PUZZLES` and the artifact to `ALL_ARTIFACTS`.
+   Add the puzzle to `PUZZLES` and the artifact to `ARTIFACTS`.
 
-5. **Verify everything links**
+7. **Rebuild and verify**
    ```bash
+   npm run build:puzzles
    npm run puzzle -- status
    npm run artifact -- status
    ```
@@ -225,8 +226,11 @@ Write each fact with its slot in mind. The anchor fact should contain the most s
 
 | Path | Purpose |
 |------|---------|
-| `data/puzzles/<id>.json` | Weekly puzzle content (created by `new`, edited manually) |
-| `data/artifacts/<id>.json` | Knowledge artifacts (created by `artifact new`, edited manually) |
-| `lib/puzzle-loader.ts` | Static index — import new puzzles and artifacts here |
+| `data/puzzles/<id>.json` | Slim manifest — source of truth, edit this |
+| `data/generated/puzzles/<id>.json` | Full puzzle JSON — generated by `build:puzzles`, imported by app |
+| `data/canonical-facts.csv` | Source of facts (text + source attribution) |
+| `data/generated/world-model.json` | Source of observation values and units |
+| `lib/puzzle-loader.ts` | Static index — import new generated puzzles and artifacts here |
+| `scripts/build-puzzles.ts` | Build script |
 | `scripts/artifact.ts` | Companion tool for knowledge artifact management |
 | `docs/12_Artifact_Script.md` | Reference for the `artifact` script |

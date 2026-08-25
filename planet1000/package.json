@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "build:data": "tsx scripts/build-world-model.ts",
+    "build:puzzles": "tsx scripts/build-puzzles.ts",
     "fact-hunt": "tsx scripts/fact-hunt.ts",
     "obs-add": "tsx scripts/obs-add.ts",
     "artifact": "tsx scripts/artifact.ts",

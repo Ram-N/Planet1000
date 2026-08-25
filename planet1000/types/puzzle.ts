@@ -1,3 +1,19 @@
+/**
+ * Slim puzzle manifest — source of truth in data/puzzles/.
+ * The build script (build:puzzles) expands this into a full WeeklyPuzzle
+ * by resolving observation facts and computing answer_value_1k from world-model.json.
+ */
+export interface PuzzleSource {
+  id: string;
+  week_id: string;
+  publish_date: string;
+  domain: string;
+  question: string;
+  observation_id: string;
+  answer_explanation: string;
+  artifact_id: string;
+}
+
 /** A single fact attached to a weekly puzzle (with optional source attribution). */
 export interface PuzzleFact {
   text: string;

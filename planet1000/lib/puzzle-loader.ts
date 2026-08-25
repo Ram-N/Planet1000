@@ -1,7 +1,7 @@
 import type { WeeklyPuzzle, KnowledgeArtifact } from '@/types/puzzle';
 
-// Static puzzle registry — add new puzzles here as they are published
-import puzzle_2026_w35 from '@/data/puzzles/puzzle_2026_w35.json';
+// Static puzzle registry — add new puzzles here after running: npm run build:puzzles
+import puzzle_2026_w35 from '@/data/generated/puzzles/puzzle_2026_w35.json';
 import artifact_global_homelessness from '@/data/artifacts/artifact_global_homelessness.json';
 
 const PUZZLES: WeeklyPuzzle[] = [

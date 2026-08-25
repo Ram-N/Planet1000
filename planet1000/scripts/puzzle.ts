@@ -4,20 +4,22 @@
  * Commands:
  *   npx tsx scripts/puzzle.ts status
  *   npx tsx scripts/puzzle.ts show <puzzle-id>
+ *   npx tsx scripts/puzzle.ts show next <n>
  *   npx tsx scripts/puzzle.ts new <week-id>
  *
  * status
- *   Lists all puzzles with week, publish date, domain, and question preview.
- *   Flags missing artifact links.
+ *   Lists all puzzle manifests with week, publish date, domain, and question preview.
+ *   Reads resolved answers from data/generated/puzzles/ when available.
  *
  * show <puzzle-id>
- *   Pretty-prints the full content of one puzzle: question, all three facts,
- *   answer, and artifact link.
+ *   Pretty-prints the resolved full puzzle (from data/generated/puzzles/).
+ *   If the generated file doesn't exist, prompts you to run build:puzzles.
  *
  * new <week-id>
- *   Scaffolds a new puzzle JSON for the given ISO week (e.g. 2026-W36).
- *   Prompts for domain and question; writes the skeleton to data/puzzles/.
- *   Also prints the week's Monday date and suggests the artifact_id.
+ *   Scaffolds a new slim puzzle manifest for the given ISO week (e.g. 2026-W36).
+ *   Prompts for domain, observation_id, and question; lists available observations.
+ *   Writes the manifest to data/puzzles/.
+ *   Run npm run build:puzzles after to generate the full puzzle JSON.
  */
 
 import * as fs from 'fs';
@@ -26,11 +28,24 @@ import * as readline from 'readline';
 
 // ── Paths ─────────────────────────────────────────────────────────────────────
 
-const ROOT          = path.join(__dirname, '..');
-const PUZZLES_DIR   = path.join(ROOT, 'data', 'puzzles');
-const ARTIFACTS_DIR = path.join(ROOT, 'data', 'artifacts');
+const ROOT           = path.join(__dirname, '..');
+const PUZZLES_DIR    = path.join(ROOT, 'data', 'puzzles');
+const GENERATED_DIR  = path.join(ROOT, 'data', 'generated', 'puzzles');
+const ARTIFACTS_DIR  = path.join(ROOT, 'data', 'artifacts');
+const WORLD_MODEL    = path.join(ROOT, 'data', 'generated', 'world-model.json');
 
 // ── Types ─────────────────────────────────────────────────────────────────────
+
+interface PuzzleSource {
+  id: string;
+  week_id: string;
+  publish_date: string;
+  domain: string;
+  question: string;
+  observation_id: string;
+  answer_explanation: string;
+  artifact_id: string;
+}
 
 interface PuzzleFact {
   text: string;
@@ -53,28 +68,55 @@ interface WeeklyPuzzle {
   artifact_id: string;
 }
 
+interface WorldObservation {
+  id: string;
+  entity?: { name: string };
+  entity_id?: string;
+  domain?: string;
+}
+
 // ── File helpers ──────────────────────────────────────────────────────────────
 
-function listPuzzleFiles(): string[] {
+function listManifestFiles(): string[] {
   if (!fs.existsSync(PUZZLES_DIR)) return [];
   return fs.readdirSync(PUZZLES_DIR).filter(f => f.endsWith('.json')).sort();
 }
 
-function loadPuzzle(idOrFile: string): { puzzle: WeeklyPuzzle | null; error?: string } {
+function loadManifest(idOrFile: string): { source: PuzzleSource | null; error?: string } {
   const file = idOrFile.endsWith('.json') ? idOrFile : `${idOrFile}.json`;
   const filePath = path.join(PUZZLES_DIR, file);
   if (!fs.existsSync(filePath)) {
-    return { puzzle: null, error: `File not found: ${filePath}` };
+    return { source: null, error: `File not found: ${filePath}` };
   }
   try {
-    return { puzzle: JSON.parse(fs.readFileSync(filePath, 'utf-8')) as WeeklyPuzzle };
+    return { source: JSON.parse(fs.readFileSync(filePath, 'utf-8')) as PuzzleSource };
   } catch (e) {
-    return { puzzle: null, error: `JSON parse error: ${(e as Error).message}` };
+    return { source: null, error: `JSON parse error: ${(e as Error).message}` };
+  }
+}
+
+function loadGenerated(id: string): WeeklyPuzzle | null {
+  const filePath = path.join(GENERATED_DIR, `${id}.json`);
+  if (!fs.existsSync(filePath)) return null;
+  try {
+    return JSON.parse(fs.readFileSync(filePath, 'utf-8')) as WeeklyPuzzle;
+  } catch {
+    return null;
   }
 }
 
 function artifactExists(id: string): boolean {
   return fs.existsSync(path.join(ARTIFACTS_DIR, `${id}.json`));
+}
+
+function loadObservations(): WorldObservation[] {
+  if (!fs.existsSync(WORLD_MODEL)) return [];
+  try {
+    const wm = JSON.parse(fs.readFileSync(WORLD_MODEL, 'utf-8')) as { observations: WorldObservation[] };
+    return wm.observations ?? [];
+  } catch {
+    return [];
+  }
 }
 
 // ── ISO week helpers ──────────────────────────────────────────────────────────
@@ -119,7 +161,7 @@ function puzzleIdFromWeek(year: number, week: number): string {
 // ── STATUS command ────────────────────────────────────────────────────────────
 
 function cmdStatus(): void {
-  const files = listPuzzleFiles();
+  const files = listManifestFiles();
 
   console.log('\nPlanet1000 Weekly Puzzles');
   console.log('─'.repeat(70));
@@ -132,21 +174,27 @@ function cmdStatus(): void {
   }
 
   for (const file of files) {
-    const { puzzle, error } = loadPuzzle(file);
-    if (error || !puzzle) {
+    const { source, error } = loadManifest(file);
+    if (error || !source) {
       console.log(`  ✗ ${file}  — ${error}`);
       continue;
     }
 
-    const artifactOk = artifactExists(puzzle.artifact_id);
-    const artifactMark = artifactOk ? `→ ${puzzle.artifact_id}` : `→ ${puzzle.artifact_id}  ✗ MISSING`;
-    const question = puzzle.question.length > 60
-      ? puzzle.question.slice(0, 57) + '…'
-      : puzzle.question;
+    const generated = loadGenerated(source.id);
+    const artifactOk = artifactExists(source.artifact_id);
+    const artifactMark = artifactOk ? `→ ${source.artifact_id}` : `→ ${source.artifact_id}  ✗ MISSING`;
+    const question = source.question.length > 60
+      ? source.question.slice(0, 57) + '…'
+      : source.question;
 
-    console.log(`  ${puzzle.week_id}  ${puzzle.publish_date}  [${puzzle.domain}]`);
+    console.log(`  ${source.week_id}  ${source.publish_date}  [${source.domain}]  obs: ${source.observation_id}`);
     console.log(`    Q: ${question}`);
-    console.log(`    A: ${puzzle.answer_value_1k} ${puzzle.answer_unit}  ${artifactMark}`);
+
+    if (generated) {
+      console.log(`    A: ${generated.answer_value_1k} ${generated.answer_unit}  ${artifactMark}`);
+    } else {
+      console.log(`    A: (not built — run: npm run build:puzzles)  ${artifactMark}`);
+    }
     console.log('');
   }
 }
@@ -162,14 +210,14 @@ function cmdShowNext(count: number): void {
     let y = year;
     if (w > 52) { w -= 52; y++; }
     const id = puzzleIdFromWeek(y, w);
-    const { puzzle, error } = loadPuzzle(id);
-    if (error || !puzzle) {
+    const { source } = loadManifest(id);
+    if (!source) {
       const monday = getMondayOfISOWeek(y, w);
       console.log(`── ${y}-W${String(w).padStart(2, '0')}  ${formatDate(monday)}  [${id}]`);
       console.log(`   ✗ Not created yet — run: npm run puzzle -- new ${y}-W${String(w).padStart(2, '0')}`);
       console.log('');
     } else {
-      printPuzzle(puzzle);
+      printPuzzle(source);
     }
   }
 }
@@ -183,7 +231,6 @@ function cmdShow(id: string, rest: string[] = []): void {
     process.exit(1);
   }
 
-  // Handle "show next N"
   if (id === 'next') {
     const n = parseInt(rest[0] ?? '1', 10);
     if (!isFinite(n) || n < 1) {
@@ -194,65 +241,68 @@ function cmdShow(id: string, rest: string[] = []): void {
     return;
   }
 
-  const { puzzle, error } = loadPuzzle(id);
-  if (error || !puzzle) {
+  const { source, error } = loadManifest(id);
+  if (error || !source) {
     console.error(`\n✗ ${error}`);
     console.error('\nAvailable puzzles:');
-    listPuzzleFiles().forEach(f => console.error(`  ${f.replace(/\.json$/, '')}`));
+    listManifestFiles().forEach(f => console.error(`  ${f.replace(/\.json$/, '')}`));
     process.exit(1);
   }
 
-  printPuzzle(puzzle);
+  printPuzzle(source);
 }
 
-function printPuzzle(puzzle: WeeklyPuzzle): void {
-  const artifactOk = artifactExists(puzzle.artifact_id);
+function printPuzzle(source: PuzzleSource): void {
+  const generated  = loadGenerated(source.id);
+  const artifactOk = artifactExists(source.artifact_id);
 
   console.log('');
-  console.log(`── ${puzzle.id} ─────────────────────────────────────────`);
-  console.log(`Week:       ${puzzle.week_id}   (publishes ${puzzle.publish_date})`);
-  console.log(`Domain:     ${puzzle.domain}`);
+  console.log(`── ${source.id} ─────────────────────────────────────────`);
+  console.log(`Week:       ${source.week_id}   (publishes ${source.publish_date})`);
+  console.log(`Domain:     ${source.domain}`);
+  console.log(`Observation: ${source.observation_id}`);
   console.log('');
   console.log(`QUESTION`);
-  console.log(`  ${puzzle.question}`);
+  console.log(`  ${source.question}`);
   console.log('');
-  console.log(`ANSWER`);
-  console.log(`  ${puzzle.answer_value_1k} ${puzzle.answer_unit} out of 1,000`);
-  console.log(`  ${puzzle.answer_explanation}`);
-  console.log('');
-  console.log(`HINT 1 — Relationship`);
-  console.log(`  ${puzzle.relationship_fact.text}`);
-  if (puzzle.relationship_fact.source_label) {
-    const url = puzzle.relationship_fact.source_url ? `  <${puzzle.relationship_fact.source_url}>` : '';
-    console.log(`  Source: ${puzzle.relationship_fact.source_label}${url}`);
+
+  if (generated) {
+    console.log(`ANSWER`);
+    console.log(`  ${generated.answer_value_1k} ${generated.answer_unit} out of 1,000`);
+    console.log(`  ${generated.answer_explanation}`);
+    console.log('');
+    console.log(`HINT 1 — Relationship`);
+    console.log(`  ${generated.relationship_fact.text}`);
+    if (generated.relationship_fact.source_label) {
+      const url = generated.relationship_fact.source_url ? `  <${generated.relationship_fact.source_url}>` : '';
+      console.log(`  Source: ${generated.relationship_fact.source_label}${url}`);
+    }
+    console.log('');
+    console.log(`HINT 2 — Temporal`);
+    console.log(`  ${generated.temporal_fact.text}`);
+    if (generated.temporal_fact.source_label) {
+      const url = generated.temporal_fact.source_url ? `  <${generated.temporal_fact.source_url}>` : '';
+      console.log(`  Source: ${generated.temporal_fact.source_label}${url}`);
+    }
+    console.log('');
+    console.log(`HINT 3 — Anchor`);
+    console.log(`  ${generated.anchor_fact.text}`);
+    if (generated.anchor_fact.source_label) {
+      const url = generated.anchor_fact.source_url ? `  <${generated.anchor_fact.source_url}>` : '';
+      console.log(`  Source: ${generated.anchor_fact.source_label}${url}`);
+    }
+    console.log('');
+  } else {
+    console.log(`  (not built — run: npm run build:puzzles)`);
+    console.log('');
   }
-  console.log('');
-  console.log(`HINT 2 — Temporal`);
-  console.log(`  ${puzzle.temporal_fact.text}`);
-  if (puzzle.temporal_fact.source_label) {
-    const url = puzzle.temporal_fact.source_url ? `  <${puzzle.temporal_fact.source_url}>` : '';
-    console.log(`  Source: ${puzzle.temporal_fact.source_label}${url}`);
-  }
-  console.log('');
-  console.log(`HINT 3 — Anchor`);
-  console.log(`  ${puzzle.anchor_fact.text}`);
-  if (puzzle.anchor_fact.source_label) {
-    const url = puzzle.anchor_fact.source_url ? `  <${puzzle.anchor_fact.source_url}>` : '';
-    console.log(`  Source: ${puzzle.anchor_fact.source_label}${url}`);
-  }
-  console.log('');
+
   console.log(`ARTIFACT`);
-  console.log(`  ${puzzle.artifact_id}  ${artifactOk ? '✓' : '✗ NOT FOUND'}`);
+  console.log(`  ${source.artifact_id}  ${artifactOk ? '✓' : '✗ NOT FOUND'}`);
   console.log('');
 }
 
 // ── NEW command ───────────────────────────────────────────────────────────────
-
-const SKELETON_FACT: PuzzleFact = {
-  text: '',
-  source_label: '',
-  source_url: '',
-};
 
 async function cmdNew(weekId: string): Promise<void> {
   if (!weekId) {
@@ -268,17 +318,20 @@ async function cmdNew(weekId: string): Promise<void> {
   }
 
   const { year, week } = parsed;
-  const normalised = `${year}-W${String(week).padStart(2, '0')}`;
-  const puzzleId   = puzzleIdFromWeek(year, week);
-  const monday     = getMondayOfISOWeek(year, week);
+  const normalised  = `${year}-W${String(week).padStart(2, '0')}`;
+  const puzzleId    = puzzleIdFromWeek(year, week);
+  const monday      = getMondayOfISOWeek(year, week);
   const publishDate = formatDate(monday);
-  const outPath    = path.join(PUZZLES_DIR, `${puzzleId}.json`);
+  const outPath     = path.join(PUZZLES_DIR, `${puzzleId}.json`);
 
   if (fs.existsSync(outPath)) {
     console.error(`\n✗ Puzzle already exists: ${outPath}`);
     console.error(`  Use: puzzle show ${puzzleId}`);
     process.exit(1);
   }
+
+  // Load observations from world model so user can pick one
+  const observations = loadObservations();
 
   const rl  = readline.createInterface({ input: process.stdin, output: process.stdout });
   const ask = (q: string): Promise<string> =>
@@ -288,44 +341,70 @@ async function cmdNew(weekId: string): Promise<void> {
   console.log(`Week:    ${normalised}`);
   console.log(`Publish: ${publishDate} (Monday)\n`);
 
-  const domainOpts = 'people/healthcare/education/food/water/energy/housing/transportation/money/environment';
-  const domain   = await ask(`Domain [${domainOpts}]: `);
-  const question = await ask('Question (the "out of 1,000" prompt): ');
+  // Show available observations grouped by domain
+  if (observations.length > 0) {
+    console.log('Available observations (from world-model.json):');
+    const byDomain = new Map<string, WorldObservation[]>();
+    for (const obs of observations) {
+      const d = obs.domain ?? obs.entity?.name ?? 'other';
+      if (!byDomain.has(d)) byDomain.set(d, []);
+      byDomain.get(d)!.push(obs);
+    }
+    for (const [domain, obs] of byDomain) {
+      console.log(`  [${domain}]`);
+      for (const o of obs) {
+        const name = o.entity?.name ?? o.entity_id ?? o.id;
+        console.log(`    ${o.id}  (${name})`);
+      }
+    }
+    console.log('');
+  }
+
+  const domainOpts  = 'people/healthcare/education/food/water/energy/housing/transportation/money/environment';
+  const domain         = await ask(`Domain [${domainOpts}]: `);
+  const observationId  = await ask('observation_id (from list above): ');
+  const question       = await ask('Question (the "out of 1,000" prompt): ');
 
   // Suggest artifact id from domain
-  const domainSlug = domain.toLowerCase().replace(/[^a-z0-9]+/g, '_');
+  const domainSlug       = domain.toLowerCase().replace(/[^a-z0-9]+/g, '_');
   const suggestedArtifact = `artifact_${domainSlug}_<topic>`;
 
   rl.close();
 
   if (!fs.existsSync(PUZZLES_DIR)) fs.mkdirSync(PUZZLES_DIR, { recursive: true });
 
-  const skeleton: WeeklyPuzzle = {
-    id:              puzzleId,
-    week_id:         normalised,
-    publish_date:    publishDate,
-    domain:          domain || '<domain>',
-    question:        question || '<question>',
-    answer_value_1k: 0,
-    answer_unit:     'people',
+  // Validate observation_id
+  if (observations.length > 0 && !observations.find(o => o.id === observationId)) {
+    console.warn(`\n⚠ observation_id "${observationId}" not found in world-model.json`);
+    console.warn('  Check the ID above or run: npm run build:data to refresh the world model.');
+  }
+
+  const manifest: PuzzleSource = {
+    id:                 puzzleId,
+    week_id:            normalised,
+    publish_date:       publishDate,
+    domain:             domain || '<domain>',
+    question:           question || '<question>',
+    observation_id:     observationId || '<observation_id>',
     answer_explanation: '',
-    relationship_fact: { ...SKELETON_FACT },
-    temporal_fact:     { ...SKELETON_FACT },
-    anchor_fact:       { ...SKELETON_FACT },
-    artifact_id:     suggestedArtifact,
+    artifact_id:        suggestedArtifact,
   };
 
-  fs.writeFileSync(outPath, JSON.stringify(skeleton, null, 2) + '\n');
+  fs.writeFileSync(outPath, JSON.stringify(manifest, null, 2) + '\n');
 
   console.log(`\n✓ Created: ${outPath}`);
   console.log('\nNext steps:');
-  console.log(`  1. Fill in answer_value_1k, answer_unit, answer_explanation`);
-  console.log(`  2. Write the three facts (relationship, temporal, anchor)`);
-  console.log(`  3. Create the artifact:  npm run artifact -- new ${suggestedArtifact.replace('_<topic>', '_<topic>')}`);
-  console.log(`  4. Set artifact_id to match the artifact you create`);
-  console.log(`  5. Register both in lib/puzzle-loader.ts`);
-  console.log(`  6. Verify: npm run puzzle -- show ${puzzleId}`);
-  console.log(`             npm run artifact -- status\n`);
+  console.log(`  1. Fill in answer_explanation in the manifest`);
+  console.log(`  2. Author facts in canonical-facts.csv for "${observationId || '<observation_id>'}":`);
+  console.log(`       relationship, temporal, anchor  (one row each, minimum)`);
+  console.log(`     Verify: npm run fact-hunt -- status`);
+  console.log(`  3. Build the full puzzle JSON:`);
+  console.log(`       npm run build:puzzles`);
+  console.log(`  4. Preview: npm run puzzle -- show ${puzzleId}`);
+  console.log(`  5. Create the artifact:  npm run artifact -- new ${suggestedArtifact.replace('_<topic>', '_<topic>')}`);
+  console.log(`  6. Set artifact_id to match the artifact you create`);
+  console.log(`  7. Register both in lib/puzzle-loader.ts`);
+  console.log(`  8. Rebuild: npm run build:puzzles\n`);
 }
 
 // ── Entry point ───────────────────────────────────────────────────────────────
@@ -350,9 +429,9 @@ switch (command) {
 puzzle — Planet1000 weekly puzzle manager
 
 Commands:
-  status              List all puzzles with question preview and artifact link
-  show <id>           Print full puzzle content (question, facts, answer)
-  new <week-id>       Scaffold a new puzzle skeleton for the given ISO week
+  status              List all puzzle manifests with observation and build status
+  show <id>           Print full resolved puzzle (from generated files)
+  new <week-id>       Scaffold a new slim puzzle manifest for the given ISO week
 
 Examples:
   npx tsx scripts/puzzle.ts status
@@ -361,10 +440,15 @@ Examples:
   npx tsx scripts/puzzle.ts new 2026-W37
 
 Week ID format: YYYY-WNN  (e.g. 2026-W36)
-Puzzle files:   data/puzzles/<puzzle_id>.json
+Manifest files:  data/puzzles/<puzzle_id>.json       (slim — edit this)
+Generated files: data/generated/puzzles/<id>.json   (full — built by build:puzzles)
 
-After creating a puzzle, register it in lib/puzzle-loader.ts
-and create its artifact with: npm run artifact -- new <artifact_id>
+Workflow:
+  1. puzzle new <week-id>            — create manifest
+  2. Fill answer_explanation + author facts in canonical-facts.csv
+  3. npm run build:puzzles           — generate full puzzle JSON
+  4. puzzle show <id>                — verify resolved facts and answer
+  5. Register in lib/puzzle-loader.ts
 `);
     break;
 }
