@@ -404,7 +404,8 @@ function cmdValidate(targetId?: string): void {
           console.error(`\n✗ Artifact not found: ${p}`);
           process.exit(1);
         }
-        return [{ file: f, id: targetId, ...loadArtifact(p) }];
+        const { data, errors } = loadArtifact(p);
+        return [{ file: f, id: targetId, data: errors.length ? null : data, parseError: errors[0] }];
       })()
     : listArtifacts();
 
