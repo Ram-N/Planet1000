@@ -21,7 +21,7 @@ Before this change, `fact-hunt add` wrote facts only to `data/generated/world-mo
 | Column | Required | Notes |
 |---|---|---|
 | `observation_id` | yes | Must match an ID in world-model.json |
-| `type` | yes | `relationship` or `anchor` |
+| `type` | yes | `relationship`, `temporal`, or `anchor` |
 | `text` | yes | The fact sentence |
 | `source` | no | URL of primary source |
 | `year` | no | Publication or data year |
@@ -31,6 +31,7 @@ Example:
 ```csv
 observation_id,type,text,source,year
 people-children,relationship,"Children under 15 make up a much larger share in Africa than Europe",,
+people-children,temporal,"The global share of under-15s has fallen from 33% in 1990 to 26% today as birth rates decline",,
 people-children,anchor,"In Niger, more than half the population is under 15",https://worldbank.org/,2022
 ```
 
@@ -66,7 +67,7 @@ The bulk CSV uses the same columns as `canonical-facts.csv`. The command:
 3. Prints a grouped preview and the count of valid/skipped rows
 4. Prompts `Add all? [Y/n]:` (default Y)
 5. Writes all valid facts to `world-model.json` and appends to `canonical-facts.csv`
-6. Prints a per-observation summary: `people-children: +3 (now 2R 5A)`
+6. Prints a per-observation summary: `people-children: +3 (now 2R 1T 5A)`
 
 ### Recovery via rebuild
 

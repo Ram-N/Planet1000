@@ -239,15 +239,13 @@ These IDs appear as "Related" links in the post-game summary UI. Use `status` to
    npx tsx scripts/artifact.ts validate artifact_global_doctors
    ```
 
-2. **Create the puzzle** (manually in `data/puzzles/`)
-   ```json
-   {
-     "id": "puzzle_2026_w36",
-     "week_id": "2026-W36",
-     "artifact_id": "artifact_global_doctors",
-     ...
-   }
+2. **Create the puzzle**
+   ```bash
+   npm run puzzle -- new 2026-W36
+   # Fill in data/puzzles/puzzle_2026_w36.json and set artifact_id
+   npm run puzzle -- show puzzle_2026_w36
    ```
+   See `docs/13_Puzzle_Script.md` for the full puzzle authoring reference.
 
 3. **Register both in `lib/puzzle-loader.ts`**
    ```ts
