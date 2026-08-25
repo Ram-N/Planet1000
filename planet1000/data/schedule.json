@@ -1,0 +1,118 @@
+{
+  "generated": "2026-08-25T02:01:33.230Z",
+  "pool_size": 76,
+  "days": [
+    {
+      "date": "2026-08-25",
+      "question_id": "gen-absolute_1k_gather-energy-no-electricity",
+      "observation_id": "energy-no-electricity",
+      "entity": "People without electricity access",
+      "domain": "energy",
+      "template": "absolute_1k_gather",
+      "facts": {
+        "relationship": 2,
+        "anchor": 1,
+        "total": 3
+      },
+      "priority": "HIGH",
+      "gap": "A:1 — needs 1 more anchor (concrete country figure)",
+      "action": "npx tsx scripts/fact-hunt.ts add energy-no-electricity"
+    },
+    {
+      "date": "2026-08-26",
+      "question_id": "gen-absolute_1k_gather-housing-homeless",
+      "observation_id": "housing-homeless",
+      "entity": "People in inadequate housing",
+      "domain": "housing",
+      "template": "absolute_1k_gather",
+      "facts": {
+        "relationship": 2,
+        "anchor": 1,
+        "total": 3
+      },
+      "priority": "HIGH",
+      "gap": "A:1 — needs 1 more anchor (concrete country figure)",
+      "action": "npx tsx scripts/fact-hunt.ts add housing-homeless"
+    },
+    {
+      "date": "2026-08-27",
+      "question_id": "gen-absolute_1k_gather-people-children",
+      "observation_id": "people-children",
+      "entity": "Children under 15",
+      "domain": "people",
+      "template": "absolute_1k_gather",
+      "facts": {
+        "relationship": 1,
+        "anchor": 5,
+        "total": 6
+      },
+      "priority": "MEDIUM",
+      "gap": "R:1 — needs 1 more relationship (ratio/trend/comparison)",
+      "action": "npx tsx scripts/fact-hunt.ts add people-children"
+    },
+    {
+      "date": "2026-08-28",
+      "question_id": "gen-absolute_1k_gather-people-doctors",
+      "observation_id": "people-doctors",
+      "entity": "Doctors",
+      "domain": "healthcare",
+      "template": "absolute_1k_gather",
+      "facts": {
+        "relationship": 3,
+        "anchor": 1,
+        "total": 4
+      },
+      "priority": "MEDIUM",
+      "gap": "A:1 — needs 1 more anchor (concrete country figure)",
+      "action": "npx tsx scripts/fact-hunt.ts add people-doctors"
+    },
+    {
+      "date": "2026-08-29",
+      "question_id": "gen-absolute_1k_gather-people-elderly",
+      "observation_id": "people-elderly",
+      "entity": "People over 65",
+      "domain": "people",
+      "template": "absolute_1k_gather",
+      "facts": {
+        "relationship": 1,
+        "anchor": 1,
+        "total": 2
+      },
+      "priority": "MEDIUM",
+      "gap": "Only R:1 A:1 — needs 1R + 1A",
+      "action": "npx tsx scripts/fact-hunt.ts add people-elderly"
+    },
+    {
+      "date": "2026-08-30",
+      "question_id": "gen-absolute_1k_objects-transportation-flights-annual",
+      "observation_id": "transportation-flights-annual",
+      "entity": "Annual air travelers",
+      "domain": "transportation",
+      "template": "absolute_1k_objects",
+      "facts": {
+        "relationship": 2,
+        "anchor": 1,
+        "total": 3
+      },
+      "priority": "MEDIUM",
+      "gap": "A:1 — needs 1 more anchor (concrete country figure)",
+      "action": "npx tsx scripts/fact-hunt.ts add transportation-flights-annual"
+    },
+    {
+      "date": "2026-08-31",
+      "question_id": "gen-absolute_1k-education-school-age",
+      "observation_id": "education-school-age",
+      "entity": "Out-of-school children",
+      "domain": "education",
+      "template": "absolute_1k",
+      "facts": {
+        "relationship": 2,
+        "anchor": 1,
+        "total": 3
+      },
+      "priority": "MEDIUM",
+      "gap": "A:1 — needs 1 more anchor (concrete country figure)",
+      "action": "npx tsx scripts/fact-hunt.ts add education-school-age"
+    }
+  ]
+}
