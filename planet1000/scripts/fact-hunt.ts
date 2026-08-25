@@ -10,11 +10,16 @@
  *   npx tsx scripts/fact-hunt.ts rebuild
  *
  * Flags for non-interactive add:
- *   --type  / -t   r|a  (relationship or anchor)
+ *   --type  / -t   r|a|t  (relationship, anchor, or temporal)
  *   --fact  / -f   fact text (alias: --text)
  *   --source / -s  source URL (optional)
  *   --year  / -y   year (optional)
  *   --csv   / -c   path to bulk CSV file (observation_id,type,text,source,year)
+ *
+ * Fact types:
+ *   relationship  Hint 1 — comparative context (no world totals)
+ *   temporal      Hint 2 — trend / change over time
+ *   anchor        Hint 3 — concrete number for ONE region (best calibration before final guess)
  *
  * Source of truth:
  *   data/canonical-facts.csv  — all facts, durable record
@@ -30,9 +35,11 @@ import * as readline from 'readline';
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
+type FactType = 'relationship' | 'anchor' | 'temporal';
+
 interface Fact {
   text: string;
-  type: 'relationship' | 'anchor';
+  type: FactType;
 }
 
 interface Observation {
@@ -52,7 +59,7 @@ interface WorldModelData {
 
 interface CanonicalRow {
   observation_id: string;
-  type: 'relationship' | 'anchor';
+  type: FactType;
   text: string;
   source?: string;
   year?: string;
@@ -134,6 +141,22 @@ function csvEscape(value: string): string {
   return value;
 }
 
+// ── Type helpers ───────────────────────────────────────────────────────────────
+
+function parseFactType(raw: string): FactType | null {
+  const s = raw.toLowerCase();
+  if (s === 'relationship' || s.startsWith('r')) return 'relationship';
+  if (s === 'anchor'       || s.startsWith('a')) return 'anchor';
+  if (s === 'temporal'     || s.startsWith('t')) return 'temporal';
+  return null;
+}
+
+const TYPE_ABBR: Record<FactType, string> = {
+  relationship: 'R',
+  anchor:       'A',
+  temporal:     'T',
+};
+
 // ── Canonical CSV helpers ──────────────────────────────────────────────────────
 
 function appendToCanonical(rows: CanonicalRow[]): void {
@@ -166,32 +189,30 @@ function cmdStatus(): void {
 
   let totalRelationship = 0;
   let totalAnchor = 0;
+  let totalTemporal = 0;
   const needsAnchor: string[] = [];
   const needsRelationship: string[] = [];
+  const needsTemporal: string[] = [];
 
   for (const o of obs) {
     const rel = o.facts.filter(f => f.type === 'relationship').length;
     const anc = o.facts.filter(f => f.type === 'anchor').length;
+    const tmp = o.facts.filter(f => f.type === 'temporal').length;
     totalRelationship += rel;
     totalAnchor += anc;
+    totalTemporal += tmp;
     if (anc === 0) needsAnchor.push(o.id);
     if (rel === 0) needsRelationship.push(o.id);
+    if (tmp === 0) needsTemporal.push(o.id);
   }
 
   console.log('\nPlanet1000 Fact Universe');
   console.log('─'.repeat(40));
   console.log(`Questions:      ${obs.length}`);
-  console.log(`Relationship:   ${totalRelationship} facts`);
-  console.log(`Anchor:         ${totalAnchor} facts`);
-  console.log(`Total facts:    ${totalRelationship + totalAnchor}`);
-
-  if (needsAnchor.length > 0) {
-    console.log(`\nNeeds anchors (${needsAnchor.length}):`);
-    for (const id of needsAnchor) {
-      const o = obs.find(x => x.id === id)!;
-      console.log(`  ${id}  (${o.entity.domain} — ${o.entity.name})`);
-    }
-  }
+  console.log(`Relationship:   ${totalRelationship} facts  (Hint 1 — comparative context)`);
+  console.log(`Temporal:       ${totalTemporal} facts  (Hint 2 — trend over time)`);
+  console.log(`Anchor:         ${totalAnchor} facts  (Hint 3 — concrete scale number)`);
+  console.log(`Total facts:    ${totalRelationship + totalAnchor + totalTemporal}`);
 
   if (needsRelationship.length > 0) {
     console.log(`\nNeeds relationship (${needsRelationship.length}):`);
@@ -201,12 +222,34 @@ function cmdStatus(): void {
     }
   }
 
+  if (needsTemporal.length > 0) {
+    console.log(`\nNeeds temporal (${needsTemporal.length}):`);
+    for (const id of needsTemporal) {
+      const o = obs.find(x => x.id === id)!;
+      console.log(`  ${id}  (${o.entity.domain} — ${o.entity.name})`);
+    }
+  }
+
+  if (needsAnchor.length > 0) {
+    console.log(`\nNeeds anchor (${needsAnchor.length}):`);
+    for (const id of needsAnchor) {
+      const o = obs.find(x => x.id === id)!;
+      console.log(`  ${id}  (${o.entity.domain} — ${o.entity.name})`);
+    }
+  }
+
   console.log('\nAll observations:');
   for (const o of obs) {
     const rel = o.facts.filter(f => f.type === 'relationship').length;
     const anc = o.facts.filter(f => f.type === 'anchor').length;
-    const flag = anc === 0 ? ' ← needs anchor' : rel === 0 ? ' ← needs relationship' : '';
-    console.log(`  ${o.id.padEnd(40)} R:${rel} A:${anc}${flag}`);
+    const tmp = o.facts.filter(f => f.type === 'temporal').length;
+    const missing = [
+      rel === 0 ? 'needs-relationship' : '',
+      tmp === 0 ? 'needs-temporal' : '',
+      anc === 0 ? 'needs-anchor' : '',
+    ].filter(Boolean).join(', ');
+    const flag = missing ? ` ← ${missing}` : '';
+    console.log(`  ${o.id.padEnd(40)} R:${rel} T:${tmp} A:${anc}${flag}`);
   }
 
   console.log('');
@@ -226,17 +269,50 @@ function cmdHunt(obsId: string): void {
 
   const relCount = obs.facts.filter(f => f.type === 'relationship').length;
   const ancCount = obs.facts.filter(f => f.type === 'anchor').length;
+  const tmpCount = obs.facts.filter(f => f.type === 'temporal').length;
   const answer = per1k(obs, data.world_population);
 
   console.log(`\n── Fact Hunt: ${obs.entity.name} (${obs.id}) ──`);
   console.log(`Domain:   ${obs.entity.domain}`);
   console.log(`Metric:   ${obs.metric.name}`);
   console.log(`Answer:   ${answer.toFixed(1)} per 1,000 (DO NOT put this in any fact)`);
-  console.log(`Facts:    ${relCount} relationship, ${ancCount} anchor`);
+  console.log(`Facts:    ${relCount} relationship, ${tmpCount} temporal, ${ancCount} anchor`);
   console.log('');
 
-  const prompts: Array<{ type: 'relationship' | 'anchor'; prompt: string }> = [];
+  const prompts: Array<{ type: FactType; prompt: string }> = [];
 
+  // ── Relationship prompts ─────────────────────────────────────────────────
+  if (relCount < 2) {
+    prompts.push({
+      type: 'relationship',
+      prompt: `Find a ratio or comparison about "${obs.entity.name.toLowerCase()}" between two regions or income groups. ` +
+        `No world totals. Example: "[Region A] has X times more than [Region B]" or "X% of [group] in [place]..."`,
+    });
+  }
+
+  prompts.push({
+    type: 'relationship',
+    prompt: `Find an inequality or gender gap related to "${obs.entity.name.toLowerCase()}". ` +
+      `Who is disproportionately affected — women, children, rural populations, low-income groups?`,
+  });
+
+  // ── Temporal prompts ────────────────────────────────────────────────────
+  if (tmpCount < 1) {
+    prompts.push({
+      type: 'temporal',
+      prompt: `Find the historical trend for "${obs.entity.name.toLowerCase()}" — how has the figure changed over the past 20–50 years? ` +
+        `Include approximate values at two time points (e.g. "In 2000, X; today, Y"). ` +
+        `Mention the main driver of the change. Do NOT give the current world per-1k figure directly.`,
+    });
+  }
+
+  prompts.push({
+    type: 'temporal',
+    prompt: `Find which region improved most (or declined most) for "${obs.entity.name.toLowerCase()}" over the past two decades. ` +
+      `What drove that change? Describe the direction and rough magnitude without revealing the world total.`,
+  });
+
+  // ── Anchor prompts ──────────────────────────────────────────────────────
   if (ancCount < 2) {
     prompts.push({
       type: 'anchor',
@@ -251,30 +327,10 @@ function cmdHunt(obsId: string): void {
     });
   }
 
-  if (relCount < 2) {
-    prompts.push({
-      type: 'relationship',
-      prompt: `Find a ratio or comparison about "${obs.entity.name.toLowerCase()}" between two regions or income groups. ` +
-        `No world totals. Example: "[Region A] has X times more than [Region B]" or "X% of [group] in [place]..."`,
-    });
-  }
-
-  prompts.push({
-    type: 'relationship',
-    prompt: `Find a historical trend for "${obs.entity.name.toLowerCase()}" — how has it changed over 20–50 years? ` +
-      `What drove the change? Which regions improved most / least?`,
-  });
-
   prompts.push({
     type: 'anchor',
     prompt: `Find a South Asian country's figure for "${obs.entity.name.toLowerCase()}" ` +
       `(India, Bangladesh, Pakistan, or Nepal) — a specific number for that country only.`,
-  });
-
-  prompts.push({
-    type: 'relationship',
-    prompt: `Find an inequality or gender gap related to "${obs.entity.name.toLowerCase()}". ` +
-      `Who is disproportionately affected — women, children, rural populations, low-income groups?`,
   });
 
   console.log('Research prompts:');
@@ -344,13 +400,12 @@ async function cmdAdd(obsId: string, flags: AddFlags = {}): Promise<void> {
 
   // ── One-shot mode: all required flags provided ─────────────────────────────
   if (flags.type && flags.text) {
-    const rawType = flags.type.toLowerCase();
-    if (!rawType.startsWith('r') && !rawType.startsWith('a')) {
-      console.error('--type must be r (relationship) or a (anchor).');
+    const factType = parseFactType(flags.type);
+    if (!factType) {
+      console.error('--type must be r (relationship), a (anchor), or t (temporal).');
       rl.close();
       process.exit(1);
     }
-    const factType: 'relationship' | 'anchor' = rawType.startsWith('r') ? 'relationship' : 'anchor';
     const newFact: Fact = { text: flags.text, type: factType };
 
     console.log('Preview:');
@@ -370,28 +425,35 @@ async function cmdAdd(obsId: string, flags: AddFlags = {}): Promise<void> {
 
     const rel = data.observations[obsIndex].facts.filter(f => f.type === 'relationship').length;
     const anc = data.observations[obsIndex].facts.filter(f => f.type === 'anchor').length;
-    console.log(`\n✓ Added. ${obs.id} now has ${rel} relationship + ${anc} anchor facts.`);
+    const tmp = data.observations[obsIndex].facts.filter(f => f.type === 'temporal').length;
+    console.log(`\n✓ Added. ${obs.id} now has ${rel}R ${tmp}T ${anc}A facts.`);
     rl.close();
     return;
   }
 
   // ── Interactive mode ───────────────────────────────────────────────────────
-  let factType: 'relationship' | 'anchor';
+  let factType: FactType;
   while (true) {
-    const t = await ask('Fact type? [r]elationship or [a]nchor: ');
-    if (t.toLowerCase().startsWith('r')) { factType = 'relationship'; break; }
-    if (t.toLowerCase().startsWith('a')) { factType = 'anchor'; break; }
-    console.log('Please enter r or a.');
+    const t = await ask('Fact type? [r]elationship, [t]emporal, or [a]nchor: ');
+    const parsed = parseFactType(t);
+    if (parsed) { factType = parsed; break; }
+    console.log('Please enter r, t, or a.');
   }
 
   console.log('');
   if (factType === 'relationship') {
-    console.log('Relationship fact rules:');
+    console.log('Relationship fact rules (Hint 1 — comparative context):');
     console.log('  ✓ Compare regions, groups, income levels');
-    console.log('  ✓ Historical trends, ratios, proportions');
+    console.log('  ✓ Ratios, proportions, inequalities');
     console.log('  ✗ NO world total that divides to the per-1k answer');
+  } else if (factType === 'temporal') {
+    console.log('Temporal fact rules (Hint 2 — trend over time):');
+    console.log('  ✓ How the figure has changed over 20–50 years');
+    console.log('  ✓ Approximate values at two time points');
+    console.log('  ✓ Direction of change (rising, falling, stable)');
+    console.log('  ✗ NOT a direct statement of today\'s world per-1k figure');
   } else {
-    console.log('Anchor fact rules:');
+    console.log('Anchor fact rules (Hint 3 — concrete scale number):');
     console.log('  ✓ ONE specific number for ONE country/region');
     console.log('  ✓ Must be strictly less than the global total');
     console.log('  ✗ NOT the world total or any figure calculable to it');
@@ -422,7 +484,8 @@ async function cmdAdd(obsId: string, flags: AddFlags = {}): Promise<void> {
 
   const rel = data.observations[obsIndex].facts.filter(f => f.type === 'relationship').length;
   const anc = data.observations[obsIndex].facts.filter(f => f.type === 'anchor').length;
-  console.log(`\n✓ Added. ${obs.id} now has ${rel} relationship + ${anc} anchor facts.`);
+  const tmp = data.observations[obsIndex].facts.filter(f => f.type === 'temporal').length;
+  console.log(`\n✓ Added. ${obs.id} now has ${rel}R ${tmp}T ${anc}A facts.`);
 
   rl.close();
 }
@@ -447,7 +510,7 @@ async function cmdAddBulk(csvPath: string): Promise<void> {
     const r = rawRows[i];
     const lineNum = i + 2; // 1-based, +1 for header
     const obsId = r['observation_id']?.trim();
-    const type = r['type']?.trim().toLowerCase();
+    const rawType = r['type']?.trim().toLowerCase();
     const text = r['text']?.trim();
 
     if (!obsId || !validIds.has(obsId)) {
@@ -455,8 +518,9 @@ async function cmdAddBulk(csvPath: string): Promise<void> {
       skipCount++;
       continue;
     }
-    if (type !== 'relationship' && type !== 'anchor') {
-      console.warn(`  [skip row ${lineNum}] Invalid type: "${type}" (must be relationship or anchor)`);
+    const factType = rawType ? parseFactType(rawType) : null;
+    if (!factType) {
+      console.warn(`  [skip row ${lineNum}] Invalid type: "${rawType}" (must be relationship, temporal, or anchor)`);
       skipCount++;
       continue;
     }
@@ -468,7 +532,7 @@ async function cmdAddBulk(csvPath: string): Promise<void> {
 
     valid.push({
       observation_id: obsId,
-      type: type as 'relationship' | 'anchor',
+      type: factType,
       text,
       source: r['source']?.trim() || undefined,
       year: r['year']?.trim() || undefined,
@@ -526,7 +590,8 @@ async function cmdAddBulk(csvPath: string): Promise<void> {
     const obs = data.observations.find(o => o.id === obsId)!;
     const rel = obs.facts.filter(f => f.type === 'relationship').length;
     const anc = obs.facts.filter(f => f.type === 'anchor').length;
-    console.log(`  ${obsId}: +${rows.length} (now ${rel}R ${anc}A)`);
+    const tmp = obs.facts.filter(f => f.type === 'temporal').length;
+    console.log(`  ${obsId}: +${rows.length} (now ${rel}R ${tmp}T ${anc}A)`);
   }
   console.log(`\n✓ Done. Added ${valid.length} facts.`);
 }
@@ -551,7 +616,7 @@ function cmdRebuild(): void {
     const r = rawRows[i];
     const lineNum = i + 2;
     const obsId = r['observation_id']?.trim();
-    const type = r['type']?.trim().toLowerCase();
+    const rawType = r['type']?.trim().toLowerCase();
     const text = r['text']?.trim();
 
     if (!obsId || !validIds.has(obsId)) {
@@ -559,8 +624,9 @@ function cmdRebuild(): void {
       skipCount++;
       continue;
     }
-    if (type !== 'relationship' && type !== 'anchor') {
-      console.warn(`  [skip row ${lineNum}] Invalid type: "${type}"`);
+    const factType = rawType ? parseFactType(rawType) : null;
+    if (!factType) {
+      console.warn(`  [skip row ${lineNum}] Invalid type: "${rawType}"`);
       skipCount++;
       continue;
     }
@@ -572,7 +638,7 @@ function cmdRebuild(): void {
 
     valid.push({
       observation_id: obsId,
-      type: type as 'relationship' | 'anchor',
+      type: factType,
       text,
       source: r['source']?.trim() || undefined,
       year: r['year']?.trim() || undefined,
@@ -621,8 +687,6 @@ function listObservations(): void {
 
 const [, , command, ...cmdArgs] = process.argv;
 
-// For 'add', the first positional arg may be an obsId or a flag
-// Parse flags first to detect --csv mode
 const addFlags = command === 'add' ? parseAddFlags(cmdArgs) : {};
 const obsId = command === 'add' && cmdArgs[0] && !cmdArgs[0].startsWith('-') ? cmdArgs[0] : undefined;
 const addRest = obsId ? cmdArgs.slice(1) : cmdArgs;
@@ -671,8 +735,14 @@ switch (command) {
     console.log('  add  --csv <path>             Bulk-add facts from a CSV file');
     console.log('  rebuild                       Regenerate world-model.json from canonical-facts.csv');
     console.log('');
+    console.log('Fact types (used as Hint 1 → 2 → 3 in the 4-guess game):');
+    console.log('  r / relationship   Hint 1 — comparative context (no world totals)');
+    console.log('  t / temporal       Hint 2 — trend / change over time');
+    console.log('  a / anchor         Hint 3 — concrete number for ONE region (best calibration)');
+    console.log('');
     console.log('One-shot add (skips prompts):');
     console.log('  add [id] --type r --fact "..." [--source "..."] [--year 2023]');
+    console.log('  add [id]  -t     t  -f      "..."  [-s          "..."]  [-y    2023]');
     console.log('  add [id]  -t     a  -f      "..."  [-s          "..."]  [-y    2023]');
     console.log('');
     console.log('Bulk add CSV format (columns: observation_id,type,text,source,year):');
@@ -686,7 +756,9 @@ switch (command) {
     console.log('  npx tsx scripts/fact-hunt.ts status');
     console.log('  npx tsx scripts/fact-hunt.ts hunt people-children');
     console.log('  npx tsx scripts/fact-hunt.ts add people-children');
+    console.log('  npx tsx scripts/fact-hunt.ts add people-children -t t -f "In 2000 it was X; today it is Y due to..."');
     console.log('  npx tsx scripts/fact-hunt.ts add people-children -t r -f "Sub-Saharan Africa has 3x more..." -s "https://..." -y 2021');
+    console.log('  npx tsx scripts/fact-hunt.ts add people-children -t a -f "In Niger, approximately X..." -s "https://..."');
     console.log('  npx tsx scripts/fact-hunt.ts add --csv scripts/input/batch.csv');
     console.log('  npx tsx scripts/fact-hunt.ts rebuild');
     console.log('');

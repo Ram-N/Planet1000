@@ -1,20 +1,22 @@
 /**
  * Proximity-based scoring: rewards closeness to the actual answer.
  *
- * guessNumber controls the maximum points available:
- *   1 (cold, no hints)     → up to 100 pts
- *   2 (after hint 1)       → up to  40 pts
- *   3 (after hint 2)       → up to  15 pts
+ * guessNumber controls the maximum points available (weekly 4-guess system):
+ *   1 (cold, no hints)          → up to 100 pts
+ *   2 (after relationship hint) → up to  75 pts
+ *   3 (after temporal hint)     → up to  50 pts
+ *   4 (after anchor hint)       → up to  25 pts
  *
+ * Max possible score per puzzle = 250 pts.
  * Defaults to guessNumber=1 for backward compatibility with existing game pages.
  */
 
-const MAX_BY_GUESS = { 1: 100, 2: 40, 3: 15 } as const;
+const MAX_BY_GUESS = { 1: 100, 2: 75, 3: 50, 4: 25 } as const;
 
 export function scoreEstimate(
   guess: number,
   actual: number,
-  guessNumber: 1 | 2 | 3 = 1,
+  guessNumber: 1 | 2 | 3 | 4 = 1,
 ): { points: number; label: string; percentOff: number } {
   const maxPoints = MAX_BY_GUESS[guessNumber];
 

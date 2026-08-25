@@ -1,15 +1,11 @@
 /**
- * Hint Engine for the Planet1000 adaptive 3-guess challenge.
+ * Hint Engine for the Planet1000 weekly 4-guess challenge.
  *
- * THINK phase (guessNumber=1): no directional preamble — show relationship facts
- *   (comparisons, ratios, historical trends; never a world total that divides to the answer).
- * REFINE phase (guessNumber=2): directional preamble + one anchor fact
- *   (a partial number for one region/group, not the global total).
+ * Hint 1 (after Guess 1): relationship facts — comparative context, no world totals
+ * Hint 2 (after Guess 2): temporal facts — direction and trend over time
+ * Hint 3 (after Guess 3): anchor facts — concrete numerical scale, best calibration before final guess
  *
- * Fact selection is type-based:
- *   relationship → preferred for THINK phase
- *   anchor       → preferred for REFINE phase
- *   Either type → fallback if preferred type is exhausted
+ * Fact selection is type-based, with fallback to any unused fact.
  */
 
 import type { Fact } from '@/types/world-model';
@@ -55,7 +51,6 @@ function buildPreamble(guess: number, actual: number): string {
 
   const ratio = guess / actual;
   const direction = guess > actual ? 'high' : 'low';
-  // How many times off (always ≥ 1)
   const r = ratio > 1 ? ratio : 1 / ratio;
 
   if (r > 10) return `Your estimate is dramatically too ${direction}.`;
@@ -69,19 +64,28 @@ export function selectHint(
   guess: number,
   actual: number,
   facts: Fact[],
-  guessNumber: 1 | 2,
+  guessNumber: 1 | 2 | 3,
   usedIndices: number[],
 ): HintResponse {
   if (guessNumber === 1) {
-    // THINK phase: no preamble; prefer relationship facts (2 of them)
+    // After Guess 1: relationship facts — broad comparative context, no preamble
     const selectedIndices = pickByType(facts, 'relationship', usedIndices, 2);
     return {
       preamble: null,
       facts: selectedIndices.map((i) => facts[i].text),
       selectedIndices,
     };
+  } else if (guessNumber === 2) {
+    // After Guess 2: temporal facts — direction and trend over time
+    const preamble = buildPreamble(guess, actual);
+    const selectedIndices = pickByType(facts, 'temporal', usedIndices, 1);
+    return {
+      preamble,
+      facts: selectedIndices.map((i) => facts[i].text),
+      selectedIndices,
+    };
   } else {
-    // REFINE phase: directional preamble + 1 anchor fact
+    // After Guess 3: anchor facts — concrete number, best calibration before final guess
     const preamble = buildPreamble(guess, actual);
     const selectedIndices = pickByType(facts, 'anchor', usedIndices, 1);
     return {

@@ -3,8 +3,8 @@ export type GeographyLevel = 'world' | 'continent' | 'country' | 'state' | 'city
 export type TimePeriodType = 'year' | 'quarter' | 'month';
 export type ConfidenceLevel = 'high' | 'medium' | 'low';
 
-/** Hint 1 facts show relationships/comparisons (no world totals). Hint 2 facts show a partial anchor number for one region/group. */
-export type FactType = 'relationship' | 'anchor';
+/** Hint 1 = relationship (comparisons). Hint 2 = temporal (trend over time). Hint 3 = anchor (concrete scale number). */
+export type FactType = 'relationship' | 'anchor' | 'temporal';
 
 export interface Fact {
   text: string;

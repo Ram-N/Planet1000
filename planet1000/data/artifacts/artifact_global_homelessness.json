@@ -1,0 +1,137 @@
+{
+  "id": "artifact_global_homelessness",
+  "title": "Global Homelessness",
+  "description": "How homelessness is distributed across the world, scaled to a global village of 1,000 people.",
+  "domain": "housing",
+  "data_year": 2024,
+  "updated_at": "2026-08-25",
+  "sections": [
+    {
+      "type": "bar_chart",
+      "heading": "Homelessness Distribution in a Global Village of 1,000 People",
+      "caption": "Here is the visual breakdown of how continental homelessness translates to a global village of 1,000 people, calculated using a world baseline of 8 billion people.",
+      "x_label": "Number of People (per 1,000 Global Citizens)",
+      "bars": [
+        { "label": "Africa",        "value": 6.75 },
+        { "label": "Asia",          "value": 5.00 },
+        { "label": "South America", "value": 1.56 },
+        { "label": "Europe",        "value": 0.14 },
+        { "label": "North America", "value": 0.11 }
+      ]
+    },
+    {
+      "type": "table",
+      "columns": ["Continent", "Primary Data Definition", "Estimated Scale", "Main Drivers", "Representation in a World of 1,000 People"],
+      "rows": [
+        {
+          "cells": [
+            "Africa",
+            "Includes street homelessness, displaced persons, and severe informal structures",
+            "54M+",
+            "Rapid urbanization, conflict, infrastructure gaps",
+            "6.75 people"
+          ]
+        },
+        {
+          "cells": [
+            "Asia",
+            "Tracks street populations, refugee camps, and dense urban slums",
+            "40M+",
+            "Population density, natural disasters, economic inequality",
+            "5.00 people"
+          ]
+        },
+        {
+          "cells": [
+            "South America",
+            "Measures street homelessness, favelas/informal housing, and migrant encampments",
+            "10M–15M+",
+            "Hyperinflation, regional refugee crises, housing deficits",
+            "1.25 to 1.88 people"
+          ]
+        },
+        {
+          "cells": [
+            "Europe",
+            "Focuses on rough sleepers and individuals in emergency shelters",
+            "1M–1.2M",
+            "High city rents, lack of affordable housing, economic pressures",
+            "0.125 to 0.150 people"
+          ]
+        },
+        {
+          "cells": [
+            "North America",
+            "Tracks single-night snapshots of sheltered and unsheltered street populations",
+            "850,000+",
+            "Extreme housing affordability crises, inflation, weak social safety nets",
+            "0.106 people"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "bullet_list",
+      "heading": "Infographic Breakdown: The Global Village of 1,000 People",
+      "items": [
+        {
+          "icon": "🌍",
+          "label": "Africa",
+          "value": "6.75 people",
+          "note": "out of 1,000 are homeless or living in severe informal precarity."
+        },
+        {
+          "icon": "🌏",
+          "label": "Asia",
+          "value": "5.00 people",
+          "note": "out of 1,000 lack adequate, stable shelter."
+        },
+        {
+          "icon": "🌎",
+          "label": "South America",
+          "value": "1.56 people",
+          "note": "out of 1,000 (midpoint) are affected by hyperinflation, regional displacement, or housing deficits."
+        },
+        {
+          "icon": "🇪🇺",
+          "label": "Europe",
+          "value": "0.14 people",
+          "note": "out of 1,000 (midpoint) are utilizing emergency shelter systems or sleeping rough."
+        },
+        {
+          "icon": "🇨🇦",
+          "label": "North America",
+          "value": "0.11 people",
+          "note": "out of 1,000 are unhoused on any given night."
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "heading": "Key Data Sources",
+      "sources": [
+        {
+          "title": "United Nations Human Settlements Programme (UN-Habitat)",
+          "description": "Provides the foundational baseline estimates for global housing deficits, slum populations, and informal settlements across Africa, Asia, and Latin America.",
+          "url": "https://unhabitat.org"
+        },
+        {
+          "title": "European Federation of National Organisations Working with the Homeless (FEANTSA)",
+          "description": "Publishes the annual Overview of Housing Exclusion in Europe, which tracks shelter usage and rough sleeping across the EU and the UK.",
+          "url": "https://www.feantsa.org"
+        },
+        {
+          "title": "U.S. Dept. of Housing and Urban Development (HUD) Annual Homeless Assessment Report (AHAR)",
+          "description": "Supplies the rigid single-night Point-in-Time (PIT) data for the North American baseline.",
+          "url": "https://www.huduser.gov/portal/datasets/ahar.html"
+        },
+        {
+          "title": "Internal Displacement Monitoring Centre (IDMC)",
+          "description": "Offers updated tracking on numbers of conflict and climate-displaced individuals living in temporary encampments, heavily influencing the data for sub-Saharan Africa, Syria, and South American border regions.",
+          "url": "https://www.internal-displacement.org"
+        }
+      ]
+    }
+  ],
+  "related_artifact_ids": []
+}

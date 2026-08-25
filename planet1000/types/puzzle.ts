@@ -1,0 +1,72 @@
+/** A single fact attached to a weekly puzzle (with optional source attribution). */
+export interface PuzzleFact {
+  text: string;
+  source_url?: string;
+  source_label?: string;
+}
+
+/** A playable weekly Planet 1000 puzzle. */
+export interface WeeklyPuzzle {
+  id: string;            // e.g. "puzzle_2026_w35"
+  week_id: string;       // ISO week: "2026-W35"
+  publish_date: string;  // "YYYY-MM-DD"
+  domain: string;
+  question: string;
+  answer_value_1k: number;
+  answer_unit: string;
+  answer_explanation: string;
+  /** Hint 1 (shown after Guess 1): comparative context */
+  relationship_fact: PuzzleFact;
+  /** Hint 2 (shown after Guess 2): trend / change over time */
+  temporal_fact: PuzzleFact;
+  /** Hint 3 (shown after Guess 3): concrete scale reference */
+  anchor_fact: PuzzleFact;
+  /** References a KnowledgeArtifact by id */
+  artifact_id: string;
+}
+
+// ── Summary / Knowledge Artifact types ────────────────────────────────────────
+
+export interface BulletItem {
+  icon?: string;
+  label: string;
+  value: string;
+  note?: string;
+}
+
+export interface ChartBar {
+  label: string;
+  value: number;
+}
+
+export interface TableRow {
+  cells: string[];
+}
+
+export interface ArtifactSource {
+  title: string;
+  description: string;
+  url?: string;
+}
+
+export type SummarySection =
+  | { type: 'text'; heading?: string; body: string }
+  | { type: 'bullet_list'; heading: string; items: BulletItem[] }
+  | { type: 'bar_chart'; heading: string; caption?: string; bars: ChartBar[]; x_label: string }
+  | { type: 'table'; heading?: string; columns: string[]; rows: TableRow[] }
+  | { type: 'sources'; heading: string; sources: ArtifactSource[] };
+
+/**
+ * A reusable body of researched knowledge that can be referenced by multiple puzzles.
+ * Each puzzle's summary page renders one of these.
+ */
+export interface KnowledgeArtifact {
+  id: string;           // e.g. "artifact_global_homelessness"
+  title: string;
+  description: string;
+  domain: string;
+  data_year: number;
+  updated_at: string;
+  sections: SummarySection[];
+  related_artifact_ids: string[];
+}

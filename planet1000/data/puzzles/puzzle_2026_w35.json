@@ -1,0 +1,25 @@
+{
+  "id": "puzzle_2026_w35",
+  "week_id": "2026-W35",
+  "publish_date": "2026-08-25",
+  "domain": "housing",
+  "question": "Out of every 1,000 people on Earth, how many are homeless or living without adequate shelter?",
+  "answer_value_1k": 14,
+  "answer_unit": "people",
+  "answer_explanation": "Roughly 14 out of every 1,000 people worldwide lack adequate shelter. That represents around 112 million people — a figure that spans street homelessness, displacement camps, and severe informal housing across every continent. The true scale is likely higher, as many countries lack consistent counting methods.",
+  "relationship_fact": {
+    "text": "Africa accounts for the largest share of global homelessness — more than 6 out of every 1,000 global citizens experience homelessness or severe housing precarity there, compared to less than 1 per 1,000 in Europe or North America.",
+    "source_label": "UN-Habitat",
+    "source_url": "https://unhabitat.org"
+  },
+  "temporal_fact": {
+    "text": "Global homelessness has worsened since 2000. Estimates suggested around 100 million people lacked adequate shelter then; today that figure exceeds 150 million, driven by rapid urbanisation, conflict displacement, and climate-related housing loss.",
+    "source_label": "IDMC / UN-Habitat"
+  },
+  "anchor_fact": {
+    "text": "There are approximately 8 billion people on Earth. Even a tiny fraction — say, 0.01% — represents 800,000 people. The homeless population is estimated at well over 100 million, which is roughly 1.4% of the world population.",
+    "source_label": "UN World Population",
+    "source_url": "https://www.un.org/en/global-issues/population"
+  },
+  "artifact_id": "artifact_global_homelessness"
+}
