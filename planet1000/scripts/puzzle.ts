@@ -79,6 +79,16 @@ function artifactExists(id: string): boolean {
 
 // ── ISO week helpers ──────────────────────────────────────────────────────────
 
+function getCurrentISOWeek(): { year: number; week: number } {
+  const d = new Date();
+  const utc = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  const dayOfWeek = utc.getUTCDay() || 7;
+  utc.setUTCDate(utc.getUTCDate() + 4 - dayOfWeek);
+  const yearStart = new Date(Date.UTC(utc.getUTCFullYear(), 0, 1));
+  const week = Math.ceil(((utc.getTime() - yearStart.getTime()) / 86400000 + 1) / 7);
+  return { year: utc.getUTCFullYear(), week };
+}
+
 function getMondayOfISOWeek(year: number, week: number): Date {
   const jan4 = new Date(Date.UTC(year, 0, 4));
   const dayOfWeek = jan4.getUTCDay() || 7;
@@ -143,11 +153,45 @@ function cmdStatus(): void {
 
 // ── SHOW command ──────────────────────────────────────────────────────────────
 
-function cmdShow(id: string): void {
+function cmdShowNext(count: number): void {
+  const { year, week } = getCurrentISOWeek();
+  console.log(`\nNext ${count} puzzle${count === 1 ? '' : 's'} from current week (${year}-W${String(week).padStart(2, '0')}):\n`);
+
+  for (let i = 1; i <= count; i++) {
+    let w = week + i;
+    let y = year;
+    if (w > 52) { w -= 52; y++; }
+    const id = puzzleIdFromWeek(y, w);
+    const { puzzle, error } = loadPuzzle(id);
+    if (error || !puzzle) {
+      const monday = getMondayOfISOWeek(y, w);
+      console.log(`── ${y}-W${String(w).padStart(2, '0')}  ${formatDate(monday)}  [${id}]`);
+      console.log(`   ✗ Not created yet — run: npm run puzzle -- new ${y}-W${String(w).padStart(2, '0')}`);
+      console.log('');
+    } else {
+      printPuzzle(puzzle);
+    }
+  }
+}
+
+function cmdShow(id: string, rest: string[] = []): void {
   if (!id) {
     console.error('\nUsage: puzzle show <puzzle-id>');
-    console.error('  Example: puzzle show puzzle_2026_w35');
+    console.error('       puzzle show next <n>');
+    console.error('  Examples: puzzle show puzzle_2026_w35');
+    console.error('            puzzle show next 3');
     process.exit(1);
+  }
+
+  // Handle "show next N"
+  if (id === 'next') {
+    const n = parseInt(rest[0] ?? '1', 10);
+    if (!isFinite(n) || n < 1) {
+      console.error('\n✗ "puzzle show next <n>" requires a positive number');
+      process.exit(1);
+    }
+    cmdShowNext(n);
+    return;
   }
 
   const { puzzle, error } = loadPuzzle(id);
@@ -158,6 +202,10 @@ function cmdShow(id: string): void {
     process.exit(1);
   }
 
+  printPuzzle(puzzle);
+}
+
+function printPuzzle(puzzle: WeeklyPuzzle): void {
   const artifactOk = artifactExists(puzzle.artifact_id);
 
   console.log('');
@@ -290,7 +338,7 @@ switch (command) {
     break;
 
   case 'show':
-    cmdShow(cmdArgs[0]);
+    cmdShow(cmdArgs[0], cmdArgs.slice(1));
     break;
 
   case 'new':
