@@ -11,7 +11,9 @@ import { getDailyQuestions, getStatById } from '@/lib/questions';
 import { scoreEstimate } from '@/lib/scoring';
 import { selectHint, type HintResponse } from '@/lib/hint-engine';
 import { addScore } from '@/lib/stats';
+import { worldModel } from '@/lib/world-model-instance';
 import type { Question, WorldStat } from '@/types';
+import type { Source, ObservationSummary } from '@/types/world-model';
 
 // ─── Phase type ──────────────────────────────────────────────────────────────
 // estimate  → player makes first cold guess
@@ -266,6 +268,23 @@ export default function Planet1000Page() {
                   pts1={pts1}
                   pts2={pts2}
                   pts3={pts3}
+                  primarySource={(() => {
+                    const obs = worldModel.getObservationById(currentStat.id);
+                    return obs ? worldModel.getSourceById(obs.source_id) : null;
+                  })()}
+                  factSources={(() => {
+                    const obs = worldModel.getObservationById(currentStat.id);
+                    if (!obs) return [];
+                    const seen = new Set<string>();
+                    return obs.facts
+                      .filter((f) => f.source?.trim())
+                      .map((f) => f.source!)
+                      .filter((url) => { if (seen.has(url)) return false; seen.add(url); return true; });
+                  })()}
+                  summary={(() => {
+                    const obs = worldModel.getObservationById(currentStat.id);
+                    return obs?.summary ?? null;
+                  })()}
                 />
                 <Button size="lg" className="w-full" onClick={handleNext}>
                   {qIndex + 1 < questions.length ? 'Next Question →' : 'See Results →'}
@@ -321,18 +340,26 @@ function RevealContent({
   pts1,
   pts2,
   pts3,
+  primarySource,
+  factSources,
+  summary,
 }: {
   stat: WorldStat;
   guess3: number;
   pts1: number;
   pts2: number;
   pts3: number;
+  primarySource: Source | null;
+  factSources: string[];
+  summary: ObservationSummary | null;
 }) {
   const actual     = stat.value_1k;
   const total      = pts1 + pts2 + pts3;
   const guessWidth = Math.min(100, (guess3 / 1000) * 100);
   const actualWidth = Math.min(100, (actual / 1000) * 100);
   const percentOff = actual === 0 ? 0 : Math.abs(guess3 - actual) / actual;
+
+  const hasExploreMore = primarySource || factSources.length > 0 || summary;
 
   return (
     <motion.div
@@ -370,6 +397,89 @@ function RevealContent({
         <h4 className="font-semibold text-emerald-800 mb-1">Did you know?</h4>
         <p className="text-emerald-900 text-sm leading-relaxed">{stat.explanation}</p>
       </div>
+
+      {/* Explore More */}
+      {hasExploreMore && (
+        <div className="border-t border-slate-200 pt-4 space-y-3">
+          <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Explore more</p>
+
+          {/* Primary source — Phase 1 */}
+          {primarySource && (
+            <div className="flex items-baseline gap-2 text-sm">
+              <span className="text-slate-500 shrink-0">Primary data:</span>
+              <a
+                href={primarySource.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:underline font-medium"
+              >
+                {primarySource.title} ↗
+              </a>
+            </div>
+          )}
+
+          {/* Fact reference links — Phase 2 */}
+          {factSources.length > 0 && (
+            <div className="flex items-baseline gap-2 text-sm flex-wrap">
+              <span className="text-slate-500 shrink-0">References:</span>
+              {factSources.map((url, i) => {
+                let label: string;
+                try { label = new URL(url).hostname.replace(/^www\./, ''); } catch { label = url; }
+                return (
+                  <a
+                    key={i}
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:underline"
+                  >
+                    [{label}] ↗
+                  </a>
+                );
+              })}
+            </div>
+          )}
+
+          {/* Continent summary table — Phase 3 */}
+          {summary && (
+            <div className="mt-2 space-y-2">
+              <div className="flex items-baseline gap-2 text-sm">
+                <span className="text-slate-500">Regional breakdown:</span>
+                <a
+                  href={summary.source_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:underline text-xs"
+                >
+                  {summary.source_label} ↗
+                </a>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-xs border-collapse">
+                  <thead>
+                    <tr className="text-left text-slate-500 border-b border-slate-200">
+                      <th className="pb-1 pr-3 font-medium">Region</th>
+                      <th className="pb-1 pr-3 font-medium">Estimate</th>
+                      <th className="pb-1 pr-3 font-medium">Per 1k</th>
+                      <th className="pb-1 font-medium">Key drivers</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {summary.rows.map((row, i) => (
+                      <tr key={i} className="border-b border-slate-100 last:border-0">
+                        <td className="py-1 pr-3 font-medium text-slate-700">{row.region}</td>
+                        <td className="py-1 pr-3 text-slate-600">{row.estimate}</td>
+                        <td className="py-1 pr-3 text-slate-600">{row.per_1k}</td>
+                        <td className="py-1 text-slate-500">{row.drivers}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
     </motion.div>
   );
 }

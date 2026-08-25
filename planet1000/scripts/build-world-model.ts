@@ -12,7 +12,7 @@ const SOURCE_DIR = path.join(__dirname, '../data/source');
 const OUTPUT_FILE = path.join(__dirname, '../data/generated/world-model.json');
 
 // Ordered priority for fact types when selecting hints
-const FACT_TYPE_ORDER = ['scale_anchor', 'geographic', 'inequality', 'comparison', 'trend', 'general'];
+const FACT_TYPE_ORDER = ['relationship', 'anchor'];
 
 const WORLD_POPULATION = 10_000_000_000;
 
@@ -70,10 +70,11 @@ function parseCSVLine(line: string): string[] {
 // Load all CSVs
 // ---------------------------------------------------------------------------
 
-interface FactRow { id: string; observation_id: string; type: string; text: string; }
+interface FactRow { observation_id: string; type: string; text: string; source?: string; year?: string; }
+interface FactObject { text: string; type: string; source?: string; year?: number; }
 
-function loadFacts(): Map<string, string[]> {
-  const factsPath = path.join(SOURCE_DIR, 'facts.csv');
+function loadFacts(): Map<string, FactObject[]> {
+  const factsPath = path.join(__dirname, '../data/canonical-facts.csv');
   if (!fs.existsSync(factsPath)) return new Map();
 
   const rows = parseCSV(factsPath) as unknown as FactRow[];
@@ -87,17 +88,36 @@ function loadFacts(): Map<string, string[]> {
     grouped.get(obsId)!.push(row);
   }
 
-  // Sort each group by fact type priority, then return just the text strings
-  const result = new Map<string, string[]>();
+  // Sort each group by fact type priority, then return fact objects
+  const result = new Map<string, FactObject[]>();
   for (const [obsId, facts] of grouped) {
     const sorted = facts.slice().sort((a, b) => {
       const ai = FACT_TYPE_ORDER.indexOf(a.type ?? '');
       const bi = FACT_TYPE_ORDER.indexOf(b.type ?? '');
       return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
     });
-    result.set(obsId, sorted.map((f) => f.text));
+    result.set(obsId, sorted.map((f) => {
+      const obj: FactObject = { text: f.text, type: f.type };
+      if (f.source?.trim()) obj.source = f.source.trim();
+      if (f.year?.trim()) obj.year = parseInt(f.year.trim(), 10);
+      return obj;
+    }));
   }
   return result;
+}
+
+// ---------------------------------------------------------------------------
+// Load optional summaries.json
+// ---------------------------------------------------------------------------
+
+interface SummaryRow { region: string; estimate: string; per_1k: number; drivers: string; }
+interface Summary { observation_id: string; source_label: string; source_url: string; rows: SummaryRow[]; }
+
+function loadSummaries(): Map<string, Summary> {
+  const summariesPath = path.join(SOURCE_DIR, 'summaries.json');
+  if (!fs.existsSync(summariesPath)) return new Map();
+  const raw = JSON.parse(fs.readFileSync(summariesPath, 'utf-8')) as Summary[];
+  return new Map(raw.map((s) => [s.observation_id, s]));
 }
 
 function loadData(): ParsedData {
@@ -129,10 +149,11 @@ interface Observation {
   id: string; entity_id: string; metric_id: string; geography_id: string;
   time_period_id: string; population_group_id: string; value: number;
   unit_id: string; source_id: string; confidence: string; notes: string;
-  entity: Entity; metric: Metric; unit: Unit; facts: string[];
+  entity: Entity; metric: Metric; unit: Unit; facts: FactObject[];
+  summary?: Summary;
 }
 
-function buildWorldModel(data: ParsedData, factsMap: Map<string, string[]>) {
+function buildWorldModel(data: ParsedData, factsMap: Map<string, FactObject[]>, summariesMap: Map<string, Summary>) {
   const entities = data.entities.map((r) => ({
     id: String(r.id), name: String(r.name), domain: String(r.domain), description: String(r.description),
   })) as Entity[];
@@ -196,6 +217,7 @@ function buildWorldModel(data: ParsedData, factsMap: Map<string, string[]>) {
       metric,
       unit,
       facts: factsMap.get(obsId) ?? [],
+      ...(summariesMap.has(obsId) ? { summary: summariesMap.get(obsId) } : {}),
     } as Observation;
   });
 
@@ -226,10 +248,15 @@ function main() {
   console.log(`   Loaded: ${data.entities.length} entities, ${data.metrics.length} metrics, ${data.observations.length} observations\n`);
 
   // Load facts
-  console.log('📝 Loading facts.csv...');
+  console.log('📝 Loading canonical-facts.csv...');
   const factsMap = loadFacts();
   const totalFacts = Array.from(factsMap.values()).reduce((sum, arr) => sum + arr.length, 0);
   console.log(`   Loaded: ${totalFacts} facts for ${factsMap.size} observations\n`);
+
+  // Load summaries
+  console.log('📊 Loading summaries.json...');
+  const summariesMap = loadSummaries();
+  console.log(`   Loaded: ${summariesMap.size} summaries\n`);
 
   // Validate
   console.log('🔍 Validating data...');
@@ -243,7 +270,7 @@ function main() {
 
   // Build output
   console.log('🔨 Building world-model.json...');
-  const worldModel = buildWorldModel(data, factsMap);
+  const worldModel = buildWorldModel(data, factsMap, summariesMap);
 
   // Ensure output directory exists
   const outputDir = path.dirname(OUTPUT_FILE);

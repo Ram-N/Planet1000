@@ -1,5 +1,5 @@
 import type {
-  Observation, ObservationQuery, ScaleArgs, DerivedValue, WorldModel,
+  Observation, ObservationQuery, ScaleArgs, DerivedValue, WorldModel, Source,
 } from '@/types/world-model';
 
 const SCALABLE_MEASURE_TYPES = new Set(['stock', 'flow']);
@@ -7,10 +7,12 @@ const SCALABLE_MEASURE_TYPES = new Set(['stock', 'flow']);
 export class WorldModelImpl implements WorldModel {
   private readonly observations: Observation[];
   private readonly worldPopulation: number;
+  private readonly sourcesMap: Map<string, Source>;
 
-  constructor(observations: Observation[], worldPopulation: number) {
+  constructor(observations: Observation[], worldPopulation: number, sources: Source[] = []) {
     this.observations = observations;
     this.worldPopulation = worldPopulation;
+    this.sourcesMap = new Map(sources.map((s) => [s.id, s]));
   }
 
   getWorldPopulation(): number {
@@ -89,5 +91,10 @@ export class WorldModelImpl implements WorldModel {
   /** Return the observation for world population (used as reference denominator). */
   getObservationById(id: string): Observation | null {
     return this.queryObservations({ id })[0] ?? null;
+  }
+
+  /** Look up a source by its id. Returns null if not found. */
+  getSourceById(id: string): Source | null {
+    return this.sourcesMap.get(id) ?? null;
   }
 }

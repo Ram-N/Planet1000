@@ -6,4 +6,4 @@ import worldModelData from '@/data/generated/world-model.json';
 
 const data = worldModelData as unknown as WorldModelData;
 
-export const worldModel = new WorldModelImpl(data.observations, data.world_population);
+export const worldModel = new WorldModelImpl(data.observations, data.world_population, data.sources);

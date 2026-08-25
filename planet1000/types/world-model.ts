@@ -9,6 +9,10 @@ export type FactType = 'relationship' | 'anchor';
 export interface Fact {
   text: string;
   type: FactType;
+  /** URL of the source document for this fact (from canonical-facts.csv column 4) */
+  source?: string;
+  /** Publication year of the source */
+  year?: number;
 }
 
 export interface Entity {
@@ -61,6 +65,20 @@ export interface Source {
   retrieval_date: string;
 }
 
+export interface SummaryRow {
+  region: string;
+  estimate: string;
+  per_1k: number;
+  drivers: string;
+}
+
+export interface ObservationSummary {
+  observation_id: string;
+  source_label: string;
+  source_url: string;
+  rows: SummaryRow[];
+}
+
 export interface Observation {
   id: string;
   entity_id: string;
@@ -81,6 +99,8 @@ export interface Observation {
   unit: Unit;
   /** Curated facts for hint selection. relationship facts → Hint 1 (no world totals). anchor facts → Hint 2 (partial regional number). */
   facts: Fact[];
+  /** Optional per-continent breakdown, populated from summaries.json when available */
+  summary?: ObservationSummary;
 }
 
 export interface ScaleArgs {
@@ -117,6 +137,8 @@ export interface WorldModel {
    *  For rate/share: value (already per-person or fractional)
    */
   per1k(obs: Observation): number;
+  /** Look up a source by its id (e.g. 'world-bank'). Returns null if not found. */
+  getSourceById(id: string): Source | null;
 }
 
 export interface WorldModelData {
