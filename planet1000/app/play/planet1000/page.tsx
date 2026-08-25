@@ -118,25 +118,25 @@ export default function Planet1000Page() {
       {/* 4-segment guess progress bar */}
       {phase !== 'revealed' && (
         <div className="flex gap-2">
-          {(['Guess 1', 'Guess 2', 'Guess 3', 'Guess 4'] as const).map((label, i) => {
+          {([
+            { guess: 'Guess 1', hint: 'No hints yet'       },
+            { guess: 'Guess 2', hint: 'How it compares'    },
+            { guess: 'Guess 3', hint: 'How it has changed' },
+            { guess: 'Guess 4', hint: 'Concrete scale'     },
+          ] as const).map(({ guess, hint }, i) => {
             const isDone    = phaseIndex > i;
             const isCurrent = phaseIndex === i;
+            const color = isDone ? 'text-emerald-600' : isCurrent ? 'text-blue-600' : 'text-slate-300';
             return (
-              <div key={label} className="flex-1 space-y-1">
+              <div key={guess} className="flex-1 space-y-1">
                 <div className={[
                   'h-2.5 rounded-full transition-colors duration-300',
                   isDone    ? 'bg-emerald-500' :
                   isCurrent ? 'bg-blue-500'    :
                               'bg-slate-200',
                 ].join(' ')} />
-                <p className={[
-                  'text-xs text-center font-medium',
-                  isDone    ? 'text-emerald-600' :
-                  isCurrent ? 'text-blue-600'    :
-                              'text-slate-300',
-                ].join(' ')}>
-                  {label}
-                </p>
+                <p className={`text-xs text-center font-semibold ${color}`}>{guess}</p>
+                <p className={`text-xs text-center ${color} opacity-70`}>{hint}</p>
               </div>
             );
           })}
