@@ -33,7 +33,7 @@
     {
       "type": "bar_chart",
       "heading": "Agricultural Workforce Density by Region (per 1,000 Workers)",
-      "caption": "How many out of every 1,000 employed people work in agriculture. Note: this uses the workforce as the denominator — the puzzle answer of 322 uses total population (including children and retirees).",
+      "caption": "How many out of every 1,000 employed people work in agriculture, by region. All figures use the employed workforce — not total population — as the denominator.",
       "x_label": "Agricultural workers per 1,000 employed",
       "bars": [
         { "label": "Burundi",           "value": 851 },
@@ -52,7 +52,6 @@
       "heading": "Agricultural Share of Employment by Geography",
       "columns": ["Geography", "Share of Workforce (%)", "Per 1,000 Workers"],
       "rows": [
-        { "cells": ["Global Average",    "~26.1%", "261"] },
         { "cells": ["Africa",            "46.0%",  "460"] },
         { "cells": ["Asia",              "30.3%",  "303"] },
         { "cells": ["Americas",          "8.6%",   "86"]  },
@@ -74,8 +73,8 @@
         { "label": "South Asia — 2025",        "value": 400 },
         { "label": "Sub-Saharan Africa — 1990","value": 600 },
         { "label": "Sub-Saharan Africa — 2025","value": 500 },
-        { "label": "Global Average — 1990",    "value": 400 },
-        { "label": "Global Average — 2025",    "value": 261 }
+        { "label": "World workforce avg — 1990", "value": 400 },
+        { "label": "World workforce avg — 2025", "value": 261 }
       ]
     },
     {
