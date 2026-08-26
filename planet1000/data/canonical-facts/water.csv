@@ -1,0 +1,7 @@
+observation_id,type,text,source,year
+water-freshwater-daily,relationship,Agriculture accounts for about 70% of all freshwater withdrawals globally — meaning the water footprint of food production dwarfs household consumption,,
+water-freshwater-daily,relationship,Water use is heavily skewed by wealth and geography — a typical resident of a high-income country uses far more water indirectly through food and goods than someone in a low-income country uses in total,,
+water-freshwater-daily,anchor,Americans use roughly 500 litres of water per day; people in Mozambique or Niger typically use under 20 litres — a 25-fold gap that reflects both water scarcity and lack of infrastructure,,
+water-no-clean,relationship,"Most people without safe water live in sub-Saharan Africa and South Asia — and the burden falls disproportionately on women and girls, who often walk hours daily to collect it",,
+water-no-clean,relationship,"Access to safe water varies enormously even within countries — urban residents in most parts of the world have tap water, while many rural communities in Africa and Asia rely on unprotected wells or rivers",,
+water-no-clean,anchor,"In Ethiopia, around 40% of the population lacks access to basic drinking water — one of the higher rates in the world, concentrated in rural and remote areas",,

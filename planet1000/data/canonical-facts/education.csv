@@ -1,0 +1,9 @@
+observation_id,type,text,source,year
+people-teachers,relationship,"Teacher shortages are far more severe in low-income countries than high-income ones — in many wealthy nations teacher-to-student ratios have improved for decades, while in sub-Saharan Africa they've worsened",,
+people-teachers,anchor,Sub-Saharan Africa will need to hire around 17 million more teachers by 2030 just to achieve universal primary education — in some schools there is one teacher for 60 or more children,,
+people-literate,relationship,"About two-thirds of the world's illiterate adults are women — and most are concentrated in South Asia and sub-Saharan Africa, where gender gaps in schooling remain wide",,
+people-literate,relationship,"Global adult literacy has risen dramatically since 1970, driven by the expansion of schooling in Asia and Latin America — but progress has been slower in parts of sub-Saharan Africa",,
+people-literate,anchor,"In Mali, around 35% of adults can read and write — among the lowest literacy rates globally — while in wealthy countries near-universal literacy has been achieved for generations",,
+education-school-age,relationship,"More than half of out-of-school children live in conflict-affected countries — places where schools have been destroyed, teachers have fled, and families are displaced",,
+education-school-age,relationship,"Out-of-school rates are far higher for girls than boys in many parts of sub-Saharan Africa and South Asia — gender, poverty, and conflict compound one another to keep children out of education",,
+education-school-age,anchor,"In Nigeria alone, there are an estimated 20 million out-of-school children — the highest number of any country in the world, driven by poverty, insecurity in the north, and the collapse of schools in conflict zones",,

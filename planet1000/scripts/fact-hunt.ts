@@ -22,8 +22,8 @@
  *   anchor        Hint 3 — concrete number for ONE region (best calibration before final guess)
  *
  * Source of truth:
- *   data/canonical-facts.csv  — all facts, durable record
- *   data/generated/world-model.json — regenerated from canonical-facts.csv via `rebuild`
+ *   data/canonical-facts/  — facts per domain (people.csv, healthcare.csv, etc.)
+ *   data/generated/world-model.json — regenerated from canonical-facts/ via `rebuild`
  *
  * This script reads and writes world-model.json directly.
  * It is a creator-only tool — not shipped to players.
@@ -68,7 +68,7 @@ interface CanonicalRow {
 // ── Paths ─────────────────────────────────────────────────────────────────────
 
 const DATA_PATH = path.join(__dirname, '../data/generated/world-model.json');
-const CANONICAL_PATH = path.join(__dirname, '../data/canonical-facts.csv');
+const CANONICAL_DIR = path.join(__dirname, '../data/canonical-facts');
 
 // ── Data helpers ───────────────────────────────────────────────────────────────
 
@@ -160,25 +160,44 @@ const TYPE_ABBR: Record<FactType, string> = {
 // ── Canonical CSV helpers ──────────────────────────────────────────────────────
 
 function appendToCanonical(rows: CanonicalRow[]): void {
-  const needsHeader = !fs.existsSync(CANONICAL_PATH);
-  const lines: string[] = [];
-
-  if (needsHeader) {
-    lines.push('observation_id,type,text,source,year');
+  // Group rows by domain (derived from observation entity in world-model.json)
+  const data = loadData();
+  const obsToFile = new Map<string, string>();
+  for (const obs of data.observations) {
+    obsToFile.set(obs.id, path.join(CANONICAL_DIR, obs.entity.domain + '.csv'));
   }
 
+  if (!fs.existsSync(CANONICAL_DIR)) {
+    fs.mkdirSync(CANONICAL_DIR, { recursive: true });
+  }
+
+  // Group rows by target file
+  const byFile = new Map<string, CanonicalRow[]>();
   for (const r of rows) {
-    const cols = [
-      csvEscape(r.observation_id),
-      csvEscape(r.type),
-      csvEscape(r.text),
-      csvEscape(r.source ?? ''),
-      csvEscape(r.year ?? ''),
-    ];
-    lines.push(cols.join(','));
+    const filePath = obsToFile.get(r.observation_id);
+    if (!filePath) continue;
+    if (!byFile.has(filePath)) byFile.set(filePath, []);
+    byFile.get(filePath)!.push(r);
   }
 
-  fs.appendFileSync(CANONICAL_PATH, lines.join('\n') + '\n');
+  for (const [filePath, fileRows] of byFile) {
+    const needsHeader = !fs.existsSync(filePath);
+    const lines: string[] = [];
+    if (needsHeader) {
+      lines.push('observation_id,type,text,source,year');
+    }
+    for (const r of fileRows) {
+      const cols = [
+        csvEscape(r.observation_id),
+        csvEscape(r.type),
+        csvEscape(r.text),
+        csvEscape(r.source ?? ''),
+        csvEscape(r.year ?? ''),
+      ];
+      lines.push(cols.join(','));
+    }
+    fs.appendFileSync(filePath, lines.join('\n') + '\n');
+  }
 }
 
 // ── STATUS command ─────────────────────────────────────────────────────────────
@@ -599,8 +618,8 @@ async function cmdAddBulk(csvPath: string): Promise<void> {
 // ── REBUILD command ────────────────────────────────────────────────────────────
 
 function cmdRebuild(): void {
-  if (!fs.existsSync(CANONICAL_PATH)) {
-    console.error(`\ncanonical-facts.csv not found at: ${CANONICAL_PATH}`);
+  if (!fs.existsSync(CANONICAL_DIR)) {
+    console.error(`\ncanonical-facts/ directory not found at: ${CANONICAL_DIR}`);
     console.error('Nothing to rebuild from.');
     process.exit(1);
   }
@@ -608,7 +627,12 @@ function cmdRebuild(): void {
   const data = loadData();
   const validIds = new Set(data.observations.map(o => o.id));
 
-  const rawRows = parseCSV(CANONICAL_PATH);
+  const files = fs.readdirSync(CANONICAL_DIR).filter((f: string) => f.endsWith('.csv')).sort();
+  const allRows: Record<string, string>[] = [];
+  for (const file of files) {
+    allRows.push(...parseCSV(path.join(CANONICAL_DIR, file)));
+  }
+  const rawRows = allRows;
   const valid: CanonicalRow[] = [];
   let skipCount = 0;
 
@@ -733,7 +757,7 @@ switch (command) {
     console.log('  hunt [observation-id]         Generate research prompts for an observation');
     console.log('  add  [observation-id]         Interactively add a new fact');
     console.log('  add  --csv <path>             Bulk-add facts from a CSV file');
-    console.log('  rebuild                       Regenerate world-model.json from canonical-facts.csv');
+    console.log('  rebuild                       Regenerate world-model.json from canonical-facts/ folder');
     console.log('');
     console.log('Fact types (used as Hint 1 → 2 → 3 in the 4-guess game):');
     console.log('  r / relationship   Hint 1 — comparative context (no world totals)');
@@ -750,7 +774,7 @@ switch (command) {
     console.log('  add -c /tmp/batch.csv');
     console.log('');
     console.log('Source of truth:');
-    console.log('  data/canonical-facts.csv — all facts, durable; use rebuild to restore world-model.json');
+    console.log('  data/canonical-facts/ — facts per domain (people.csv, healthcare.csv, etc.); use rebuild to restore world-model.json');
     console.log('');
     console.log('Examples:');
     console.log('  npx tsx scripts/fact-hunt.ts status');

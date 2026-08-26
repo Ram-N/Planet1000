@@ -1,0 +1,9 @@
+observation_id,type,text,source,year
+people-farmers,relationship,"More than 90% of the world's farms are smallholdings under 2 hectares — most are in Asia and sub-Saharan Africa, where agriculture remains the primary livelihood for billions",,
+people-farmers,relationship,"The share of the workforce in agriculture is dramatically higher in low-income countries — in Ethiopia over 70% work the land, while in the UK and US it's under 2%",,
+people-farmers,anchor,"In South Asia and sub-Saharan Africa, roughly half of all workers are in agriculture — compared to under 5% in wealthy nations, reflecting how mechanisation has transformed farming in richer countries",,
+food-calories-daily,relationship,"The world produces enough calories to feed every person — the challenge is that food is unevenly distributed, with wealthy populations consuming far more than they need while hundreds of millions go hungry",,
+food-calories-daily,anchor,"The United States throws away enough food each year to provide every American with 1,400 calories a day — while 700 million people globally go to bed hungry",,
+food-waste,relationship,"In high-income countries, most food is wasted at the retail and consumer stage; in low-income countries, losses happen mostly at harvest, storage, and transport — very different problems with very different solutions",,
+food-waste,relationship,Food waste has barely declined in wealthy nations despite decades of awareness campaigns — reducing it remains one of the cheapest ways to cut agricultural emissions,,
+food-waste,anchor,"North Americans and Europeans waste roughly 95–115 kg of food per person per year, compared to just 6–11 kg per person in sub-Saharan Africa and South Asia",,

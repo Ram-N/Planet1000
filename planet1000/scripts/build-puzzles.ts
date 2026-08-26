@@ -21,7 +21,7 @@ import path from 'path';
 const ROOT             = path.join(__dirname, '..');
 const PUZZLES_DIR      = path.join(ROOT, 'data', 'puzzles');
 const WORLD_MODEL_FILE = path.join(ROOT, 'data', 'generated', 'world-model.json');
-const FACTS_FILE       = path.join(ROOT, 'data', 'canonical-facts.csv');
+const CANONICAL_DIR    = path.join(ROOT, 'data', 'canonical-facts');
 const OUT_DIR          = path.join(ROOT, 'data', 'generated', 'puzzles');
 const SUMMARIES_DIR    = path.join(ROOT, 'data', 'summaries');
 const LOADER_FILE      = path.join(ROOT, 'lib', 'puzzle-loader.ts');
@@ -157,12 +157,16 @@ function loadWorldModel(): WorldModel {
 interface FactRow { observation_id: string; type: string; text: string; source: string; year: string; }
 
 function loadFactsByObsAndType(): Map<string, Map<string, FactRow[]>> {
-  if (!fs.existsSync(FACTS_FILE)) {
-    console.error(`✗ canonical-facts.csv not found: ${FACTS_FILE}`);
+  if (!fs.existsSync(CANONICAL_DIR)) {
+    console.error(`✗ canonical-facts/ directory not found: ${CANONICAL_DIR}`);
     process.exit(1);
   }
 
-  const rows = parseCSV(FACTS_FILE) as unknown as FactRow[];
+  const files = fs.readdirSync(CANONICAL_DIR).filter((f) => f.endsWith('.csv')).sort();
+  const rows: FactRow[] = [];
+  for (const file of files) {
+    rows.push(...(parseCSV(path.join(CANONICAL_DIR, file)) as unknown as FactRow[]));
+  }
   // outer key: observation_id; inner key: type ('relationship'|'temporal'|'anchor')
   const byObs = new Map<string, Map<string, FactRow[]>>();
 
@@ -233,13 +237,13 @@ function buildPuzzle(
       console.warn(`  ⚠ ${msg}`);
     } else {
       console.error(`  ✗ ${msg}`);
-      console.error('    Add facts to canonical-facts.csv, or use --allow-missing to build anyway.');
+      console.error('    Add facts to data/canonical-facts/<domain>.csv, or use --allow-missing to build anyway.');
       return null;
     }
   }
 
   // Placeholder for missing facts when --allow-missing is set
-  const PLACEHOLDER: PuzzleFact = { text: '(fact not yet authored — add to canonical-facts.csv)' };
+  const PLACEHOLDER: PuzzleFact = { text: '(fact not yet authored — add to data/canonical-facts/<domain>.csv)' };
 
   return {
     id:               source.id,

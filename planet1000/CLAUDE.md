@@ -18,7 +18,7 @@ Educational web game that shrinks the world to 1,000 people so players build int
 | `data/generated/puzzles/` | Full compiled puzzles (auto-generated, committed for Vercel) |
 | `data/generated/world-model.json` | All observations with raw values; `world_population: 10_000_000_000` |
 | `data/summaries/` | Knowledge articles (JSON) shown after puzzle reveal |
-| `data/canonical-facts.csv` | Master hints database — relationship/temporal/anchor facts per observation |
+| `data/canonical-facts/` | Master hints database — one CSV per domain (people, healthcare, education, etc.) |
 | `data/source/observations.csv` | Observation schema definitions |
 | `data/schedule.json` | Planned weekly puzzle schedule |
 | `scripts/` | Build/admin CLI tools (TypeScript) |
@@ -33,7 +33,7 @@ Educational web game that shrinks the world to 1,000 people so players build int
 1. **Author manifest** in `data/puzzles/puzzle_YYYY_wNN.json`
    Fields: `id`, `week_id`, `publish_date`, `domain`, `question`, `observation_id`, `answer_explanation`, `summary_id`
 
-2. **Check facts** — `data/canonical-facts.csv` must have at least one row per type (relationship, temporal, anchor) for the puzzle's `observation_id`
+2. **Check facts** — `data/canonical-facts/<domain>.csv` must have at least one row per type (relationship, temporal, anchor) for the puzzle's `observation_id`
 
 3. **Build** — `npm run build:puzzles` computes `answer_value_1k` from world-model and writes generated JSON + updates `lib/puzzle-loader.ts`
 
@@ -61,5 +61,5 @@ npm run fact-hunt -- status    # Check for missing fact types
 
 - `world_population` is set to **10 billion** (not current ~8B) — all observation values are scaled to this denominator
 - Observation values are raw counts at 10B scale: e.g., 6.7B internet users = 670/1000
-- The `pickFact` function in `build-puzzles.ts` always picks `rows[0]` for each fact type, so ordering in `canonical-facts.csv` matters
+- The `pickFact` function in `build-puzzles.ts` always picks `rows[0]` for each fact type, so ordering within each domain CSV matters
 

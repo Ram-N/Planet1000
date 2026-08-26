@@ -74,10 +74,14 @@ interface FactRow { observation_id: string; type: string; text: string; source?:
 interface FactObject { text: string; type: string; source?: string; year?: number; }
 
 function loadFacts(): Map<string, FactObject[]> {
-  const factsPath = path.join(__dirname, '../data/canonical-facts.csv');
-  if (!fs.existsSync(factsPath)) return new Map();
+  const canonicalDir = path.join(__dirname, '../data/canonical-facts');
+  if (!fs.existsSync(canonicalDir)) return new Map();
 
-  const rows = parseCSV(factsPath) as unknown as FactRow[];
+  const files = fs.readdirSync(canonicalDir).filter((f) => f.endsWith('.csv')).sort();
+  const rows: FactRow[] = [];
+  for (const file of files) {
+    rows.push(...(parseCSV(path.join(canonicalDir, file)) as unknown as FactRow[]));
+  }
 
   // Group by observation_id, preserving order defined by FACT_TYPE_ORDER
   const grouped = new Map<string, FactRow[]>();
@@ -248,7 +252,11 @@ function main() {
   console.log(`   Loaded: ${data.entities.length} entities, ${data.metrics.length} metrics, ${data.observations.length} observations\n`);
 
   // Load facts
-  console.log('📝 Loading canonical-facts.csv...');
+  const canonicalDir = path.join(__dirname, '../data/canonical-facts');
+  const numFiles = fs.existsSync(canonicalDir)
+    ? fs.readdirSync(canonicalDir).filter((f) => f.endsWith('.csv')).length
+    : 0;
+  console.log(`📝 Loading canonical-facts/ (${numFiles} files)…`);
   const factsMap = loadFacts();
   const totalFacts = Array.from(factsMap.values()).reduce((sum, arr) => sum + arr.length, 0);
   console.log(`   Loaded: ${totalFacts} facts for ${factsMap.size} observations\n`);

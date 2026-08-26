@@ -1,0 +1,24 @@
+observation_id,type,text,source,year
+people-children,relationship,Children under 15 make up a much larger share of the population in Africa and South Asia than in Europe or East Asia — birth rates in sub-Saharan Africa are roughly 4–5 times higher than in Japan,,
+people-children,anchor,"In Niger, more than half the population is under 15 — one of the youngest age structures in the world, compared to under 15% in most of Europe",,
+people-children,anchor,36.4% of Pakistan's population consists of children aged 0–14 (under 15 years old),,
+people-children,anchor,24% of India's population falls within the 0–14 age bracket (under 15 years old),,
+people-children,anchor,"""India has roughly 350 million children under 15 — more than the entire population of the United States""",,
+people-children,anchor,28% of Bangladesh's population belongs to the 0–14 age demographic (under 15 years old),,
+people-elderly,relationship,The share of people over 65 is rising in almost every country — driven by falling birth rates and longer lives — creating new pressures on pension and healthcare systems,,
+people-elderly,anchor,"Japan leads the world in population ageing — nearly 30% of its population is over 65, compared to under 3% in many sub-Saharan African countries",,
+people-urban,relationship,"Lagos, Dhaka, and Delhi each add millions of residents every year — cities in the global south now account for most of the world's urban population growth",,
+people-urban,relationship,In 1950 only about 30 in every 100 people lived in cities; by 2050 that figure is expected to reach 68 — urbanisation has been one of the defining shifts of the modern era,,
+people-urban,anchor,"Sub-Saharan Africa is the world's fastest-urbanising region, with around 45% of its population already in cities — yet it remains less urbanised than every other major world region",,
+people-internet,relationship,"India crossed 800 million internet users in 2023 — a single country now has more people online than the entire world did in 2005, reflecting how fast connectivity has spread",,
+people-internet,relationship,"Internet access has grown faster than almost any technology in history — from fewer than 1 in 50 people in 1997 to a clear majority today — yet hundreds of millions remain offline, mostly in rural Africa and South Asia",,
+people-internet,anchor,"Sub-Saharan Africa has the lowest internet penetration of any world region — around 40% of people were online in 2023, compared to over 90% in Europe and North America",,
+people-smartphones,relationship,China and India together account for roughly a third of all smartphone users on Earth — scale in just two countries that dwarfs most continents,,
+people-smartphones,relationship,More people now own a smartphone than have access to safely managed drinking water — consumer technology has spread faster than basic infrastructure in many regions,,
+people-smartphones,anchor,"In sub-Saharan Africa, smartphone ownership has grown rapidly but still lags behind other regions — around 40–50% of adults owned a smartphone in 2023, compared to over 80% in Europe",,
+people-refugees,relationship,"The number of forcibly displaced people has more than doubled since 2012, driven by prolonged conflicts that show no sign of resolution — displacement is increasingly long-term, not temporary",,
+people-refugees,relationship,"Most refugees are hosted not by wealthy countries but by neighbouring low-income nations — countries like Uganda, Iran, and Colombia host millions despite having far fewer resources than European or North American states",,
+people-refugees,anchor,Sudan's conflict alone has produced over 8 million internally displaced people since 2023 — a single crisis straining the entire global humanitarian system,,
+people-no-internet,relationship,"While Europe/North america has 90% internet availability, only 40% in sub-Saharan africa have access",International Telecommunication Union (https://www.itu.int/en/ITU-D/Statistics/pages/stat/default.aspx),2023
+people-no-internet,temporal,"By 2023, India had more internet users than the number of internet users in the entire world back in 2005. In other words, internet penetration has been dramatic in the last 2 decades.",International Telecommunication Union (https://www.itu.int/en/ITU-D/Statistics/pages/stat/default.aspx),2023
+people-no-internet,anchor,"""Ethiopia: 106.7 million people offline. This represents one of the lowest percentages of connectivity globally, with over 75% of the population cut off.""",Visual Capitalist Data (https://www.visualcapitalist.com/largest-offline-populations-ranking/),2025

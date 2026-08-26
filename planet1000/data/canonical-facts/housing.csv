@@ -1,0 +1,11 @@
+observation_id,type,text,source,year
+housing-homeless,relationship,"In some sub-Saharan African cities, more than 60% of urban residents live in informal settlements or slums — far higher than in wealthier regions where slums are a much smaller fraction of city populations",,
+housing-homeless,relationship,"Inadequate housing is heavily concentrated in low-income countries — rapid urban growth has outpaced housing construction in cities across Africa, South Asia, and Latin America",,
+housing-homeless,anchor,"In Nigeria alone, an estimated 40–50 million people live in substandard housing or informal settlements — a single country that illustrates how large the housing deficit is in rapidly urbanising Africa",,
+housing-homeless,temporal,"Global homelessness has worsened since 2000 — the number of people without adequate shelter has grown substantially, driven by rapid urbanisation outpacing housing construction, conflict displacement, and climate-related housing loss.","IDMC / UN-Habitat",
+housing-homeless,anchor,"India has an official houseless population of 1.77 million people, though civil rights groups estimate the actual number is closer to 3 million.",CounterCurrents https://countercurrents.org/2026/04/lives-of-the-homeless-in-indias-cities/,04-2026
+housing-homeless,anchor,"Slum Populations: Alongside street homelessness, an estimated 65 million people reside in precarious urban slums",Emerald.com,2018
+housing-homeless,relationship,"Roughly 53% of India's homeless population lives in urban cities, driven by work migration and lack of affordable housing.",ResearchGate,2025
+housing-homeless,anchor,"""Nigeria records the largest homeless and displaced population at roughly 24.4 million, followed by Egypt with about 12 million""",Greater Change https://www.greaterchange.co.uk/post/which-country-has-the-highest-rate-of-homelessness,2022
+housing-homeless,relationship,"""There are as many  homeless/inadequate housing in Africa as in Asia + South America combined.""",UN News (https://news.un.org/en/story/2025/05/1163851),2025
+housing-homeless,relationship,"There are as many homeless in N. America as in Europe, but both continents have far fewer homelessness compared to the other 3 continents.",UN News (https://news.un.org/en/story/2025/05/1163851),2025

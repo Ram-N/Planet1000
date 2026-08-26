@@ -1,0 +1,10 @@
+observation_id,type,text,source,year
+people-doctors,relationship,Most of the world's doctors are clustered in wealthy countries — sub-Saharan Africa has less than 3% of global physicians despite holding 16% of the world's population,,
+people-doctors,relationship,The US alone has more registered doctors than all of sub-Saharan Africa combined — medical training and healthcare investment are heavily concentrated in high-income nations,,
+people-doctors,relationship,"Global physician numbers have grown 60% since 2000, but mostly in countries that were already well-supplied — the distribution gap has barely narrowed",,
+people-doctors,anchor,"Norway has about 40 doctors per 1,000 people; Niger has fewer than 0.1 — a 400-fold gap driven by wealth, training capacity, and migration of healthcare workers to richer countries",,
+people-nurses,relationship,"Nurses and midwives outnumber doctors roughly two to one globally, and in many rural areas they are the only healthcare providers that communities ever see",,
+people-nurses,anchor,Sub-Saharan Africa faces a shortage of over 4 million nurses — its healthcare systems rely heavily on community health workers who have no formal nursing qualification,,
+healthcare-life-expectancy,relationship,"Life expectancy has risen dramatically since 1950, driven mainly by reductions in child mortality — but the gap between the richest and poorest countries remains more than 20 years",,
+healthcare-life-expectancy,relationship,"Japan leads global life expectancy at around 84 years; Chad sits at around 54 years — a 30-year gap driven by differences in healthcare, nutrition, water access, and conflict",,
+healthcare-life-expectancy,anchor,"Sub-Saharan Africa has an average life expectancy of around 62 years — more than 10 years below the global average, with the gap driven largely by preventable diseases and limited healthcare infrastructure",,

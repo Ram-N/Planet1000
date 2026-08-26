@@ -1,0 +1,10 @@
+observation_id,type,text,source,year
+people-poverty,relationship,"The share of people in extreme poverty fell from nearly 40% in 1990 to under 10% by 2019 — then stalled as COVID-19, conflict, and climate disruption reversed progress in many regions",,
+people-poverty,relationship,More than 90% of people in extreme poverty live in sub-Saharan Africa or South Asia — in some countries more than half the population lives below the $2.15-a-day line,,
+people-poverty,anchor,"In the Democratic Republic of Congo, over 75% of the population lives in extreme poverty — one of the highest rates anywhere in the world",,
+money-gdp-per-capita,relationship,The average person in the world's 10 richest countries earns roughly 50 times more than the average person in the 10 poorest — a gap that has barely narrowed in decades,,
+money-gdp-per-capita,relationship,The global average income is pulled up dramatically by a small number of very wealthy countries — the typical person on Earth earns far less than the average suggests,,
+money-gdp-per-capita,anchor,"Luxembourg's GDP per capita exceeds $120,000 per year; Burundi's is under $300 — a 400-fold gap that illustrates how little the global average tells you about any individual country",,
+money-top10-wealth,relationship,"Wealth inequality is far more extreme than income inequality — owning assets (property, shares) compounds advantage over time in a way that wages alone do not",,
+money-top10-wealth,relationship,"Wealth inequality worsened after the 2008 financial crisis as stock and property prices recovered faster than wages, benefiting those who already owned assets",,
+money-top10-wealth,anchor,"North America and Europe together hold more than 60% of all global household wealth, despite containing less than 20% of the world's population",,
