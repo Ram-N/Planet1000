@@ -121,7 +121,7 @@ Question
    ↓
 Guess 1
    ↓
-Anchor Fact revealed
+Scale Fact revealed
    ↓
 Guess 2
    ↓
@@ -148,9 +148,9 @@ Instead, each hint should allow the player to **narrow their estimate**.
 
 Planet 1000 should now support three distinct categories of supporting facts.
 
-## 6.1 Anchor Facts
+## 6.1 Scale Facts
 
-An anchor fact provides a concrete numerical reference point.
+An scale fact provides a concrete numerical reference point.
 
 Its purpose is to help the player understand **scale**.
 
@@ -162,7 +162,7 @@ Or:
 
 > About 8 billion people live on Earth.
 
-The anchor should help the player establish an order of magnitude or general scale.
+The scale should help the player establish an order of magnitude or general scale.
 
 ---
 
@@ -239,7 +239,7 @@ This is the purest estimation opportunity.
 
 ### After Guess 1
 
-Reveal the **Anchor Fact**.
+Reveal the **Scale Fact**.
 
 The player now has a better sense of scale.
 
@@ -280,7 +280,7 @@ Question
     ↓
 "I have no idea."
     ↓
-Anchor
+Scale
     ↓
 "Okay, I know roughly how big this is."
     ↓
@@ -369,7 +369,7 @@ Conceptually:
 Puzzle
  ├── Question
  ├── Answer
- ├── Anchor Fact
+ ├── Scale Fact
  ├── Relationship Fact
  ├── Temporal Fact
  ├── Scoring
@@ -573,7 +573,7 @@ Contains:
 * Correct answer
 * Answer explanation
 * Four-guess configuration
-* Anchor fact
+* Scale fact
 * Relationship fact
 * Temporal fact
 * Scoring information
@@ -829,7 +829,7 @@ Establish a reliable target number and appropriate date/year.
 
 Create:
 
-* Anchor
+* Scale
 * Relationship
 * Temporal
 
@@ -838,7 +838,7 @@ Create:
 Ask:
 
 * Is the initial question genuinely difficult?
-* Does the anchor help?
+* Does the scale help?
 * Does the relationship help?
 * Does the temporal fact help?
 * Does each stage feel meaningfully easier?
@@ -881,7 +881,7 @@ puzzles/
     weekly-puzzles.json
 
 facts/
-    anchor-facts.json
+    scale-facts.json
     relationship-facts.json
     temporal-facts.json
 
@@ -978,7 +978,7 @@ The implementation should support the following fundamental capabilities.
 * Weekly puzzle model
 * Four guesses
 * Progressive hint reveal
-* Anchor facts
+* Scale facts
 * Relationship facts
 * Temporal facts
 * Scoring

@@ -17,16 +17,16 @@ import type { WeeklyPuzzle, KnowledgeSummary } from '@/types/puzzle';
 // estimate     → Guess 1 (cold)
 // relationship → Hint 1 shown (comparative context); Guess 2
 // temporal     → Hint 2 shown (trend over time); Guess 3
-// anchor       → Hint 3 shown (concrete scale number); Guess 4
+// scale        → Hint 3 shown (concrete scale number); Guess 4
 // revealed     → Final answer + score + summary artifact
-type Phase = 'estimate' | 'relationship' | 'temporal' | 'anchor' | 'revealed';
+type Phase = 'estimate' | 'relationship' | 'temporal' | 'scale' | 'revealed';
 
-const GUESS_PHASES: Phase[] = ['estimate', 'relationship', 'temporal', 'anchor'];
+const GUESS_PHASES: Phase[] = ['estimate', 'relationship', 'temporal', 'scale'];
 
 const HINT_META: Record<Exclude<Phase, 'estimate' | 'revealed'>, { heading: string; label: string }> = {
   relationship: { heading: 'Relationship', label: 'How it compares' },
   temporal:     { heading: 'Time Trend',   label: 'How it has changed' },
-  anchor:       { heading: 'Scale Anchor', label: 'A concrete reference' },
+  scale:        { heading: 'Scale', label: 'A concrete reference' },
 };
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -85,7 +85,7 @@ export default function Planet1000Page() {
     const { points } = scoreEstimate(guess3, actual, 3);
     setPts3(points);
     setGuess4(guess3);
-    setPhase('anchor');
+    setPhase('scale');
   }
 
   function handleAnchor() {
@@ -210,16 +210,16 @@ export default function Planet1000Page() {
         )}
 
         {/* ── ANCHOR HINT (Guess 4) ──────────────────────────────────────────── */}
-        {phase === 'anchor' && (
-          <motion.div key="anchor" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}>
+        {phase === 'scale' && (
+          <motion.div key="scale" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}>
             <Card>
               <div className="space-y-6">
                 <h2 className="text-xl font-semibold text-slate-800 leading-snug">{puzzle.question}</h2>
                 <HintBox
-                  heading={HINT_META.anchor.heading}
-                  fact={puzzle.anchor_fact.text}
-                  sourceLabel={puzzle.anchor_fact.source_label}
-                  sourceUrl={puzzle.anchor_fact.source_url}
+                  heading={HINT_META.scale.heading}
+                  fact={puzzle.scale_fact.text}
+                  sourceLabel={puzzle.scale_fact.source_label}
+                  sourceUrl={puzzle.scale_fact.source_url}
                 />
                 <EstimateInput value={guess4} onChange={setGuess4} max={1000} unit="out of 1,000 people" />
                 <Button size="lg" className="w-full" onClick={handleAnchor}>

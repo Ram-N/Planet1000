@@ -3,7 +3,7 @@
  *
  * Hint 1 (after Guess 1): relationship facts — comparative context, no world totals
  * Hint 2 (after Guess 2): temporal facts — direction and trend over time
- * Hint 3 (after Guess 3): anchor facts — concrete numerical scale, best calibration before final guess
+ * Hint 3 (after Guess 3): scale facts — concrete numerical scale, best calibration before final guess
  *
  * Fact selection is type-based, with fallback to any unused fact.
  */
@@ -85,9 +85,9 @@ export function selectHint(
       selectedIndices,
     };
   } else {
-    // After Guess 3: anchor facts — concrete number, best calibration before final guess
+    // After Guess 3: scale facts — concrete number, best calibration before final guess
     const preamble = buildPreamble(guess, actual);
-    const selectedIndices = pickByType(facts, 'anchor', usedIndices, 1);
+    const selectedIndices = pickByType(facts, 'scale', usedIndices, 1);
     return {
       preamble,
       facts: selectedIndices.map((i) => facts[i].text),

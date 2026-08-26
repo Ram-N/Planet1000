@@ -131,7 +131,7 @@ tail -1 data/source/observations.csv
 npx tsx scripts/fact-hunt.ts status
 ```
 
-The new observation will appear with `R:0 A:0` — no facts yet. Use `fact-hunt` to add relationship and anchor facts to it.
+The new observation will appear with `R:0 A:0` — no facts yet. Use `fact-hunt` to add relationship and scale facts to it.
 
 ---
 

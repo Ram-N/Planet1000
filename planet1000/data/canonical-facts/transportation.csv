@@ -1,7 +1,7 @@
 observation_id,type,text,source,year
 transportation-cars,relationship,"Car ownership rates differ enormously by wealth — the US has about 800 cars per 1,000 people; India has about 30 — a gap that reflects not just wealth but also the quality of public transport infrastructure",,
 transportation-cars,relationship,"The wealthiest 10% of countries account for roughly 70% of all cars on the road — car ownership remains heavily concentrated in North America, Europe, and parts of East Asia",,
-transportation-cars,anchor,"The United States alone has more than 280 million registered passenger cars — roughly one car per adult, and more than any other country by a wide margin",,
+transportation-cars,scale,"The United States alone has more than 280 million registered passenger cars — roughly one car per adult, and more than any other country by a wide margin",,
 transportation-flights-annual,relationship,"Flying remains one of the most unequally distributed activities on Earth — the majority of flights are taken by a small minority of frequent flyers, mostly in wealthy countries",,
 transportation-flights-annual,relationship,"Most people in low-income countries have never flown — air travel is overwhelmingly the activity of wealthier populations, and the gap between rich and poor countries is enormous",,
-transportation-flights-annual,anchor,"The US alone accounts for roughly a quarter of all commercial passengers globally — more than all of Africa, South America, and the Middle East combined",,
+transportation-flights-annual,scale,"The US alone accounts for roughly a quarter of all commercial passengers globally — more than all of Africa, South America, and the Middle East combined",,

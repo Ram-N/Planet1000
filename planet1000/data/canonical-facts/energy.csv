@@ -1,14 +1,14 @@
 observation_id,type,text,source,year
 energy-electricity,relationship,An average American uses about 10 times more electricity per year than the global average — electricity consumption tracks wealth more closely than almost any other resource,,
 energy-electricity,relationship,"Global electricity demand has more than doubled since 1990, driven by population growth, industrialisation in Asia, and the rise of consumer electronics",,
-energy-electricity,anchor,Sub-Saharan Africa generates about 1% of global electricity despite holding roughly 15% of the world's population — a stark illustration of how unequally energy is distributed,,
+energy-electricity,scale,Sub-Saharan Africa generates about 1% of global electricity despite holding roughly 15% of the world's population — a stark illustration of how unequally energy is distributed,,
 energy-renewables,relationship,"The share of renewables in global electricity has roughly doubled since 2010, driven mostly by the dramatic fall in wind and solar costs — both now cheaper than new coal in most markets",,
 energy-renewables,relationship,"Solar energy is growing faster than any fuel in history — capacity added globally in 2023 exceeded all previous records, but fossil fuels still dominate total electricity generation",,
-energy-renewables,anchor,China installed more solar capacity in 2023 than the entire world had installed in all previous years combined — a single country driving much of the global renewable energy transition,,
+energy-renewables,scale,China installed more solar capacity in 2023 than the entire world had installed in all previous years combined — a single country driving much of the global renewable energy transition,,
 energy-no-electricity,relationship,"People without electricity are overwhelmingly concentrated in sub-Saharan Africa and South Asia — and for many, cooking with solid fuels causes more immediate harm than lack of light",,
 energy-no-electricity,relationship,"The number of people without electricity has fallen significantly since 2010, driven mainly by India's rural electrification push — but progress in sub-Saharan Africa has been much slower",,
-energy-no-electricity,anchor,"In Chad, fewer than 10% of the population has electricity access — one of the lowest rates in the world, with most rural communities entirely off-grid",,
-energy-no-electricity,anchor,Approximately 47% to 53% of the population in Sub-Saharan Africa lives without electricity,https://unctad.org/publication/commodities-glance-special-issue-access-energy-sub-saharan-africa,2023
-energy-no-electricity,anchor,Approximately 22% of the people in DRC Africa have access to electricity,https://unctad.org/publication/commodities-glance-special-issue-access-energy-sub-saharan-africa,2023
+energy-no-electricity,scale,"In Chad, fewer than 10% of the population has electricity access — one of the lowest rates in the world, with most rural communities entirely off-grid",,
+energy-no-electricity,scale,Approximately 47% to 53% of the population in Sub-Saharan Africa lives without electricity,https://unctad.org/publication/commodities-glance-special-issue-access-energy-sub-saharan-africa,2023
+energy-no-electricity,scale,Approximately 22% of the people in DRC Africa have access to electricity,https://unctad.org/publication/commodities-glance-special-issue-access-energy-sub-saharan-africa,2023
 energy-no-electricity,relationship,Electrification rate across the Sub-Saharan region has roughly doubled since 2000,https://ourworldindata.org/data-insights/the-global-number-of-people-without-electricity-has-halved-since-2000-but-it-has-increased-in-sub-saharan-africa,April 2026
 energy-no-electricity,relationship,"In sub-Saharan Africa, 80% of the Urban population has electricity, but over 60% of the rural population doesn't",https://unctad.org/publication/commodities-glance-special-issue-access-energy-sub-saharan-africa,

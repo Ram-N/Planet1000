@@ -1,7 +1,7 @@
 observation_id,type,text,source,year
 environment-forest-loss,relationship,"Deforestation is almost entirely driven by agriculture — clearing land for cattle, soy, palm oil, and subsistence farming, not logging for timber",,
 environment-forest-loss,relationship,"Brazil's Amazon deforestation fell by roughly 80% between 2004 and 2012 under strong enforcement policies — then rebounded sharply when those policies weakened, showing deforestation is a political choice",,
-environment-forest-loss,anchor,"Brazil, Indonesia, and the Democratic Republic of Congo together account for more than half of all tropical deforestation — three countries defining the pace of global forest loss",,
+environment-forest-loss,scale,"Brazil, Indonesia, and the Democratic Republic of Congo together account for more than half of all tropical deforestation — three countries defining the pace of global forest loss",,
 environment-co2,relationship,"The richest 10% of people are responsible for about half of all global carbon emissions, while the poorest 50% produce less than 10% — climate change is overwhelmingly driven by wealthy consumption",,
 environment-co2,relationship,Americans emit roughly 3 times the global average per person; people in low-income countries emit a tiny fraction of that — the gap in emissions per person between rich and poor nations is enormous,,
-environment-co2,anchor,A return economy-class flight from London to New York emits roughly 1 tonne of CO₂ per passenger — about as much as an average person in Rwanda emits in an entire year,,
+environment-co2,scale,A return economy-class flight from London to New York emits roughly 1 tonne of CO₂ per passenger — about as much as an average person in Rwanda emits in an entire year,,

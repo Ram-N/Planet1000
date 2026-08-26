@@ -69,7 +69,7 @@ HINT 2 — Temporal  (shown after Guess 2)
   [temporal_fact.text]
   Source: ...
 
-HINT 3 — Anchor  (shown after Guess 3)
+HINT 3 — Scale  (shown after Guess 3)
   [anchor_fact.text]
   Source: ...
 

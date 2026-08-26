@@ -33,7 +33,7 @@ Educational web game that shrinks the world to 1,000 people so players build int
 1. **Author manifest** in `data/puzzles/puzzle_YYYY_wNN.json`
    Fields: `id`, `week_id`, `publish_date`, `domain`, `question`, `observation_id`, `answer_explanation`, `summary_id`
 
-2. **Check facts** — `data/canonical-facts/<domain>.csv` must have at least one row per type (relationship, temporal, anchor) for the puzzle's `observation_id`
+2. **Check facts** — `data/canonical-facts/<domain>.csv` must have at least one row per type (relationship, temporal, scale) for the puzzle's `observation_id`
 
 3. **Build** — `npm run build:puzzles` computes `answer_value_1k` from world-model and writes generated JSON + updates `lib/puzzle-loader.ts`
 

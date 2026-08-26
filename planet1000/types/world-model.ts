@@ -3,8 +3,8 @@ export type GeographyLevel = 'world' | 'continent' | 'country' | 'state' | 'city
 export type TimePeriodType = 'year' | 'quarter' | 'month';
 export type ConfidenceLevel = 'high' | 'medium' | 'low';
 
-/** Hint 1 = relationship (comparisons). Hint 2 = temporal (trend over time). Hint 3 = anchor (concrete scale number). */
-export type FactType = 'relationship' | 'anchor' | 'temporal';
+/** Hint 1 = relationship (comparisons). Hint 2 = temporal (trend over time). Hint 3 = scale (concrete scale number). */
+export type FactType = 'relationship' | 'scale' | 'temporal';
 
 export interface Fact {
   text: string;
@@ -97,7 +97,7 @@ export interface Observation {
   entity: Entity;
   metric: Metric;
   unit: Unit;
-  /** Curated facts for hint selection. relationship facts → Hint 1 (no world totals). anchor facts → Hint 2 (partial regional number). */
+  /** Curated facts for hint selection. relationship facts → Hint 1 (no world totals). scale facts → Hint 2 (partial regional number). */
   facts: Fact[];
   /** Optional per-continent breakdown, populated from summaries.json when available */
   summary?: ObservationSummary;

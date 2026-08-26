@@ -10,7 +10,7 @@
  *   npx tsx scripts/fact-hunt.ts rebuild
  *
  * Flags for non-interactive add:
- *   --type  / -t   r|a|t  (relationship, anchor, or temporal)
+ *   --type  / -t   r|a|t  (relationship, scale, or temporal)
  *   --fact  / -f   fact text (alias: --text)
  *   --source / -s  source URL (optional)
  *   --year  / -y   year (optional)
@@ -19,7 +19,7 @@
  * Fact types:
  *   relationship  Hint 1 — comparative context (no world totals)
  *   temporal      Hint 2 — trend / change over time
- *   anchor        Hint 3 — concrete number for ONE region (best calibration before final guess)
+ *   scale         Hint 3 — concrete number for ONE region (best calibration before final guess)
  *
  * Source of truth:
  *   data/canonical-facts/  — facts per domain (people.csv, healthcare.csv, etc.)
@@ -35,7 +35,7 @@ import * as readline from 'readline';
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
-type FactType = 'relationship' | 'anchor' | 'temporal';
+type FactType = 'relationship' | 'scale' | 'temporal';
 
 interface Fact {
   text: string;
@@ -146,14 +146,14 @@ function csvEscape(value: string): string {
 function parseFactType(raw: string): FactType | null {
   const s = raw.toLowerCase();
   if (s === 'relationship' || s.startsWith('r')) return 'relationship';
-  if (s === 'anchor'       || s.startsWith('a')) return 'anchor';
+  if (s === 'scale'       || s.startsWith('a')) return 'scale';
   if (s === 'temporal'     || s.startsWith('t')) return 'temporal';
   return null;
 }
 
 const TYPE_ABBR: Record<FactType, string> = {
   relationship: 'R',
-  anchor:       'A',
+  scale:        'A',
   temporal:     'T',
 };
 
@@ -215,7 +215,7 @@ function cmdStatus(): void {
 
   for (const o of obs) {
     const rel = o.facts.filter(f => f.type === 'relationship').length;
-    const anc = o.facts.filter(f => f.type === 'anchor').length;
+    const anc = o.facts.filter(f => f.type === 'scale').length;
     const tmp = o.facts.filter(f => f.type === 'temporal').length;
     totalRelationship += rel;
     totalAnchor += anc;
@@ -250,7 +250,7 @@ function cmdStatus(): void {
   }
 
   if (needsAnchor.length > 0) {
-    console.log(`\nNeeds anchor (${needsAnchor.length}):`);
+    console.log(`\nNeeds scale (${needsAnchor.length}):`);
     for (const id of needsAnchor) {
       const o = obs.find(x => x.id === id)!;
       console.log(`  ${id}  (${o.entity.domain} — ${o.entity.name})`);
@@ -260,12 +260,12 @@ function cmdStatus(): void {
   console.log('\nAll observations:');
   for (const o of obs) {
     const rel = o.facts.filter(f => f.type === 'relationship').length;
-    const anc = o.facts.filter(f => f.type === 'anchor').length;
+    const anc = o.facts.filter(f => f.type === 'scale').length;
     const tmp = o.facts.filter(f => f.type === 'temporal').length;
     const missing = [
       rel === 0 ? 'needs-relationship' : '',
       tmp === 0 ? 'needs-temporal' : '',
-      anc === 0 ? 'needs-anchor' : '',
+      anc === 0 ? 'needs-scale' : '',
     ].filter(Boolean).join(', ');
     const flag = missing ? ` ← ${missing}` : '';
     console.log(`  ${o.id.padEnd(40)} R:${rel} T:${tmp} A:${anc}${flag}`);
@@ -287,7 +287,7 @@ function cmdHunt(obsId: string): void {
   }
 
   const relCount = obs.facts.filter(f => f.type === 'relationship').length;
-  const ancCount = obs.facts.filter(f => f.type === 'anchor').length;
+  const ancCount = obs.facts.filter(f => f.type === 'scale').length;
   const tmpCount = obs.facts.filter(f => f.type === 'temporal').length;
   const answer = per1k(obs, data.world_population);
 
@@ -295,7 +295,7 @@ function cmdHunt(obsId: string): void {
   console.log(`Domain:   ${obs.entity.domain}`);
   console.log(`Metric:   ${obs.metric.name}`);
   console.log(`Answer:   ${answer.toFixed(1)} per 1,000 (DO NOT put this in any fact)`);
-  console.log(`Facts:    ${relCount} relationship, ${tmpCount} temporal, ${ancCount} anchor`);
+  console.log(`Facts:    ${relCount} relationship, ${tmpCount} temporal, ${ancCount} scale`);
   console.log('');
 
   const prompts: Array<{ type: FactType; prompt: string }> = [];
@@ -334,20 +334,20 @@ function cmdHunt(obsId: string): void {
   // ── Anchor prompts ──────────────────────────────────────────────────────
   if (ancCount < 2) {
     prompts.push({
-      type: 'anchor',
+      type: 'scale',
       prompt: `Find the number of "${obs.entity.name.toLowerCase()}" in ONE specific country or region (not the world total). ` +
         `It should be small enough that a player can't divide by world population to get the answer. ` +
         `Include the source and year. Example format: "In [country], approximately [number] [unit]..."`,
     });
     prompts.push({
-      type: 'anchor',
+      type: 'scale',
       prompt: `Find a sub-Saharan African country's figure for "${obs.entity.name.toLowerCase()}". ` +
         `A partial number that requires extrapolation — not calculable to the world total.`,
     });
   }
 
   prompts.push({
-    type: 'anchor',
+    type: 'scale',
     prompt: `Find a South Asian country's figure for "${obs.entity.name.toLowerCase()}" ` +
       `(India, Bangladesh, Pakistan, or Nepal) — a specific number for that country only.`,
   });
@@ -421,7 +421,7 @@ async function cmdAdd(obsId: string, flags: AddFlags = {}): Promise<void> {
   if (flags.type && flags.text) {
     const factType = parseFactType(flags.type);
     if (!factType) {
-      console.error('--type must be r (relationship), a (anchor), or t (temporal).');
+      console.error('--type must be r (relationship), a (scale), or t (temporal).');
       rl.close();
       process.exit(1);
     }
@@ -443,7 +443,7 @@ async function cmdAdd(obsId: string, flags: AddFlags = {}): Promise<void> {
     appendToCanonical([{ observation_id: obsId, type: factType, text: flags.text, source: flags.source, year: flags.year }]);
 
     const rel = data.observations[obsIndex].facts.filter(f => f.type === 'relationship').length;
-    const anc = data.observations[obsIndex].facts.filter(f => f.type === 'anchor').length;
+    const anc = data.observations[obsIndex].facts.filter(f => f.type === 'scale').length;
     const tmp = data.observations[obsIndex].facts.filter(f => f.type === 'temporal').length;
     console.log(`\n✓ Added. ${obs.id} now has ${rel}R ${tmp}T ${anc}A facts.`);
     rl.close();
@@ -502,7 +502,7 @@ async function cmdAdd(obsId: string, flags: AddFlags = {}): Promise<void> {
   appendToCanonical([{ observation_id: obsId, type: factType, text, source: source || undefined, year: year || undefined }]);
 
   const rel = data.observations[obsIndex].facts.filter(f => f.type === 'relationship').length;
-  const anc = data.observations[obsIndex].facts.filter(f => f.type === 'anchor').length;
+  const anc = data.observations[obsIndex].facts.filter(f => f.type === 'scale').length;
   const tmp = data.observations[obsIndex].facts.filter(f => f.type === 'temporal').length;
   console.log(`\n✓ Added. ${obs.id} now has ${rel}R ${tmp}T ${anc}A facts.`);
 
@@ -539,7 +539,7 @@ async function cmdAddBulk(csvPath: string): Promise<void> {
     }
     const factType = rawType ? parseFactType(rawType) : null;
     if (!factType) {
-      console.warn(`  [skip row ${lineNum}] Invalid type: "${rawType}" (must be relationship, temporal, or anchor)`);
+      console.warn(`  [skip row ${lineNum}] Invalid type: "${rawType}" (must be relationship, temporal, or scale)`);
       skipCount++;
       continue;
     }
@@ -608,7 +608,7 @@ async function cmdAddBulk(csvPath: string): Promise<void> {
   for (const [obsId, rows] of grouped) {
     const obs = data.observations.find(o => o.id === obsId)!;
     const rel = obs.facts.filter(f => f.type === 'relationship').length;
-    const anc = obs.facts.filter(f => f.type === 'anchor').length;
+    const anc = obs.facts.filter(f => f.type === 'scale').length;
     const tmp = obs.facts.filter(f => f.type === 'temporal').length;
     console.log(`  ${obsId}: +${rows.length} (now ${rel}R ${tmp}T ${anc}A)`);
   }
@@ -762,7 +762,7 @@ switch (command) {
     console.log('Fact types (used as Hint 1 → 2 → 3 in the 4-guess game):');
     console.log('  r / relationship   Hint 1 — comparative context (no world totals)');
     console.log('  t / temporal       Hint 2 — trend / change over time');
-    console.log('  a / anchor         Hint 3 — concrete number for ONE region (best calibration)');
+    console.log('  a / scale          Hint 3 — concrete number for ONE region (best calibration)');
     console.log('');
     console.log('One-shot add (skips prompts):');
     console.log('  add [id] --type r --fact "..." [--source "..."] [--year 2023]');

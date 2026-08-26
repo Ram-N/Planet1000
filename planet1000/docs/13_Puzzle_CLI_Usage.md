@@ -77,7 +77,7 @@ HINT 2 — Temporal
   Global homelessness has worsened since 2000...
   Source: IDMC / UN-Habitat
 
-HINT 3 — Anchor
+HINT 3 — Scale
   In Nigeria alone, an estimated 40–50 million people live in substandard housing...
 
 SUMMARY
@@ -118,7 +118,7 @@ The script:
 
 After the script runs:
 1. Fill in `answer_explanation` in the manifest
-2. Author `relationship`, `temporal`, and `anchor` facts in `data/canonical-facts/<domain>.csv` for the observation
+2. Author `relationship`, `temporal`, and `scale` facts in `data/canonical-facts/<domain>.csv` for the observation
 3. Run `npm run build:puzzles` to generate the full puzzle JSON
 4. Preview with `npm run puzzle -- show <id>`
 
@@ -145,7 +145,7 @@ After the script runs:
 | `answer_explanation` | Prose explanation shown after the game; should match the computed answer |
 | `summary_id` | References a `KnowledgeSummary` in `data/summaries/` |
 
-The build script computes `answer_value_1k = Math.round(obs.value / world_population * 1000)` and selects facts from `data/canonical-facts/` (first `relationship`, `temporal`, and `anchor` row for the observation_id across all domain files).
+The build script computes `answer_value_1k = Math.round(obs.value / world_population * 1000)` and selects facts from `data/canonical-facts/` (first `relationship`, `temporal`, and `scale` row for the observation_id across all domain files).
 
 ---
 
@@ -186,7 +186,7 @@ Edit `data/canonical-facts/<domain>.csv` or observation value
    ```
 
 2. **Author facts in `data/canonical-facts/<domain>.csv`**
-   Add at minimum one `relationship`, one `temporal`, and one `anchor` row for the observation_id.
+   Add at minimum one `relationship`, one `temporal`, and one `scale` row for the observation_id.
    ```bash
    npm run fact-hunt -- status   # verify no missing fact types
    ```

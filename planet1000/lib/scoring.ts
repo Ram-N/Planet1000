@@ -5,7 +5,7 @@
  *   1 (cold, no hints)          → up to 100 pts
  *   2 (after relationship hint) → up to  75 pts
  *   3 (after temporal hint)     → up to  50 pts
- *   4 (after anchor hint)       → up to  25 pts
+ *   4 (after scale hint)       → up to  25 pts
  *
  * Max possible score per puzzle = 250 pts.
  * Defaults to guessNumber=1 for backward compatibility with existing game pages.

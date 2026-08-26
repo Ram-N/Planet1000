@@ -25,7 +25,7 @@ The old `facts: string[]` array had no type distinction. The hint engine used ar
 `Observation.facts` is now `Fact[]` instead of `string[]`.
 
 ```ts
-type FactType = 'relationship' | 'anchor';
+type FactType = 'relationship' | 'scale';
 
 interface Fact {
   text: string;
@@ -40,7 +40,7 @@ interface Fact {
 - Structural inequalities
 - **Rule:** must NOT contain a world total that divides directly to the per-1k answer
 
-**`anchor`** — Hint 2 (REFINE phase)
+**`scale`** — Hint 2 (REFINE phase)
 - One specific number for one country or region
 - Strictly less than the global total
 - Requires the player to extrapolate ("that's just Nigeria — what about the rest?")
@@ -53,7 +53,7 @@ interface Fact {
 | Phase | Preferred type | Fallback |
 |-------|---------------|---------|
 | THINK (guess 1) | `relationship` (up to 2) | any unused fact |
-| REFINE (guess 2) | `anchor` (1 fact) | any unused fact |
+| REFINE (guess 2) | `scale` (1 fact) | any unused fact |
 
 `HintResponse.facts` is still `string[]` (text extracted from the typed facts), so the UI layer (`page.tsx`, `HintBox`) needed no changes.
 
@@ -79,7 +79,7 @@ A creator-only tool for maintaining and growing the fact pool. Run from the `pla
 # Overview — run this periodically
 npx tsx scripts/fact-hunt.ts status
 ```
-Shows total relationship/anchor counts, and flags any observations with zero anchors or zero relationship facts.
+Shows total relationship/scale counts, and flags any observations with zero anchors or zero relationship facts.
 
 ```bash
 # Research prompts for a specific observation
@@ -97,7 +97,7 @@ Prompts for type, fact text, and optional source URL + year. Shows a preview bef
 
 ```bash
 npx tsx scripts/fact-hunt.ts status
-# → see which observations need more anchor facts
+# → see which observations need more scale facts
 
 npx tsx scripts/fact-hunt.ts hunt water-no-clean
 # → read the research prompts, do the research
@@ -113,11 +113,11 @@ npx tsx scripts/fact-hunt.ts add water-no-clean
 ```
 Questions:      28
 Relationship:   52 facts
-Anchor:         28 facts
+Scale:         28 facts
 Total:          80 facts
 ```
 
-Each observation has at least 1 relationship + 1 anchor. Most have 2–3 relationship + 1 anchor. Running `status` will show where the gaps are.
+Each observation has at least 1 relationship + 1 scale. Most have 2–3 relationship + 1 scale. Running `status` will show where the gaps are.
 
 ---
 
@@ -131,7 +131,7 @@ Each observation has at least 1 relationship + 1 anchor. Most have 2–3 relatio
 | "The richest 10% account for about half of all global carbon emissions" | "The global average is 4.6 tonnes per person per year" (= the answer) |
 | "Access has roughly doubled since 2000, but gaps remain large" | Any sentence with the world total |
 
-### Anchor facts
+### Scale facts
 
 | Do | Don't |
 |----|-------|
@@ -139,9 +139,9 @@ Each observation has at least 1 relationship + 1 anchor. Most have 2–3 relatio
 | "Sub-Saharan Africa generates about 1% of global electricity despite holding 15% of the population" | Any percentage or number that lets the player calculate the world total |
 | "Chad has fewer than 10% of its population with electricity access" | Round numbers that happen to equal the per-1k answer |
 
-### Anchor size check
+### Scale size check
 
-Before adding an anchor, mentally verify: can a player divide this number by world population to get close to the answer? If yes, it's not an anchor — it's an answer. Replace it with a partial regional figure.
+Before adding an scale, mentally verify: can a player divide this number by world population to get close to the answer? If yes, it's not an scale — it's an answer. Replace it with a partial regional figure.
 
 ---
 
@@ -165,7 +165,7 @@ npx tsc --noEmit
 npm run dev
 # → open http://localhost:3000/play/planet1000
 # → play a housing, water, or energy question
-# → verify Hint 1 has no world total, Hint 2 has a regional anchor
+# → verify Hint 1 has no world total, Hint 2 has a regional scale
 ```
 
 ---

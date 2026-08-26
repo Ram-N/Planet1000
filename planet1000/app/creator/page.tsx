@@ -95,7 +95,7 @@ interface GeneratedPuzzle extends ManifestPuzzle {
   answer_unit?: string;
   relationship_fact?: { text: string; source_label?: string };
   temporal_fact?: { text: string; source_label?: string };
-  anchor_fact?: { text: string; source_label?: string };
+  scale_fact?: { text: string; source_label?: string };
 }
 
 function readJson<T>(filePath: string): T | null {
@@ -225,10 +225,10 @@ export default function CreatorDashboard() {
                                 {firstNWords(row.generated.temporal_fact.text)}
                               </div>
                             )}
-                            {row.generated.anchor_fact && (
+                            {row.generated.scale_fact && (
                               <div className="text-xs text-slate-400">
                                 <span className="text-slate-300 font-mono mr-1">H3</span>
-                                {firstNWords(row.generated.anchor_fact.text)}
+                                {firstNWords(row.generated.scale_fact.text)}
                               </div>
                             )}
                           </div>

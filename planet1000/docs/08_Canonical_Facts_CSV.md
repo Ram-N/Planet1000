@@ -21,7 +21,7 @@ Before this change, `fact-hunt add` wrote facts only to `data/generated/world-mo
 | Column | Required | Notes |
 |---|---|---|
 | `observation_id` | yes | Must match an ID in world-model.json |
-| `type` | yes | `relationship`, `temporal`, or `anchor` |
+| `type` | yes | `relationship`, `temporal`, or `scale` |
 | `text` | yes | The fact sentence |
 | `source` | no | URL of primary source |
 | `year` | no | Publication or data year |
@@ -32,7 +32,7 @@ Example:
 observation_id,type,text,source,year
 people-children,relationship,"Children under 15 make up a much larger share in Africa than Europe",,
 people-children,temporal,"The global share of under-15s has fallen from 33% in 1990 to 26% today as birth rates decline",,
-people-children,anchor,"In Niger, more than half the population is under 15",https://worldbank.org/,2022
+people-children,scale,"In Niger, more than half the population is under 15",https://worldbank.org/,2022
 ```
 
 `source` and `year` are stored here even though `world-model.json`'s `Fact` interface only has `text` and `type`. They are preserved for provenance and future use.

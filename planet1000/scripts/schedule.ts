@@ -29,7 +29,7 @@ type Obs = {
   unit: { id: string };
   value: number;
   notes: string;
-  facts: { type: 'relationship' | 'anchor'; text: string }[];
+  facts: { type: 'relationship' | 'scale'; text: string }[];
 };
 
 const TEMPLATES: { id: string; applies: (o: Obs) => boolean }[] = [
@@ -99,7 +99,7 @@ interface FactCounts { r: number; a: number }
 function countFacts(obs: Obs): FactCounts {
   return {
     r: obs.facts.filter(f => f.type === 'relationship').length,
-    a: obs.facts.filter(f => f.type === 'anchor').length,
+    a: obs.facts.filter(f => f.type === 'scale').length,
   };
 }
 
@@ -137,7 +137,7 @@ function recommend(obs: Obs, counts: FactCounts, daysUntil: number): Recommendat
   if (a < 2) {
     return {
       priority: soon ? 'HIGH' : 'MEDIUM',
-      gap:      `A:${a} — needs ${2 - a} more anchor (concrete country figure)`,
+      gap:      `A:${a} — needs ${2 - a} more scale (concrete country figure)`,
       action:   `npx tsx scripts/fact-hunt.ts add ${obs.id}`,
     };
   }
@@ -163,7 +163,7 @@ interface ScheduleDay {
   entity:         string;
   domain:         string;
   template:       string;
-  facts:          { relationship: number; anchor: number; total: number };
+  facts:          { relationship: number; scale: number; total: number };
   priority:       Priority;
   gap:            string;
   action:         string;
@@ -202,7 +202,7 @@ function printSchedule(days: ScheduleDay[], poolSize: number): void {
   console.log('   ' + '─'.repeat(COL.date + COL.id + COL.entity + 26));
 
   for (const day of days) {
-    const facts = `R:${day.facts.relationship} A:${day.facts.anchor}`;
+    const facts = `R:${day.facts.relationship} A:${day.facts.scale}`;
     const icon  = PRIORITY_ICON[day.priority];
     console.log(
       ` ${icon} ` +
@@ -280,7 +280,7 @@ for (let i = 0; i < N; i++) {
     entity:         obs.entity.name,
     domain:         obs.entity.domain,
     template:       pick.template,
-    facts:          { relationship: counts.r, anchor: counts.a, total: counts.r + counts.a },
+    facts:          { relationship: counts.r, scale: counts.a, total: counts.r + counts.a },
     priority:       rec.priority,
     gap:            rec.gap,
     action:         rec.action,

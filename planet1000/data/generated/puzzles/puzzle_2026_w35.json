@@ -4,7 +4,7 @@
   "publish_date": "2026-08-25",
   "domain": "housing",
   "question": "Out of every 1,000 people on Earth, how many are homeless or living without adequate shelter?",
-  "answer_value_1k": 160,
+  "answer_value_1k": 184,
   "answer_unit": "people",
   "answer_explanation": "Roughly 160 out of every 1,000 people worldwide live in inadequate housing — slums, informal settlements, or without any shelter at all. That represents around 1.6 billion people across every continent, a number that has grown as rapid urbanisation outpaces housing construction in low-income countries.",
   "relationship_fact": {
@@ -14,7 +14,7 @@
     "text": "Global homelessness has worsened since 2000 — the number of people without adequate shelter has grown substantially, driven by rapid urbanisation outpacing housing construction, conflict displacement, and climate-related housing loss.",
     "source_label": "IDMC / UN-Habitat"
   },
-  "anchor_fact": {
+  "scale_fact": {
     "text": "In Nigeria alone, an estimated 40–50 million people live in substandard housing or informal settlements — a single country that illustrates how large the housing deficit is in rapidly urbanising Africa"
   },
   "summary_id": "summary_global_homelessness"

@@ -8,7 +8,7 @@ Step-by-step guide for creating a new Planet 1000 weekly puzzle from scratch.
 
 Every puzzle requires three things:
 1. A **slim manifest** (`data/puzzles/<id>.json`) — question, observation, explanation
-2. **Three facts** in `data/canonical-facts/<domain>.csv` — one relationship, one temporal, one anchor
+2. **Three facts** in `data/canonical-facts/<domain>.csv` — one relationship, one temporal, one scale
 3. A **knowledge summary** (`data/summaries/summary_<topic>.json`) — post-game learning content
 
 Running `npm run build:puzzles` assembles these into the full puzzle the game reads.
@@ -36,7 +36,7 @@ Open the domain file for the observation (e.g. `data/canonical-facts/housing.csv
 | Column | What to write |
 |--------|---------------|
 | `observation_id` | Must exactly match the manifest's `observation_id` |
-| `type` | `relationship`, `temporal`, or `anchor` |
+| `type` | `relationship`, `temporal`, or `scale` |
 | `text` | The fact shown to the player as a hint |
 | `source` | Free text, e.g. `WHO https://who.int/data` |
 | `year` | Year the data refers to |
@@ -45,7 +45,7 @@ Open the domain file for the observation (e.g. `data/canonical-facts/housing.csv
 
 **temporal** — how it has changed over time. Should give the player a sense of direction.
 
-**anchor** — a concrete reference point at a similar scale. Should help the player calibrate.
+**scale** — a concrete reference point at a similar scale. Should help the player calibrate.
 
 Check nothing is missing:
 

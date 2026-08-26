@@ -56,7 +56,7 @@ interface WeeklyPuzzle {
   answer_explanation: string;
   relationship_fact: PuzzleFact;
   temporal_fact: PuzzleFact;
-  anchor_fact: PuzzleFact;
+  scale_fact: PuzzleFact;
   summary_id: string;
 }
 
@@ -167,7 +167,7 @@ function loadFactsByObsAndType(): Map<string, Map<string, FactRow[]>> {
   for (const file of files) {
     rows.push(...(parseCSV(path.join(CANONICAL_DIR, file)) as unknown as FactRow[]));
   }
-  // outer key: observation_id; inner key: type ('relationship'|'temporal'|'anchor')
+  // outer key: observation_id; inner key: type ('relationship'|'temporal'|'scale')
   const byObs = new Map<string, Map<string, FactRow[]>>();
 
   for (const row of rows) {
@@ -223,12 +223,12 @@ function buildPuzzle(
 
   const relationship_fact = pickFact('relationship');
   const temporal_fact     = pickFact('temporal');
-  const anchor_fact       = pickFact('anchor');
+  const scale_fact        = pickFact('scale');
 
   const missingTypes = [
     !relationship_fact && 'relationship',
     !temporal_fact     && 'temporal',
-    !anchor_fact       && 'anchor',
+    !scale_fact        && 'scale',
   ].filter(Boolean) as string[];
 
   if (missingTypes.length > 0) {
@@ -256,7 +256,7 @@ function buildPuzzle(
     answer_explanation: source.answer_explanation,
     relationship_fact:  relationship_fact ?? PLACEHOLDER,
     temporal_fact:      temporal_fact     ?? PLACEHOLDER,
-    anchor_fact:        anchor_fact       ?? PLACEHOLDER,
+    scale_fact:         scale_fact       ?? PLACEHOLDER,
     summary_id:       source.summary_id,
   };
 }

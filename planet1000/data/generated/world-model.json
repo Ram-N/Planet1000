@@ -441,23 +441,23 @@
         },
         {
           "text": "In Niger, more than half the population is under 15 — one of the youngest age structures in the world, compared to under 15% in most of Europe",
-          "type": "anchor"
+          "type": "scale"
         },
         {
           "text": "36.4% of Pakistan's population consists of children aged 0–14 (under 15 years old)",
-          "type": "anchor"
+          "type": "scale"
         },
         {
           "text": "24% of India's population falls within the 0–14 age bracket (under 15 years old)",
-          "type": "anchor"
+          "type": "scale"
         },
         {
           "text": "\"India has roughly 350 million children under 15 — more than the entire population of the United States\"",
-          "type": "anchor"
+          "type": "scale"
         },
         {
           "text": "28% of Bangladesh's population belongs to the 0–14 age demographic (under 15 years old)",
-          "type": "anchor"
+          "type": "scale"
         }
       ]
     },
@@ -499,7 +499,7 @@
         },
         {
           "text": "Japan leads the world in population ageing — nearly 30% of its population is over 65, compared to under 3% in many sub-Saharan African countries",
-          "type": "anchor"
+          "type": "scale"
         }
       ]
     },
@@ -545,7 +545,7 @@
         },
         {
           "text": "Sub-Saharan Africa is the world's fastest-urbanising region, with around 45% of its population already in cities — yet it remains less urbanised than every other major world region",
-          "type": "anchor"
+          "type": "scale"
         }
       ]
     },
@@ -595,7 +595,7 @@
         },
         {
           "text": "Norway has about 40 doctors per 1,000 people; Niger has fewer than 0.1 — a 400-fold gap driven by wealth, training capacity, and migration of healthcare workers to richer countries",
-          "type": "anchor"
+          "type": "scale"
         }
       ]
     },
@@ -637,7 +637,7 @@
         },
         {
           "text": "Sub-Saharan Africa faces a shortage of over 4 million nurses — its healthcare systems rely heavily on community health workers who have no formal nursing qualification",
-          "type": "anchor"
+          "type": "scale"
         }
       ]
     },
@@ -679,7 +679,7 @@
         },
         {
           "text": "Sub-Saharan Africa will need to hire around 17 million more teachers by 2030 just to achieve universal primary education — in some schools there is one teacher for 60 or more children",
-          "type": "anchor"
+          "type": "scale"
         }
       ]
     },
@@ -725,7 +725,7 @@
         },
         {
           "text": "In South Asia and sub-Saharan Africa, roughly half of all workers are in agriculture — compared to under 5% in wealthy nations, reflecting how mechanisation has transformed farming in richer countries",
-          "type": "anchor"
+          "type": "scale"
         }
       ]
     },
@@ -771,7 +771,7 @@
         },
         {
           "text": "In the Democratic Republic of Congo, over 75% of the population lives in extreme poverty — one of the highest rates anywhere in the world",
-          "type": "anchor"
+          "type": "scale"
         }
       ]
     },
@@ -817,7 +817,7 @@
         },
         {
           "text": "Sub-Saharan Africa has the lowest internet penetration of any world region — around 40% of people were online in 2023, compared to over 90% in Europe and North America",
-          "type": "anchor"
+          "type": "scale"
         }
       ]
     },
@@ -861,7 +861,7 @@
         },
         {
           "text": "\"Ethiopia: 106.7 million people offline. This represents one of the lowest percentages of connectivity globally, with over 75% of the population cut off.\"",
-          "type": "anchor",
+          "type": "scale",
           "source": "Visual Capitalist Data (https://www.visualcapitalist.com/largest-offline-populations-ranking/)",
           "year": 2025
         },
@@ -915,7 +915,7 @@
         },
         {
           "text": "In sub-Saharan Africa, smartphone ownership has grown rapidly but still lags behind other regions — around 40–50% of adults owned a smartphone in 2023, compared to over 80% in Europe",
-          "type": "anchor"
+          "type": "scale"
         }
       ]
     },
@@ -961,7 +961,7 @@
         },
         {
           "text": "In Mali, around 35% of adults can read and write — among the lowest literacy rates globally — while in wealthy countries near-universal literacy has been achieved for generations",
-          "type": "anchor"
+          "type": "scale"
         }
       ]
     },
@@ -1003,7 +1003,7 @@
         },
         {
           "text": "The United States throws away enough food each year to provide every American with 1,400 calories a day — while 700 million people globally go to bed hungry",
-          "type": "anchor"
+          "type": "scale"
         }
       ]
     },
@@ -1049,7 +1049,7 @@
         },
         {
           "text": "North Americans and Europeans waste roughly 95–115 kg of food per person per year, compared to just 6–11 kg per person in sub-Saharan Africa and South Asia",
-          "type": "anchor"
+          "type": "scale"
         }
       ]
     },
@@ -1095,7 +1095,7 @@
         },
         {
           "text": "Americans use roughly 500 litres of water per day; people in Mozambique or Niger typically use under 20 litres — a 25-fold gap that reflects both water scarcity and lack of infrastructure",
-          "type": "anchor"
+          "type": "scale"
         }
       ]
     },
@@ -1141,7 +1141,7 @@
         },
         {
           "text": "In Ethiopia, around 40% of the population lacks access to basic drinking water — one of the higher rates in the world, concentrated in rural and remote areas",
-          "type": "anchor"
+          "type": "scale"
         }
       ]
     },
@@ -1187,7 +1187,7 @@
         },
         {
           "text": "Sub-Saharan Africa generates about 1% of global electricity despite holding roughly 15% of the world's population — a stark illustration of how unequally energy is distributed",
-          "type": "anchor"
+          "type": "scale"
         }
       ]
     },
@@ -1233,7 +1233,7 @@
         },
         {
           "text": "China installed more solar capacity in 2023 than the entire world had installed in all previous years combined — a single country driving much of the global renewable energy transition",
-          "type": "anchor"
+          "type": "scale"
         }
       ]
     },
@@ -1290,17 +1290,17 @@
         },
         {
           "text": "In Chad, fewer than 10% of the population has electricity access — one of the lowest rates in the world, with most rural communities entirely off-grid",
-          "type": "anchor"
+          "type": "scale"
         },
         {
           "text": "Approximately 47% to 53% of the population in Sub-Saharan Africa lives without electricity",
-          "type": "anchor",
+          "type": "scale",
           "source": "https://unctad.org/publication/commodities-glance-special-issue-access-energy-sub-saharan-africa",
           "year": 2023
         },
         {
           "text": "Approximately 22% of the people in DRC Africa have access to electricity",
-          "type": "anchor",
+          "type": "scale",
           "source": "https://unctad.org/publication/commodities-glance-special-issue-access-energy-sub-saharan-africa",
           "year": 2023
         }
@@ -1366,23 +1366,23 @@
         },
         {
           "text": "In Nigeria alone, an estimated 40–50 million people live in substandard housing or informal settlements — a single country that illustrates how large the housing deficit is in rapidly urbanising Africa",
-          "type": "anchor"
+          "type": "scale"
         },
         {
           "text": "India has an official houseless population of 1.77 million people, though civil rights groups estimate the actual number is closer to 3 million.",
-          "type": "anchor",
+          "type": "scale",
           "source": "CounterCurrents https://countercurrents.org/2026/04/lives-of-the-homeless-in-indias-cities/",
           "year": 4
         },
         {
           "text": "Slum Populations: Alongside street homelessness, an estimated 65 million people reside in precarious urban slums",
-          "type": "anchor",
+          "type": "scale",
           "source": "Emerald.com",
           "year": 2018
         },
         {
           "text": "\"Nigeria records the largest homeless and displaced population at roughly 24.4 million, followed by Egypt with about 12 million\"",
-          "type": "anchor",
+          "type": "scale",
           "source": "Greater Change https://www.greaterchange.co.uk/post/which-country-has-the-highest-rate-of-homelessness",
           "year": 2022
         },
@@ -1435,7 +1435,7 @@
         },
         {
           "text": "The United States alone has more than 280 million registered passenger cars — roughly one car per adult, and more than any other country by a wide margin",
-          "type": "anchor"
+          "type": "scale"
         }
       ]
     },
@@ -1481,7 +1481,7 @@
         },
         {
           "text": "The US alone accounts for roughly a quarter of all commercial passengers globally — more than all of Africa, South America, and the Middle East combined",
-          "type": "anchor"
+          "type": "scale"
         }
       ]
     },
@@ -1527,7 +1527,7 @@
         },
         {
           "text": "Luxembourg's GDP per capita exceeds $120,000 per year; Burundi's is under $300 — a 400-fold gap that illustrates how little the global average tells you about any individual country",
-          "type": "anchor"
+          "type": "scale"
         }
       ]
     },
@@ -1573,7 +1573,7 @@
         },
         {
           "text": "North America and Europe together hold more than 60% of all global household wealth, despite containing less than 20% of the world's population",
-          "type": "anchor"
+          "type": "scale"
         }
       ]
     },
@@ -1619,7 +1619,7 @@
         },
         {
           "text": "Brazil, Indonesia, and the Democratic Republic of Congo together account for more than half of all tropical deforestation — three countries defining the pace of global forest loss",
-          "type": "anchor"
+          "type": "scale"
         }
       ]
     },
@@ -1665,7 +1665,7 @@
         },
         {
           "text": "A return economy-class flight from London to New York emits roughly 1 tonne of CO₂ per passenger — about as much as an average person in Rwanda emits in an entire year",
-          "type": "anchor"
+          "type": "scale"
         }
       ]
     },
@@ -1711,7 +1711,7 @@
         },
         {
           "text": "Sub-Saharan Africa has an average life expectancy of around 62 years — more than 10 years below the global average, with the gap driven largely by preventable diseases and limited healthcare infrastructure",
-          "type": "anchor"
+          "type": "scale"
         }
       ]
     },
@@ -1757,7 +1757,7 @@
         },
         {
           "text": "In Nigeria alone, there are an estimated 20 million out-of-school children — the highest number of any country in the world, driven by poverty, insecurity in the north, and the collapse of schools in conflict zones",
-          "type": "anchor"
+          "type": "scale"
         }
       ]
     },
@@ -1803,11 +1803,11 @@
         },
         {
           "text": "Sudan's conflict alone has produced over 8 million internally displaced people since 2023 — a single crisis straining the entire global humanitarian system",
-          "type": "anchor"
+          "type": "scale"
         }
       ]
     }
   ],
-  "world_population": 10000000000,
-  "generated_at": "2026-08-26T19:18:03.433Z"
+  "world_population": 8700000000,
+  "generated_at": "2026-08-26T21:17:24.095Z"
 }

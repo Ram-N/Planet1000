@@ -1,0 +1,4 @@
+observation_id,type,text,source,year,prompt
+housing-homeless,scale,"India has an official houseless population of 1.77 million people, though civil rights groups estimate the actual number is closer to 3 million.","CounterCurrents https://countercurrents.org/2026/04/lives-of-the-homeless-in-indias-cities/",04-2026,Find 
+housing-homeless,scale,"Slum Populations: Alongside street homelessness, an estimated 65 million people reside in precarious urban slums","Emerald.com",2018,Find a sub-Saharan African country figure (not Nigeria — already covered). A partial number not calculable to the world total.
+housing-homeless,relationship," Roughly 53% of India's homeless population lives in urban cities, driven by work migration and lack of affordable housing.",ResearchGate,2025,Ineq

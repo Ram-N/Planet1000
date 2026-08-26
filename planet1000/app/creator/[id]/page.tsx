@@ -31,7 +31,7 @@ interface GeneratedPuzzle extends ManifestPuzzle {
   answer_unit?: string;
   relationship_fact?: Fact;
   temporal_fact?: Fact;
-  anchor_fact?: Fact;
+  scale_fact?: Fact;
 }
 
 interface BarChartSection {
@@ -423,7 +423,7 @@ export default async function PuzzlePreview({
               slot={3}
               label="Anchor"
               gameNote="shown after Guess 3"
-              fact={generated.anchor_fact}
+              fact={generated.scale_fact}
             />
           </>
         ) : (

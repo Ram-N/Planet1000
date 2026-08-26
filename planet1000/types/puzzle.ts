@@ -36,7 +36,7 @@ export interface WeeklyPuzzle {
   /** Hint 2 (shown after Guess 2): trend / change over time */
   temporal_fact: PuzzleFact;
   /** Hint 3 (shown after Guess 3): concrete scale reference */
-  anchor_fact: PuzzleFact;
+  scale_fact: PuzzleFact;
   /** References a KnowledgeSummary by id */
   summary_id: string;
 }

@@ -64,7 +64,7 @@ interface WeeklyPuzzle {
   answer_explanation: string;
   relationship_fact: PuzzleFact;
   temporal_fact: PuzzleFact;
-  anchor_fact: PuzzleFact;
+  scale_fact: PuzzleFact;
   artifact_id: string;
 }
 
@@ -286,10 +286,10 @@ function printPuzzle(source: PuzzleSource): void {
     }
     console.log('');
     console.log(`HINT 3 — Anchor`);
-    console.log(`  ${generated.anchor_fact.text}`);
-    if (generated.anchor_fact.source_label) {
-      const url = generated.anchor_fact.source_url ? `  <${generated.anchor_fact.source_url}>` : '';
-      console.log(`  Source: ${generated.anchor_fact.source_label}${url}`);
+    console.log(`  ${generated.scale_fact.text}`);
+    if (generated.scale_fact.source_label) {
+      const url = generated.scale_fact.source_url ? `  <${generated.scale_fact.source_url}>` : '';
+      console.log(`  Source: ${generated.scale_fact.source_label}${url}`);
     }
     console.log('');
   } else {
@@ -396,7 +396,7 @@ async function cmdNew(weekId: string): Promise<void> {
   console.log('\nNext steps:');
   console.log(`  1. Fill in answer_explanation in the manifest`);
   console.log(`  2. Author facts in canonical-facts.csv for "${observationId || '<observation_id>'}":`);
-  console.log(`       relationship, temporal, anchor  (one row each, minimum)`);
+  console.log(`       relationship, temporal, scale  (one row each, minimum)`);
   console.log(`     Verify: npm run fact-hunt -- status`);
   console.log(`  3. Build the full puzzle JSON:`);
   console.log(`       npm run build:puzzles`);

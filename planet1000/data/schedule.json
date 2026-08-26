@@ -11,7 +11,7 @@
       "template": "absolute_1k_gather",
       "facts": {
         "relationship": 2,
-        "anchor": 1,
+        "scale": 1,
         "total": 3
       },
       "priority": "HIGH",
@@ -27,7 +27,7 @@
       "template": "absolute_1k_gather",
       "facts": {
         "relationship": 2,
-        "anchor": 1,
+        "scale": 1,
         "total": 3
       },
       "priority": "HIGH",
@@ -43,7 +43,7 @@
       "template": "absolute_1k_gather",
       "facts": {
         "relationship": 1,
-        "anchor": 5,
+        "scale": 5,
         "total": 6
       },
       "priority": "MEDIUM",
@@ -59,7 +59,7 @@
       "template": "absolute_1k_gather",
       "facts": {
         "relationship": 3,
-        "anchor": 1,
+        "scale": 1,
         "total": 4
       },
       "priority": "MEDIUM",
@@ -75,7 +75,7 @@
       "template": "absolute_1k_gather",
       "facts": {
         "relationship": 1,
-        "anchor": 1,
+        "scale": 1,
         "total": 2
       },
       "priority": "MEDIUM",
@@ -91,7 +91,7 @@
       "template": "absolute_1k_objects",
       "facts": {
         "relationship": 2,
-        "anchor": 1,
+        "scale": 1,
         "total": 3
       },
       "priority": "MEDIUM",
@@ -107,7 +107,7 @@
       "template": "absolute_1k",
       "facts": {
         "relationship": 2,
-        "anchor": 1,
+        "scale": 1,
         "total": 3
       },
       "priority": "MEDIUM",
