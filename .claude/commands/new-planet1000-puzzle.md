@@ -137,12 +137,16 @@ Do NOT run `npm run summary -- build`. Instead:
 
 1. List all files in `data/source/summary-input/<summary_id>/`.
 2. Read every file in that directory directly — images, text files, whatever is there.
-3. Based on what you read, write `data/summaries/<summary_id>.json` yourself, following the existing summary format (see `data/summaries/summary_global_homelessness.json` as the canonical example). Include:
+3. **Before writing anything**, check for denominator mismatches: source charts often show figures "per 1,000 workers" or "per 1,000 employed" — a workforce denominator (~3–4B). The puzzle answer uses total world population (8.7B) as the denominator. These will produce different numbers for the same observation and will confuse the player. Specifically:
+   - If a source shows a "global average" or "world total" figure that differs from `answer_value_1k`, do NOT include that figure as a standalone bar or table row — it will look like a contradiction.
+   - Regional breakdowns (Africa, Asia, individual countries) are fine to include even when they use a workforce denominator, as long as the chart heading or caption makes the denominator explicit (e.g. "per 1,000 employed").
+   - The historical trend charts are also fine — label them clearly as workforce-relative if that's what they show.
+4. Based on what you read, write `data/summaries/<summary_id>.json` yourself, following the existing summary format (see `data/summaries/summary_global_homelessness.json` as the canonical example). Include:
    - A `bullet_list` section for key takeaways
    - One or more `bar_chart` sections for any chart data visible in the sources
    - A `table` section if tabular data is present
    - A `sources` section with attribution
-4. Run `npm run summary -- validate <summary_id>` to check the schema.
+5. Run `npm run summary -- validate <summary_id>` to check the schema.
 
 **STOP**:
 > Summary written to `data/summaries/<summary_id>.json`.
