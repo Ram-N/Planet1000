@@ -1,0 +1,99 @@
+{
+  "id": "summary_global_agriculture",
+  "title": "Who Works the Land?",
+  "description": "How agricultural employment is distributed around the world — and how it has shifted over the past three decades.",
+  "domain": "food",
+  "data_year": 2025,
+  "updated_at": "2026-08-26",
+  "sections": [
+    {
+      "type": "bullet_list",
+      "heading": "Key Takeaways",
+      "items": [
+        {
+          "icon": "🌾",
+          "label": "The Wealth-Density Inversion",
+          "value": "851 vs 10",
+          "note": "Out of every 1,000 workers, Burundi relies on 851 for farming. The United States needs just 10 — mechanisation does the rest."
+        },
+        {
+          "icon": "🌍",
+          "label": "Continental Dominance",
+          "value": "68%",
+          "note": "Asia and Africa together account for over 68% of all global farming labour."
+        },
+        {
+          "icon": "📉",
+          "label": "The Productivity Factor",
+          "value": "Falling share",
+          "note": "Shifts out of agriculture are driven by better wages in services and manufacturing, plus improved seeds, tools, and irrigation freeing workers to move."
+        }
+      ]
+    },
+    {
+      "type": "bar_chart",
+      "heading": "Agricultural Workforce Density by Region (per 1,000 Workers)",
+      "caption": "How many out of every 1,000 employed people work in agriculture. Note: this uses the workforce as the denominator — the puzzle answer of 322 uses total population (including children and retirees).",
+      "x_label": "Agricultural workers per 1,000 employed",
+      "bars": [
+        { "label": "Burundi",           "value": 851 },
+        { "label": "Niger",             "value": 710 },
+        { "label": "Nepal",             "value": 520 },
+        { "label": "Africa (avg)",      "value": 460 },
+        { "label": "Asia (avg)",        "value": 303 },
+        { "label": "Americas (avg)",    "value": 86 },
+        { "label": "Europe (avg)",      "value": 50 },
+        { "label": "Japan",             "value": 40 },
+        { "label": "United States",     "value": 10 }
+      ]
+    },
+    {
+      "type": "table",
+      "heading": "Agricultural Share of Employment by Geography",
+      "columns": ["Geography", "Share of Workforce (%)", "Per 1,000 Workers"],
+      "rows": [
+        { "cells": ["Global Average",    "~26.1%", "261"] },
+        { "cells": ["Africa",            "46.0%",  "460"] },
+        { "cells": ["Asia",              "30.3%",  "303"] },
+        { "cells": ["Americas",          "8.6%",   "86"]  },
+        { "cells": ["Europe",            "5.0%",   "50"]  },
+        { "cells": ["Burundi (highest)", "85.1%",  "851"] },
+        { "cells": ["Niger",             "71.0%",  "710"] },
+        { "cells": ["Nepal",             "~52.0%", "520"] },
+        { "cells": ["Japan",             "4.0%",   "40"]  },
+        { "cells": ["United States",     "1.0%",   "10"]  }
+      ]
+    },
+    {
+      "type": "bar_chart",
+      "heading": "Historical Decline in Agricultural Labour Density (1990 vs 2025)",
+      "caption": "Agricultural workers per 1,000 employed, comparing 1990 baseline to 2025. South Asia fell sharply; sub-Saharan Africa declined more slowly.",
+      "x_label": "Agricultural workers per 1,000 employed",
+      "bars": [
+        { "label": "South Asia — 1990",        "value": 660 },
+        { "label": "South Asia — 2025",        "value": 400 },
+        { "label": "Sub-Saharan Africa — 1990","value": 600 },
+        { "label": "Sub-Saharan Africa — 2025","value": 500 },
+        { "label": "Global Average — 1990",    "value": 400 },
+        { "label": "Global Average — 2025",    "value": 261 }
+      ]
+    },
+    {
+      "type": "sources",
+      "heading": "Data Sources",
+      "sources": [
+        {
+          "title": "FAO — Food and Agriculture Organization of the United Nations",
+          "description": "Primary source for global agricultural employment figures and labour dynamics across regions.",
+          "url": "https://fao.org"
+        },
+        {
+          "title": "World Bank Group — World Development Indicators",
+          "description": "Regional employment share data and historical trend figures used for the 1990 vs 2025 comparison.",
+          "url": "https://data.worldbank.org"
+        }
+      ]
+    }
+  ],
+  "related_summary_ids": []
+}

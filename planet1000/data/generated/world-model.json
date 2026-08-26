@@ -726,6 +726,12 @@
         {
           "text": "In South Asia and sub-Saharan Africa, roughly half of all workers are in agriculture — compared to under 5% in wealthy nations, reflecting how mechanisation has transformed farming in richer countries",
           "type": "scale"
+        },
+        {
+          "text": "Over the past three decades, South Asia's agricultural workforce contracted significantly to two-thirds of its 1990 baseline. By contrast, sub-Saharan Africa experienced a much more gradual transition, with its 2023 farming workforce retaining five-sixths of its 1990 level.",
+          "type": "temporal",
+          "source": "World Bank Group",
+          "year": 2023
         }
       ]
     },
@@ -1809,5 +1815,5 @@
     }
   ],
   "world_population": 8700000000,
-  "generated_at": "2026-08-26T21:17:24.095Z"
+  "generated_at": "2026-08-26T21:38:45.179Z"
 }

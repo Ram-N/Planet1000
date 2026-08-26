@@ -1,0 +1,10 @@
+{
+  "id": "puzzle_2026_w37",
+  "week_id": "2026-W37",
+  "publish_date": "2026-09-07",
+  "domain": "food",
+  "observation_id": "people-farmers",
+  "question": "Out of every 1,000 people on Earth, how many work in agriculture — farming, fishing, or forestry?",
+  "answer_explanation": "Agriculture employs more people than any other sector on Earth. Most are smallholder farmers in Asia and sub-Saharan Africa, where farming remains the primary livelihood for a large share of the population. In wealthy, mechanised nations the figure drops to under 2% of the workforce.",
+  "summary_id": "summary_global_agriculture"
+}
