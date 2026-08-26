@@ -34,6 +34,53 @@ interface GeneratedPuzzle extends ManifestPuzzle {
   anchor_fact?: Fact;
 }
 
+interface BarChartSection {
+  type: 'bar_chart';
+  heading?: string;
+  caption?: string;
+  x_label?: string;
+  bars: { label: string; value: number }[];
+}
+
+interface TableSection {
+  type: 'table';
+  heading?: string;
+  caption?: string;
+  columns: string[];
+  rows: { cells: string[] }[];
+}
+
+interface BulletListSection {
+  type: 'bullet_list';
+  heading?: string;
+  items: { icon?: string; label: string; value?: string; note?: string }[];
+}
+
+interface SourcesSection {
+  type: 'sources';
+  heading?: string;
+  sources: { title: string; description?: string; url?: string }[];
+}
+
+interface TextSection {
+  type: 'text';
+  heading?: string;
+  body: string;
+}
+
+type SummarySection = BarChartSection | TableSection | BulletListSection | SourcesSection | TextSection;
+
+interface KnowledgeSummary {
+  id: string;
+  title: string;
+  description?: string;
+  domain: string;
+  data_year?: number;
+  updated_at?: string;
+  sections: SummarySection[];
+  related_summary_ids?: string[];
+}
+
 function readJson<T>(filePath: string): T | null {
   try {
     return JSON.parse(fs.readFileSync(filePath, 'utf-8')) as T;
@@ -119,6 +166,153 @@ function HintBlock({
   );
 }
 
+// ── Summary section renderers ─────────────────────────────────────────────────
+
+function SummaryBarChart({ section }: { section: BarChartSection }) {
+  const max = Math.max(...section.bars.map((b) => b.value), 1);
+  return (
+    <div className="mb-6">
+      {section.heading && <h3 className="font-semibold text-slate-700 mb-1">{section.heading}</h3>}
+      {section.caption && <p className="text-xs text-slate-500 mb-3">{section.caption}</p>}
+      <div className="space-y-2">
+        {section.bars.map((bar, i) => (
+          <div key={i} className="flex items-center gap-3">
+            <span className="text-sm text-slate-600 w-32 shrink-0 text-right">{bar.label}</span>
+            <div className="flex-1 bg-slate-100 rounded-full h-5 overflow-hidden">
+              <div
+                className="bg-emerald-500 h-5 rounded-full"
+                style={{ width: `${(bar.value / max) * 100}%` }}
+              />
+            </div>
+            <span className="text-sm font-mono text-slate-700 w-12 shrink-0">{bar.value}</span>
+          </div>
+        ))}
+      </div>
+      {section.x_label && (
+        <p className="text-xs text-slate-400 mt-2 text-right">{section.x_label}</p>
+      )}
+    </div>
+  );
+}
+
+function SummaryTable({ section }: { section: TableSection }) {
+  return (
+    <div className="mb-6 overflow-x-auto">
+      {section.heading && <h3 className="font-semibold text-slate-700 mb-2">{section.heading}</h3>}
+      {section.caption && <p className="text-xs text-slate-500 mb-2">{section.caption}</p>}
+      <table className="w-full text-sm border-collapse">
+        <thead>
+          <tr>
+            {section.columns.map((col, i) => (
+              <th
+                key={i}
+                className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wide border-b border-slate-200 pb-2 px-2 first:pl-0"
+              >
+                {col}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {section.rows.map((row, ri) => (
+            <tr key={ri} className="border-b border-slate-100 last:border-0">
+              {row.cells.map((cell, ci) => (
+                <td key={ci} className="py-2 px-2 first:pl-0 text-slate-700 align-top">
+                  {cell}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function SummaryBulletList({ section }: { section: BulletListSection }) {
+  return (
+    <div className="mb-6">
+      {section.heading && <h3 className="font-semibold text-slate-700 mb-2">{section.heading}</h3>}
+      <ul className="space-y-2">
+        {section.items.map((item, i) => (
+          <li key={i} className="flex items-baseline gap-2 text-sm">
+            {item.icon && <span className="shrink-0">{item.icon}</span>}
+            <span className="font-medium text-slate-700">{item.label}</span>
+            {item.value && <span className="font-bold text-emerald-700">{item.value}</span>}
+            {item.note && <span className="text-slate-500">{item.note}</span>}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function SummarySources({ section }: { section: SourcesSection }) {
+  return (
+    <div className="mb-2">
+      {section.heading && (
+        <h3 className="font-semibold text-slate-700 mb-2">{section.heading}</h3>
+      )}
+      <ul className="space-y-2">
+        {section.sources.map((src, i) => (
+          <li key={i} className="text-sm">
+            {src.url ? (
+              <a
+                href={src.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-emerald-700 hover:underline"
+              >
+                {src.title}
+              </a>
+            ) : (
+              <span className="font-medium text-slate-700">{src.title}</span>
+            )}
+            {src.description && (
+              <p className="text-slate-500 text-xs mt-0.5">{src.description}</p>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function SummaryText({ section }: { section: TextSection }) {
+  return (
+    <div className="mb-6">
+      {section.heading && <h3 className="font-semibold text-slate-700 mb-1">{section.heading}</h3>}
+      <p className="text-slate-700 text-sm leading-relaxed">{section.body}</p>
+    </div>
+  );
+}
+
+function SummaryPreview({ summary }: { summary: KnowledgeSummary }) {
+  return (
+    <div className="mt-4 border-t border-slate-100 pt-4">
+      <div className="flex items-baseline gap-3 mb-3 flex-wrap">
+        <span className="font-semibold text-slate-800">{summary.title}</span>
+        {summary.data_year && (
+          <span className="text-xs text-slate-400">data: {summary.data_year}</span>
+        )}
+      </div>
+      {summary.description && (
+        <p className="text-sm text-slate-600 mb-4 leading-relaxed">{summary.description}</p>
+      )}
+      {summary.sections.map((section, i) => {
+        switch (section.type) {
+          case 'bar_chart':   return <SummaryBarChart key={i} section={section} />;
+          case 'table':       return <SummaryTable key={i} section={section} />;
+          case 'bullet_list': return <SummaryBulletList key={i} section={section} />;
+          case 'sources':     return <SummarySources key={i} section={section} />;
+          case 'text':        return <SummaryText key={i} section={section} />;
+          default:            return null;
+        }
+      })}
+    </div>
+  );
+}
+
 // ── Page ─────────────────────────────────────────────────────────────────────
 
 export default async function PuzzlePreview({
@@ -145,9 +339,9 @@ export default async function PuzzlePreview({
   const data = (generated ?? manifest)!;
 
   const summaryId = data.summary_id;
-  const summaryExists = summaryId
-    ? fs.existsSync(path.join(SUMMARIES_DIR, `${summaryId}.json`))
-    : false;
+  const summaryPath = summaryId ? path.join(SUMMARIES_DIR, `${summaryId}.json`) : null;
+  const summaryExists = summaryPath ? fs.existsSync(summaryPath) : false;
+  const summary = summaryExists && summaryPath ? readJson<KnowledgeSummary>(summaryPath) : null;
 
   return (
     <main className="min-h-screen bg-slate-50 p-8">
@@ -239,20 +433,38 @@ export default async function PuzzlePreview({
         )}
 
         {/* Summary */}
-        <Section label="Summary">
+        <section className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 mb-4">
+          <div className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-3">
+            Summary
+          </div>
           {summaryId ? (
-            <div className="flex items-center gap-2">
-              <code className="font-mono text-slate-700 text-sm">{summaryId}</code>
-              {summaryExists ? (
-                <span className="text-emerald-600 font-medium text-sm">✓</span>
+            <>
+              <div className="flex items-center gap-2">
+                <code className="font-mono text-slate-700 text-sm">{summaryId}</code>
+                {summaryExists ? (
+                  <span className="text-emerald-600 font-medium text-sm">✓</span>
+                ) : (
+                  <span className="text-red-500 font-semibold text-sm">✗ MISSING</span>
+                )}
+              </div>
+              {summary ? (
+                <SummaryPreview summary={summary} />
+              ) : summaryExists ? (
+                <p className="text-amber-600 text-sm mt-2 italic">Summary file exists but could not be parsed.</p>
               ) : (
-                <span className="text-red-500 font-semibold text-sm">✗ MISSING</span>
+                <p className="text-slate-400 text-sm mt-2 italic">
+                  Run{' '}
+                  <code className="font-mono bg-slate-100 px-1 rounded">
+                    npm run summary -- build {summaryId}
+                  </code>{' '}
+                  to generate.
+                </p>
               )}
-            </div>
+            </>
           ) : (
             <span className="text-slate-400">—</span>
           )}
-        </Section>
+        </section>
 
         {/* Observation */}
         {data.observation_id && (
