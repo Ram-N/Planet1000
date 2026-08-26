@@ -4,7 +4,7 @@ import type { WeeklyPuzzle, KnowledgeSummary } from '@/types/puzzle';
 import puzzle_2026_w35 from '@/data/generated/puzzles/puzzle_2026_w35.json';
 import puzzle_2026_w36 from '@/data/generated/puzzles/puzzle_2026_w36.json';
 import summary_global_homelessness from '@/data/summaries/summary_global_homelessness.json';
-import summary_people_internet from '@/data/summaries/summary_people_internet.json';
+import summary_internet_access from '@/data/summaries/summary_internet_access.json';
 
 const PUZZLES: WeeklyPuzzle[] = [
   puzzle_2026_w35 as WeeklyPuzzle,
@@ -13,7 +13,7 @@ const PUZZLES: WeeklyPuzzle[] = [
 
 const SUMMARIES: KnowledgeSummary[] = [
   summary_global_homelessness as KnowledgeSummary,
-  summary_people_internet as KnowledgeSummary,
+  summary_internet_access as KnowledgeSummary,
 ];
 
 /** Returns the ISO week string for a given date, e.g. "2026-W35". */

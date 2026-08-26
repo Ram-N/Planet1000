@@ -4,7 +4,7 @@
   "publish_date": "2026-08-31",
   "domain": "people",
   "question": "How many people do not have access to the internet? (completely offline)",
-  "observation_id": "people-internet",
+  "observation_id": "people-no-internet",
   "answer_explanation": "The Offline Population: Conversely, about 2.17 billion people remain completely offline or unconnected. So 260 people in our Planet1000 have no access to the internet.",
-  "summary_id": "summary_people_internet"
+  "summary_id": "summary_internet_access"
 }

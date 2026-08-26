@@ -55,6 +55,12 @@
       "description": "People with access to the internet"
     },
     {
+      "id": "people-without-internet",
+      "name": "People without internet access",
+      "domain": "people",
+      "description": "People with no access to the internet"
+    },
+    {
       "id": "smartphone-owners",
       "name": "Smartphone owners",
       "domain": "people",
@@ -816,6 +822,58 @@
       ]
     },
     {
+      "id": "people-no-internet",
+      "entity_id": "people-without-internet",
+      "metric_id": "population-count",
+      "geography_id": "world",
+      "time_period_id": "2023",
+      "population_group_id": "all",
+      "value": 2600000000,
+      "unit_id": "people",
+      "source_id": "itu",
+      "confidence": "high",
+      "notes": "About one-third of humanity is still offline. These people, mostly in rural sub-Saharan Africa and South Asia — are the focus of major connectivity efforts.",
+      "entity": {
+        "id": "people-without-internet",
+        "name": "People without internet access",
+        "domain": "people",
+        "description": "People with no access to the internet"
+      },
+      "metric": {
+        "id": "population-count",
+        "name": "Population count",
+        "measure_type": "stock",
+        "default_unit": "people",
+        "description": "Count of people with a given characteristic"
+      },
+      "unit": {
+        "id": "people",
+        "name": "People",
+        "symbol": "people",
+        "conversion_factor_to_base": 1
+      },
+      "facts": [
+        {
+          "text": "While Europe/North america has 90% internet availability, only 40% in sub-Saharan africa have access",
+          "type": "relationship",
+          "source": "International Telecommunication Union (https://www.itu.int/en/ITU-D/Statistics/pages/stat/default.aspx)",
+          "year": 2023
+        },
+        {
+          "text": "\"Ethiopia: 106.7 million people offline. This represents one of the lowest percentages of connectivity globally, with over 75% of the population cut off.\"",
+          "type": "anchor",
+          "source": "Visual Capitalist Data (https://www.visualcapitalist.com/largest-offline-populations-ranking/)",
+          "year": 2025
+        },
+        {
+          "text": "By 2023, India had more internet users than the number of internet users in the entire world back in 2005. In other words, internet penetration has been dramatic in the last 2 decades.",
+          "type": "temporal",
+          "source": "International Telecommunication Union (https://www.itu.int/en/ITU-D/Statistics/pages/stat/default.aspx)",
+          "year": 2023
+        }
+      ]
+    },
+    {
       "id": "people-smartphones",
       "entity_id": "smartphone-owners",
       "metric_id": "population-count",
@@ -1327,6 +1385,11 @@
           "type": "anchor",
           "source": "Greater Change https://www.greaterchange.co.uk/post/which-country-has-the-highest-rate-of-homelessness",
           "year": 2022
+        },
+        {
+          "text": "Global homelessness has worsened since 2000 — the number of people without adequate shelter has grown substantially, driven by rapid urbanisation outpacing housing construction, conflict displacement, and climate-related housing loss.",
+          "type": "temporal",
+          "source": "IDMC / UN-Habitat"
         }
       ]
     },
@@ -1746,5 +1809,5 @@
     }
   ],
   "world_population": 10000000000,
-  "generated_at": "2026-08-25T14:32:58.339Z"
+  "generated_at": "2026-08-26T19:18:03.433Z"
 }

@@ -4,11 +4,13 @@
   "publish_date": "2026-08-31",
   "domain": "people",
   "question": "How many people do not have access to the internet? (completely offline)",
-  "answer_value_1k": 670,
+  "answer_value_1k": 260,
   "answer_unit": "people",
   "answer_explanation": "The Offline Population: Conversely, about 2.17 billion people remain completely offline or unconnected. So 260 people in our Planet1000 have no access to the internet.",
   "relationship_fact": {
-    "text": "India crossed 800 million internet users in 2023 — a single country now has more people online than the entire world did in 2005, reflecting how fast connectivity has spread"
+    "text": "While Europe/North america has 90% internet availability, only 40% in sub-Saharan africa have access",
+    "source_label": "International Telecommunication Union",
+    "source_url": "https://www.itu.int/en/ITU-D/Statistics/pages/stat/default.aspx"
   },
   "temporal_fact": {
     "text": "By 2023, India had more internet users than the number of internet users in the entire world back in 2005. In other words, internet penetration has been dramatic in the last 2 decades.",
@@ -16,7 +18,9 @@
     "source_url": "https://www.itu.int/en/ITU-D/Statistics/pages/stat/default.aspx"
   },
   "anchor_fact": {
-    "text": "Sub-Saharan Africa has the lowest internet penetration of any world region — around 40% of people were online in 2023, compared to over 90% in Europe and North America"
+    "text": "\"Ethiopia: 106.7 million people offline. This represents one of the lowest percentages of connectivity globally, with over 75% of the population cut off.\"",
+    "source_label": "Visual Capitalist Data",
+    "source_url": "https://www.visualcapitalist.com/largest-offline-populations-ranking/"
   },
-  "summary_id": "summary_people_internet"
+  "summary_id": "summary_internet_access"
 }
