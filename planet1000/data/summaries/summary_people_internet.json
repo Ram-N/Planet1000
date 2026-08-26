@@ -1,0 +1,68 @@
+{
+  "id": "summary_people_internet",
+  "title": "Lack of Internet Access",
+  "description": "Approximately 2.17 billion people—or 260 out of 1,000 global citizens—remain completely cut off from the digital world due to infrastructure gaps. This severe digital divide heavily impacts low-income nations, leaving nearly 3/4th of the populations in these countries isolated from modern economic and educational tools.",
+  "domain": "people",
+  "data_year": 2026,
+  "updated_at": "2026-08-26",
+  "sections": [
+    {
+      "type": "bar_chart",
+      "heading": "",
+      "caption": "",
+      "x_label": "",
+      "bars": [
+        {
+          "label": "Region A",
+          "value": 0
+        },
+        {
+          "label": "Region B",
+          "value": 0
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "heading": "",
+      "columns": [
+        "Column 1",
+        "Column 2",
+        "Column 3"
+      ],
+      "rows": [
+        {
+          "cells": [
+            "",
+            "",
+            ""
+          ]
+        }
+      ]
+    },
+    {
+      "type": "bullet_list",
+      "heading": "",
+      "items": [
+        {
+          "icon": "🌍",
+          "label": "Region A",
+          "value": "",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "heading": "Key Data Sources",
+      "sources": [
+        {
+          "title": "",
+          "description": "",
+          "url": ""
+        }
+      ]
+    }
+  ],
+  "related_summary_ids": []
+}

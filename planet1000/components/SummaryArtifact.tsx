@@ -2,12 +2,12 @@
 
 import { motion } from 'framer-motion';
 import type {
-  KnowledgeArtifact,
+  KnowledgeSummary,
   SummarySection,
   BulletItem,
   ChartBar,
   TableRow,
-  ArtifactSource,
+  SummarySource,
 } from '@/types/puzzle';
 
 // ── Section renderers ─────────────────────────────────────────────────────────
@@ -124,7 +124,7 @@ function DataTable({ heading, columns, rows }: { heading?: string; columns: stri
   );
 }
 
-function SourcesList({ heading, sources }: { heading: string; sources: ArtifactSource[] }) {
+function SourcesList({ heading, sources }: { heading: string; sources: SummarySource[] }) {
   return (
     <div className="space-y-3">
       <h4 className="font-semibold text-slate-800 text-sm">{heading}</h4>
@@ -178,7 +178,7 @@ function Section({ section }: { section: SummarySection }) {
 
 // ── Main component ────────────────────────────────────────────────────────────
 
-export function SummaryArtifact({ artifact }: { artifact: KnowledgeArtifact }) {
+export function SummaryArtifact({ artifact }: { artifact: KnowledgeSummary }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 16 }}

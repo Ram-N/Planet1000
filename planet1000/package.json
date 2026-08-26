@@ -11,7 +11,7 @@
     "build:puzzles": "tsx scripts/build-puzzles.ts",
     "fact-hunt": "tsx scripts/fact-hunt.ts",
     "obs-add": "tsx scripts/obs-add.ts",
-    "artifact": "tsx scripts/artifact.ts",
+    "summary": "tsx scripts/summary.ts",
     "puzzle": "tsx scripts/puzzle.ts"
   },
   "dependencies": {
@@ -21,6 +21,7 @@
     "react-dom": "19.2.8"
   },
   "devDependencies": {
+    "@anthropic-ai/sdk": "^0.120.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",

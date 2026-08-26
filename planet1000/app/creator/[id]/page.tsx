@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation';
 
 const PUZZLES_DIR = path.join(process.cwd(), 'data', 'puzzles');
 const GENERATED_DIR = path.join(process.cwd(), 'data', 'generated', 'puzzles');
-const ARTIFACTS_DIR = path.join(process.cwd(), 'data', 'artifacts');
+const SUMMARIES_DIR = path.join(process.cwd(), 'data', 'summaries');
 
 // ── Types ───────────────────────────────────────────────────────────────────
 
@@ -23,7 +23,7 @@ interface ManifestPuzzle {
   question: string;
   answer_explanation?: string;
   observation_id?: string;
-  artifact_id?: string;
+  summary_id?: string;
 }
 
 interface GeneratedPuzzle extends ManifestPuzzle {
@@ -144,9 +144,9 @@ export default async function PuzzlePreview({
   // Use generated as source of truth where available
   const data = (generated ?? manifest)!;
 
-  const artifactId = data.artifact_id;
-  const artifactExists = artifactId
-    ? fs.existsSync(path.join(ARTIFACTS_DIR, `${artifactId}.json`))
+  const summaryId = data.summary_id;
+  const summaryExists = summaryId
+    ? fs.existsSync(path.join(SUMMARIES_DIR, `${summaryId}.json`))
     : false;
 
   return (
@@ -238,12 +238,12 @@ export default async function PuzzlePreview({
           </div>
         )}
 
-        {/* Artifact */}
-        <Section label="Artifact">
-          {artifactId ? (
+        {/* Summary */}
+        <Section label="Summary">
+          {summaryId ? (
             <div className="flex items-center gap-2">
-              <code className="font-mono text-slate-700 text-sm">{artifactId}</code>
-              {artifactExists ? (
+              <code className="font-mono text-slate-700 text-sm">{summaryId}</code>
+              {summaryExists ? (
                 <span className="text-emerald-600 font-medium text-sm">✓</span>
               ) : (
                 <span className="text-red-500 font-semibold text-sm">✗ MISSING</span>

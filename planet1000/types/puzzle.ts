@@ -11,7 +11,7 @@ export interface PuzzleSource {
   question: string;
   observation_id: string;
   answer_explanation: string;
-  artifact_id: string;
+  summary_id: string;
 }
 
 /** A single fact attached to a weekly puzzle (with optional source attribution). */
@@ -37,11 +37,11 @@ export interface WeeklyPuzzle {
   temporal_fact: PuzzleFact;
   /** Hint 3 (shown after Guess 3): concrete scale reference */
   anchor_fact: PuzzleFact;
-  /** References a KnowledgeArtifact by id */
-  artifact_id: string;
+  /** References a KnowledgeSummary by id */
+  summary_id: string;
 }
 
-// ── Summary / Knowledge Artifact types ────────────────────────────────────────
+// ── Knowledge Summary types ────────────────────────────────────────────────────
 
 export interface BulletItem {
   icon?: string;
@@ -59,7 +59,7 @@ export interface TableRow {
   cells: string[];
 }
 
-export interface ArtifactSource {
+export interface SummarySource {
   title: string;
   description: string;
   url?: string;
@@ -70,19 +70,19 @@ export type SummarySection =
   | { type: 'bullet_list'; heading: string; items: BulletItem[] }
   | { type: 'bar_chart'; heading: string; caption?: string; bars: ChartBar[]; x_label: string }
   | { type: 'table'; heading?: string; columns: string[]; rows: TableRow[] }
-  | { type: 'sources'; heading: string; sources: ArtifactSource[] };
+  | { type: 'sources'; heading: string; sources: SummarySource[] };
 
 /**
- * A reusable body of researched knowledge that can be referenced by multiple puzzles.
- * Each puzzle's summary page renders one of these.
+ * A reusable body of researched knowledge referenced by a puzzle's summary_id.
+ * Rendered on the post-game summary page.
  */
-export interface KnowledgeArtifact {
-  id: string;           // e.g. "artifact_global_homelessness"
+export interface KnowledgeSummary {
+  id: string;           // e.g. "summary_global_homelessness"
   title: string;
   description: string;
   domain: string;
   data_year: number;
   updated_at: string;
   sections: SummarySection[];
-  related_artifact_ids: string[];
+  related_summary_ids: string[];
 }

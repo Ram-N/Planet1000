@@ -4,7 +4,7 @@
 
 It provides three commands: **status**, **show**, and **new**. Puzzles now follow a two-file model:
 
-- **Slim manifest** — `data/puzzles/<id>.json` — the source of truth you edit: observation_id, question, answer_explanation, artifact_id.
+- **Slim manifest** — `data/puzzles/<id>.json` — the source of truth you edit: observation_id, question, answer_explanation, summary_id.
 - **Generated puzzle** — `data/generated/puzzles/<id>.json` — the full `WeeklyPuzzle` JSON built by `npm run build:puzzles`, imported by `lib/puzzle-loader.ts`.
 
 ---
@@ -36,7 +36,7 @@ Planet1000 Weekly Puzzles
 
   2026-W35  2026-08-25  [housing]  obs: housing-homeless
     Q: Out of every 1,000 people on Earth, how many are homeless…
-    A: 160 people  → artifact_global_homelessness
+    A: 160 people  → summary_global_homelessness
 ```
 
 If a generated file doesn't exist yet, the answer column shows:
@@ -80,8 +80,8 @@ HINT 2 — Temporal
 HINT 3 — Anchor
   In Nigeria alone, an estimated 40–50 million people live in substandard housing...
 
-ARTIFACT
-  artifact_global_homelessness  ✓
+SUMMARY
+  summary_global_homelessness  ✓
 ```
 
 If the generated file doesn't exist, the facts section shows a prompt to run `build:puzzles`.
@@ -135,7 +135,7 @@ After the script runs:
   "question": "Out of every 1,000 people on Earth, how many are homeless or living without adequate shelter?",
   "observation_id": "housing-homeless",
   "answer_explanation": "Roughly 160 out of every 1,000 people worldwide live in inadequate housing...",
-  "artifact_id": "artifact_global_homelessness"
+  "summary_id": "summary_global_homelessness"
 }
 ```
 
@@ -143,7 +143,7 @@ After the script runs:
 |-------|-------------|
 | `observation_id` | References an observation in `world-model.json`; the build script looks up its `value` and `unit` |
 | `answer_explanation` | Prose explanation shown after the game; should match the computed answer |
-| `artifact_id` | References a `KnowledgeArtifact` in `data/artifacts/` |
+| `summary_id` | References a `KnowledgeSummary` in `data/summaries/` |
 
 The build script computes `answer_value_1k = Math.round(obs.value / world_population * 1000)` and selects facts from `canonical-facts.csv` (first `relationship`, `temporal`, and `anchor` row for the observation_id).
 
@@ -197,20 +197,20 @@ Edit canonical-facts.csv or observation value
    npm run puzzle -- show puzzle_2026_w36
    ```
 
-4. **Create the knowledge artifact**
+4. **Create the knowledge summary**
    ```bash
-   npm run artifact -- new artifact_<topic>
-   # Fill in data/artifacts/artifact_<topic>.json
-   npm run artifact -- validate artifact_<topic>
+   # Drop source images/data into data/source/summary-input/<topic>/
+   npm run summary -- build summary_<topic>
+   npm run summary -- validate summary_<topic>
    ```
 
-5. **Set artifact_id** in the manifest to match the artifact you created.
+5. **Set summary_id** in the manifest to match the summary you created.
 
 6. **Rebuild and verify** (`build:puzzles` also rewrites `lib/puzzle-loader.ts` automatically)
    ```bash
    npm run build:puzzles
    npm run puzzle -- status
-   npm run artifact -- status
+   npm run summary -- status
    ```
 
 ---
@@ -225,5 +225,5 @@ Edit canonical-facts.csv or observation value
 | `data/generated/world-model.json` | Source of observation values and units |
 | `lib/puzzle-loader.ts` | Static index — regenerated automatically by `build:puzzles` |
 | `scripts/build-puzzles.ts` | Build script |
-| `scripts/artifact.ts` | Companion tool for knowledge artifact management |
-| `docs/12_Artifact_Script.md` | Reference for the `artifact` script |
+| `scripts/summary.ts` | Companion tool for knowledge summary management |
+| `docs/12_Summary_Script.md` | Reference for the `summary` script |

@@ -86,7 +86,7 @@ interface ManifestPuzzle {
   domain: string;
   question: string;
   observation_id?: string;
-  artifact_id?: string;
+  summary_id?: string;
   answer_explanation?: string;
 }
 

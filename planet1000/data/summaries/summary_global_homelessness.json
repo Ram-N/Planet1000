@@ -1,5 +1,5 @@
 {
-  "id": "artifact_global_homelessness",
+  "id": "summary_global_homelessness",
   "title": "Global Homelessness",
   "description": "How homelessness is distributed across the world, scaled to a global village of 1,000 people.",
   "domain": "housing",
@@ -133,5 +133,5 @@
       ]
     }
   ],
-  "related_artifact_ids": []
+  "related_summary_ids": []
 }

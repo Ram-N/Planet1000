@@ -4,7 +4,7 @@ A browser-based tool for reviewing upcoming puzzles without leaving the browser.
 
 ```
 /creator          — dashboard: all upcoming weeks at a glance
-/creator/<id>     — full puzzle preview: question, all 3 hints, answer, artifact status
+/creator/<id>     — full puzzle preview: question, all 3 hints, answer, summary status
 ```
 
 ---
@@ -73,8 +73,8 @@ HINT 3 — Anchor  (shown after Guess 3)
   [anchor_fact.text]
   Source: ...
 
-ARTIFACT
-  artifact_global_homelessness  ✓
+SUMMARY
+  summary_global_homelessness  ✓
 
 OBSERVATION
   housing-homeless
@@ -95,7 +95,7 @@ Both pages are Next.js App Router **server components** — they read the filesy
 ```typescript
 const PUZZLES_DIR   = path.join(process.cwd(), 'data', 'puzzles');
 const GENERATED_DIR = path.join(process.cwd(), 'data', 'generated', 'puzzles');
-const ARTIFACTS_DIR = path.join(process.cwd(), 'data', 'artifacts');
+const SUMMARIES_DIR = path.join(process.cwd(), 'data', 'summaries');
 ```
 
 The dashboard inlines the same ISO week arithmetic used in `scripts/puzzle.ts` (`getMondayOfISOWeek`, `getISOWeekId`) — no shared utility was created to keep the surface area small.

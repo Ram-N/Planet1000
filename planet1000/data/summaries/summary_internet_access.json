@@ -1,0 +1,136 @@
+{
+  "id": "summary_internet_access",
+  "title": "Internet Access: Who's Connected, Who's Not",
+  "description": "How internet access and digital isolation are distributed across the world, scaled to a global village of 1,000 people.",
+  "domain": "technology",
+  "data_year": 2024,
+  "updated_at": "2026-08-26",
+  "sections": [
+    {
+      "type": "bar_chart",
+      "heading": "Digital Isolation Per 1,000 People — Those Without Internet Access",
+      "caption": "Scaled to a global village of 1,000 people, 247 are completely offline. Africa carries the heaviest burden relative to its size — 109 of the village's ~170 Africans lack internet access, meaning the offline outnumber the online on that continent.",
+      "x_label": "Number of People Offline (per 1,000 Global Citizens)",
+      "bars": [
+        { "label": "Asia",           "value": 121 },
+        { "label": "Africa",         "value": 109 },
+        { "label": "Americas",       "value": 14  },
+        { "label": "Europe",         "value": 10  },
+        { "label": "Rest of World",  "value": 4   }
+      ]
+    },
+    {
+      "type": "table",
+      "heading": "Planetary Snapshot: Scaled to 1,000 People",
+      "caption": "If the entire world's population were scaled down to a village of exactly 1,000 citizens, this table shows the regional split between those with digital access and those living in complete isolation.",
+      "columns": [
+        "Region / Continent",
+        "Connected (With Access)",
+        "Offline (Lacking Access)",
+        "Regional Penetration Rate"
+      ],
+      "rows": [
+        { "cells": ["Asia",                        "462 people", "121 people", "~79% connected"] },
+        { "cells": ["Africa",                      "61 people",  "109 people", "~36% connected"] },
+        { "cells": ["Americas (North & South)",    "111 people", "14 people",  "~89% connected"] },
+        { "cells": ["Europe",                      "112 people", "10 people",  "~92% connected"] },
+        { "cells": ["Rest of World (Oceania etc)", "7 people",   "4 people",   "~64% connected"] },
+        { "cells": ["Global Total",                "753 people", "247 people", "~75.3% average"] }
+      ]
+    },
+    {
+      "type": "bullet_list",
+      "heading": "Hotspots of Digital Isolation — Countries with the Most Offline People",
+      "items": [
+        {
+          "icon": "🌏",
+          "label": "India",
+          "value": "440 million offline",
+          "note": "Despite a thriving tech sector, a 30% offline rate leaves hundreds of millions disconnected."
+        },
+        {
+          "icon": "🌍",
+          "label": "Nigeria",
+          "value": "130 million offline",
+          "note": "Even as one of Africa's largest economies, more than half of its citizens do not use the internet."
+        },
+        {
+          "icon": "🌏",
+          "label": "Pakistan",
+          "value": "139 million offline",
+          "note": "Over half of its population faces barriers related to infrastructure and mobile network quality."
+        },
+        {
+          "icon": "🌍",
+          "label": "Ethiopia",
+          "value": "107 million offline",
+          "note": "Over 75% of the population is cut off — one of the lowest connectivity rates globally."
+        },
+        {
+          "icon": "🌏",
+          "label": "China",
+          "value": "119 million offline",
+          "note": "High overall penetration, but its large rural population means millions still wait for access."
+        },
+        {
+          "icon": "🌏",
+          "label": "Bangladesh",
+          "value": "93 million offline",
+          "note": "Infrastructure gaps and affordability barriers keep nearly half the population disconnected."
+        }
+      ]
+    },
+    {
+      "type": "bullet_list",
+      "heading": "Core Takeaways",
+      "items": [
+        {
+          "icon": "📊",
+          "label": "The Sheer Scale",
+          "value": "1 in 4 people",
+          "note": "Nearly 1 out of every 4 people on Earth has never logged onto the web or checked an email."
+        },
+        {
+          "icon": "💰",
+          "label": "The Economic Divide",
+          "value": "94% vs 23%",
+          "note": "High-income nations reach ~94% internet coverage. In low-income economies, only 23% have access — cutting them off from modern economic tools."
+        },
+        {
+          "icon": "🌍",
+          "label": "Africa's Digital Gap",
+          "value": "36% connected",
+          "note": "Africa is the only continent where the offline (109 per 1,000) outnumber the online (61 per 1,000)."
+        },
+        {
+          "icon": "🏡",
+          "label": "The Rural Factor",
+          "value": "70–88% offline",
+          "note": "In Tanzania, Uganda, South Sudan, and Burundi, 70–88% of the population lacks access — driven by infrastructure gaps, structural poverty, and lack of grid electricity."
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "heading": "Key Data Sources",
+      "sources": [
+        {
+          "title": "International Telecommunication Union (ITU)",
+          "description": "Provides the primary global baseline for internet user counts by country and region, updated annually.",
+          "url": "https://www.itu.int/en/ITU-D/Statistics"
+        },
+        {
+          "title": "Visual Capitalist — Mapped: Internet Users by Country",
+          "description": "Country-level data on absolute offline populations, used for the hotspots section.",
+          "url": "https://www.visualcapitalist.com"
+        },
+        {
+          "title": "World Bank — Digital Development",
+          "description": "Tracks internet penetration rates by income group, underpinning the high-income vs. low-income comparison.",
+          "url": "https://www.worldbank.org/en/topic/digitaldevelopment"
+        }
+      ]
+    }
+  ],
+  "related_summary_ids": []
+}

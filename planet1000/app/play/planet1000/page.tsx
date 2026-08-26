@@ -8,10 +8,10 @@ import { ScoreBadge } from '@/components/ScoreBadge';
 import { SummaryArtifact } from '@/components/SummaryArtifact';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
-import { getCurrentWeeklyPuzzle, getArtifactById } from '@/lib/puzzle-loader';
+import { getCurrentWeeklyPuzzle, getSummaryById } from '@/lib/puzzle-loader';
 import { scoreEstimate } from '@/lib/scoring';
 import { addScore } from '@/lib/stats';
-import type { WeeklyPuzzle, KnowledgeArtifact } from '@/types/puzzle';
+import type { WeeklyPuzzle, KnowledgeSummary } from '@/types/puzzle';
 
 // ─── Phase type ───────────────────────────────────────────────────────────────
 // estimate     → Guess 1 (cold)
@@ -32,7 +32,7 @@ const HINT_META: Record<Exclude<Phase, 'estimate' | 'revealed'>, { heading: stri
 // ─── Component ────────────────────────────────────────────────────────────────
 export default function Planet1000Page() {
   const [puzzle, setPuzzle]   = useState<WeeklyPuzzle | null>(null);
-  const [artifact, setArtifact] = useState<KnowledgeArtifact | null>(null);
+  const [artifact, setArtifact] = useState<KnowledgeSummary | null>(null);
   const [phase, setPhase]     = useState<Phase>('estimate');
 
   // Four guess values
@@ -50,7 +50,7 @@ export default function Planet1000Page() {
   useEffect(() => {
     const p = getCurrentWeeklyPuzzle();
     setPuzzle(p);
-    const a = getArtifactById(p.artifact_id);
+    const a = getSummaryById(p.summary_id);
     setArtifact(a);
   }, []);
 

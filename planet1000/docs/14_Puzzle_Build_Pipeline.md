@@ -33,7 +33,7 @@ Every puzzle now has two files:
 
 | File | Who writes it | What it contains |
 |------|--------------|------------------|
-| `data/puzzles/<id>.json` | You | `observation_id`, `question`, `answer_explanation`, `artifact_id` |
+| `data/puzzles/<id>.json` | You | `observation_id`, `question`, `answer_explanation`, `summary_id` |
 | `data/generated/puzzles/<id>.json` | `build:puzzles` | Full `WeeklyPuzzle`: computed answer, resolved facts with source info |
 
 Only edit the slim manifest. The generated file is produced by the build script and committed to git so Vercel can deploy without re-running the script.
@@ -110,9 +110,9 @@ Then:
 3. `npm run fact-hunt -- status` — verify no missing fact types
 4. `npm run build:puzzles`
 5. `npm run puzzle -- show puzzle_2026_w36` — preview resolved puzzle
-6. Create the artifact: `npm run artifact -- new artifact_<topic>`
-7. Set `artifact_id` in the manifest
-8. `npm run build:puzzles` — rebuild after artifact_id is finalised; also rewrites `lib/puzzle-loader.ts`
+6. Create the summary: `npm run summary -- build summary_<topic>`
+7. Set `summary_id` in the manifest
+8. `npm run build:puzzles` — rebuild after summary_id is finalised; also rewrites `lib/puzzle-loader.ts`
 9. Commit everything and push
 
 ### Preview a work-in-progress puzzle (missing facts)
