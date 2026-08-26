@@ -31,7 +31,7 @@ import * as readline from 'readline';
 const ROOT           = path.join(__dirname, '..');
 const PUZZLES_DIR    = path.join(ROOT, 'data', 'puzzles');
 const GENERATED_DIR  = path.join(ROOT, 'data', 'generated', 'puzzles');
-const ARTIFACTS_DIR  = path.join(ROOT, 'data', 'artifacts');
+const SUMMARIES_DIR  = path.join(ROOT, 'data', 'summaries');
 const WORLD_MODEL    = path.join(ROOT, 'data', 'generated', 'world-model.json');
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -44,7 +44,7 @@ interface PuzzleSource {
   question: string;
   observation_id: string;
   answer_explanation: string;
-  artifact_id: string;
+  summary_id: string;
 }
 
 interface PuzzleFact {
@@ -65,7 +65,7 @@ interface WeeklyPuzzle {
   relationship_fact: PuzzleFact;
   temporal_fact: PuzzleFact;
   scale_fact: PuzzleFact;
-  artifact_id: string;
+  summary_id: string;
 }
 
 interface WorldObservation {
@@ -105,8 +105,8 @@ function loadGenerated(id: string): WeeklyPuzzle | null {
   }
 }
 
-function artifactExists(id: string): boolean {
-  return fs.existsSync(path.join(ARTIFACTS_DIR, `${id}.json`));
+function summaryExists(id: string): boolean {
+  return fs.existsSync(path.join(SUMMARIES_DIR, `${id}.json`));
 }
 
 function loadObservations(): WorldObservation[] {
@@ -181,8 +181,8 @@ function cmdStatus(): void {
     }
 
     const generated = loadGenerated(source.id);
-    const artifactOk = artifactExists(source.artifact_id);
-    const artifactMark = artifactOk ? `→ ${source.artifact_id}` : `→ ${source.artifact_id}  ✗ MISSING`;
+    const summaryOk = summaryExists(source.summary_id);
+    const artifactMark = summaryOk ? `→ ${source.summary_id}` : `→ ${source.summary_id}  ✗ MISSING`;
     const question = source.question.length > 60
       ? source.question.slice(0, 57) + '…'
       : source.question;
@@ -254,7 +254,7 @@ function cmdShow(id: string, rest: string[] = []): void {
 
 function printPuzzle(source: PuzzleSource): void {
   const generated  = loadGenerated(source.id);
-  const artifactOk = artifactExists(source.artifact_id);
+  const summaryOk = summaryExists(source.summary_id);
 
   console.log('');
   console.log(`── ${source.id} ─────────────────────────────────────────`);
@@ -285,7 +285,7 @@ function printPuzzle(source: PuzzleSource): void {
       console.log(`  Source: ${generated.temporal_fact.source_label}${url}`);
     }
     console.log('');
-    console.log(`HINT 3 — Anchor`);
+    console.log(`HINT 3 — Scale`);
     console.log(`  ${generated.scale_fact.text}`);
     if (generated.scale_fact.source_label) {
       const url = generated.scale_fact.source_url ? `  <${generated.scale_fact.source_url}>` : '';
@@ -297,8 +297,8 @@ function printPuzzle(source: PuzzleSource): void {
     console.log('');
   }
 
-  console.log(`ARTIFACT`);
-  console.log(`  ${source.artifact_id}  ${artifactOk ? '✓' : '✗ NOT FOUND'}`);
+  console.log(`SUMMARY`);
+  console.log(`  ${source.summary_id}  ${summaryOk ? '✓' : '✗ NOT FOUND'}`);
   console.log('');
 }
 
@@ -365,9 +365,9 @@ async function cmdNew(weekId: string): Promise<void> {
   const observationId  = await ask('observation_id (from list above): ');
   const question       = await ask('Question (the "out of 1,000" prompt): ');
 
-  // Suggest artifact id from domain
+  // Suggest summary_id from domain
   const domainSlug       = domain.toLowerCase().replace(/[^a-z0-9]+/g, '_');
-  const suggestedArtifact = `artifact_${domainSlug}_<topic>`;
+  const suggestedArtifact = `summary_global_<topic>`;
 
   rl.close();
 
@@ -387,7 +387,7 @@ async function cmdNew(weekId: string): Promise<void> {
     question:           question || '<question>',
     observation_id:     observationId || '<observation_id>',
     answer_explanation: '',
-    artifact_id:        suggestedArtifact,
+    summary_id:         suggestedArtifact,
   };
 
   fs.writeFileSync(outPath, JSON.stringify(manifest, null, 2) + '\n');
@@ -401,10 +401,9 @@ async function cmdNew(weekId: string): Promise<void> {
   console.log(`  3. Build the full puzzle JSON:`);
   console.log(`       npm run build:puzzles`);
   console.log(`  4. Preview: npm run puzzle -- show ${puzzleId}`);
-  console.log(`  5. Create the artifact:  npm run artifact -- new ${suggestedArtifact.replace('_<topic>', '_<topic>')}`);
-  console.log(`  6. Set artifact_id to match the artifact you create`);
-  console.log(`  7. Register both in lib/puzzle-loader.ts`);
-  console.log(`  8. Rebuild: npm run build:puzzles\n`);
+  console.log(`  5. Create the summary:   npm run summary -- build ${suggestedArtifact}`);
+  console.log(`  6. Set summary_id in the manifest to match the summary you create`);
+  console.log(`  7. Rebuild: npm run build:puzzles\n`);
 }
 
 // ── Entry point ───────────────────────────────────────────────────────────────
