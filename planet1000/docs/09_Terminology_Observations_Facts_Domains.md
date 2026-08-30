@@ -157,7 +157,7 @@ It is never stored in source files; it is written into `data/generated/puzzles/<
 
 ### world_population
 
-The denominator used for all `answer_value_1k` calculations. Set in `scripts/build-world-model.ts` and stored in `data/generated/world-model.json` as `world_population`. Current value: **8,700,000,000** (8.7 billion). Changing this constant and running `npm run build:data` + `npm run build:puzzles` updates all puzzle answers.
+The denominator used for all `answer_value_1k` calculations. Set in `scripts/build-world-model.ts` and stored in `data/generated/world-model.json` as `world_population`. Current value: **8,100,000,000** (8.1 billion). Changing this constant and running `npm run build:data` + `npm run build:puzzles` updates all puzzle answers.
 
 ### Puzzle manifest (slim)
 
@@ -192,8 +192,8 @@ Lives at `data/schedule.json`. An optional planning file that maps upcoming week
 | Observation ID | `observations.csv` `id` column | Hand-written slug, e.g. `people-children` |
 | Fact | `canonical-facts/<domain>.csv` + `world-model.json` | Hint sentence attached to an observation |
 | Fact type | — | `relationship`, `temporal`, or `scale` — all three required per puzzle |
-| answer_value_1k | `data/generated/puzzles/<id>.json` | Computed answer: `round(value / 8_700_000_000 * 1000)` |
-| world_population | `build-world-model.ts` / `world-model.json` | Denominator for answer calculation; currently 8.7 billion |
+| answer_value_1k | `data/generated/puzzles/<id>.json` | Computed answer: `round(value / 8_100_000_000 * 1000)` |
+| world_population | `build-world-model.ts` / `world-model.json` | Denominator for answer calculation; currently 8.1 billion |
 | Puzzle manifest | `data/puzzles/<id>.json` | Slim, human-authored source file for a puzzle |
 | Generated puzzle | `data/generated/puzzles/<id>.json` | Full compiled puzzle with computed fields; committed for Vercel |
 | week_id | Puzzle manifest | ISO week string, e.g. `2026-W37` |

@@ -23,7 +23,7 @@ Work from the `/home/ram/projects/Planet1000/planet1000` directory for all comma
 
 1. Read `data/schedule.json` — check for a planned observation for the target week.
 2. Read `data/generated/world-model.json` — list unused observations (not in any `data/puzzles/` manifest).
-3. Compute `answer_value_1k = Math.round(value / 8_700_000_000 * 1000)` for each.
+3. Compute `answer_value_1k = Math.round(value / 8_100_000_000 * 1000)` for each.
 
 **STOP**: Show a numbered table of up to 6 candidates (scheduled recommendation first, if any):
 
@@ -137,7 +137,7 @@ Do NOT run `npm run summary -- build`. Instead:
 
 1. List all files in `data/source/summary-input/<summary_id>/`.
 2. Read every file in that directory directly — images, text files, whatever is there.
-3. **Before writing anything**, check for denominator mismatches: source charts often show figures "per 1,000 workers" or "per 1,000 employed" — a workforce denominator (~3–4B). The puzzle answer uses total world population (8.7B) as the denominator. These will produce different numbers for the same observation and will confuse the player. Specifically:
+3. **Before writing anything**, check for denominator mismatches: source charts often show figures "per 1,000 workers" or "per 1,000 employed" — a workforce denominator (~3–4B). The puzzle answer uses total world population (8.1B) as the denominator. These will produce different numbers for the same observation and will confuse the player. Specifically:
    - If a source shows a "global average" or "world total" figure that differs from `answer_value_1k`, do NOT include that figure as a standalone bar or table row — it will look like a contradiction.
    - Regional breakdowns (Africa, Asia, individual countries) are fine to include even when they use a workforce denominator, as long as the chart heading or caption makes the denominator explicit (e.g. "per 1,000 employed").
    - The historical trend charts are also fine — label them clearly as workforce-relative if that's what they show.

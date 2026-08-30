@@ -1,0 +1,10 @@
+{
+  "id": "puzzle_2026_w38",
+  "week_id": "2026-W38",
+  "publish_date": "2026-09-14",
+  "domain": "transportation",
+  "observation_id": "transportation-electric-cars",
+  "question": "Out of every 1,000 people on Earth, how many own an Electric Car?",
+  "answer_explanation": "Electric vehicles have grown rapidly from a niche technology to a mainstream product, but the global fleet remains highly concentrated. China alone accounts for more than half of all electric cars on the road, with Europe and the United States making up most of the remainder. In lower-income countries, EV ownership is still extremely rare.",
+  "summary_id": "summary_global_electric_vehicles"
+}

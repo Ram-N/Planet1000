@@ -14,7 +14,7 @@ const OUTPUT_FILE = path.join(__dirname, '../data/generated/world-model.json');
 // Ordered priority for fact types when selecting hints
 const FACT_TYPE_ORDER = ['relationship', 'scale'];
 
-const WORLD_POPULATION = 8_700_000_000;
+const WORLD_POPULATION = 8_100_000_000;
 
 // ---------------------------------------------------------------------------
 // CSV parser

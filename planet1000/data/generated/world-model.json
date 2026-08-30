@@ -173,6 +173,12 @@
       "name": "Forcibly displaced people",
       "domain": "people",
       "description": "People displaced by conflict persecution or disaster"
+    },
+    {
+      "id": "electric-car-owners",
+      "name": "Electric vehicles in use",
+      "domain": "transportation",
+      "description": "Electric cars and light vehicles actively in use worldwide"
     }
   ],
   "metrics": [
@@ -246,6 +252,12 @@
       "type": "year",
       "start_date": "2022-01-01",
       "end_date": "2022-12-31"
+    },
+    {
+      "id": "2026",
+      "type": "year",
+      "start_date": "2026-01-01",
+      "end_date": "2026-12-31"
     }
   ],
   "population_groups": [
@@ -400,6 +412,13 @@
       "title": "FAO Food and Agriculture Statistics",
       "publication_date": "2023-01-01",
       "retrieval_date": "2024-01-01"
+    },
+    {
+      "id": "owid",
+      "url": "https://ourworldindata.org/electric-car-sales",
+      "title": "Our World in Data — Electric Car Sales",
+      "publication_date": "2026-08-30",
+      "retrieval_date": "2026-08-30"
     }
   ],
   "observations": [
@@ -1812,8 +1831,60 @@
           "type": "scale"
         }
       ]
+    },
+    {
+      "id": "transportation-electric-cars",
+      "entity_id": "electric-car-owners",
+      "metric_id": "object-count",
+      "geography_id": "world",
+      "time_period_id": "2026",
+      "population_group_id": "all",
+      "value": 81000000,
+      "unit_id": "cars",
+      "source_id": "owid",
+      "confidence": "high",
+      "notes": "There are approximately 81 million electric vehicles in use worldwide as of 2026, with China, Europe, and the United States accounting for the vast majority of the fleet.",
+      "entity": {
+        "id": "electric-car-owners",
+        "name": "Electric vehicles in use",
+        "domain": "transportation",
+        "description": "Electric cars and light vehicles actively in use worldwide"
+      },
+      "metric": {
+        "id": "object-count",
+        "name": "Object count",
+        "measure_type": "stock",
+        "default_unit": "units",
+        "description": "Count of non-person objects (vehicles"
+      },
+      "unit": {
+        "id": "cars",
+        "name": "Cars",
+        "symbol": "cars",
+        "conversion_factor_to_base": 1
+      },
+      "facts": [
+        {
+          "text": "There are more than double the number of EVs in China compared with Europe.",
+          "type": "relationship",
+          "source": "Our World in Data",
+          "year": 2026
+        },
+        {
+          "text": "India has approximately 6 million electric vehicles in use as of 2026.",
+          "type": "scale",
+          "source": "Our World in Data",
+          "year": 2026
+        },
+        {
+          "text": "Electric cars now account for 25% of all new car sales worldwide.",
+          "type": "temporal",
+          "source": "Our World in Data",
+          "year": 2026
+        }
+      ]
     }
   ],
-  "world_population": 8700000000,
-  "generated_at": "2026-08-26T21:38:45.179Z"
+  "world_population": 8100000000,
+  "generated_at": "2026-08-30T23:57:10.334Z"
 }

@@ -1,0 +1,23 @@
+{
+  "id": "puzzle_2026_w38",
+  "week_id": "2026-W38",
+  "publish_date": "2026-09-14",
+  "domain": "transportation",
+  "question": "Out of every 1,000 people on Earth, how many own an Electric Car?",
+  "answer_value_1k": 10,
+  "answer_unit": "cars",
+  "answer_explanation": "Electric vehicles have grown rapidly from a niche technology to a mainstream product, but the global fleet remains highly concentrated. China alone accounts for more than half of all electric cars on the road, with Europe and the United States making up most of the remainder. In lower-income countries, EV ownership is still extremely rare.",
+  "relationship_fact": {
+    "text": "There are more than double the number of EVs in China compared with Europe.",
+    "source_label": "Our World in Data"
+  },
+  "temporal_fact": {
+    "text": "Electric cars now account for 25% of all new car sales worldwide.",
+    "source_label": "Our World in Data"
+  },
+  "scale_fact": {
+    "text": "India has approximately 6 million electric vehicles in use as of 2026.",
+    "source_label": "Our World in Data"
+  },
+  "summary_id": "summary_global_electric_vehicles"
+}

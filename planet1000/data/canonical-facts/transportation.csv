@@ -5,3 +5,6 @@ transportation-cars,scale,"The United States alone has more than 280 million reg
 transportation-flights-annual,relationship,"Flying remains one of the most unequally distributed activities on Earth — the majority of flights are taken by a small minority of frequent flyers, mostly in wealthy countries",,
 transportation-flights-annual,relationship,"Most people in low-income countries have never flown — air travel is overwhelmingly the activity of wealthier populations, and the gap between rich and poor countries is enormous",,
 transportation-flights-annual,scale,"The US alone accounts for roughly a quarter of all commercial passengers globally — more than all of Africa, South America, and the Middle East combined",,
+transportation-electric-cars,temporal,"Electric cars now account for 25% of all new car sales worldwide.",Our World in Data,2026
+transportation-electric-cars,relationship,"There are more than double the number of EVs in China compared with Europe.",Our World in Data,2026
+transportation-electric-cars,scale,"India has approximately 6 million electric vehicles in use as of 2026.",Our World in Data,2026

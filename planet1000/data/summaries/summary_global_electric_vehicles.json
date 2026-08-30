@@ -1,0 +1,90 @@
+{
+  "id": "summary_global_electric_vehicles",
+  "title": "The Electric Car Revolution",
+  "description": "How electric vehicles are distributed around the world — and how fast the fleet has grown.",
+  "domain": "transportation",
+  "data_year": 2025,
+  "updated_at": "2026-08-30",
+  "sections": [
+    {
+      "type": "bullet_list",
+      "heading": "Key Takeaways",
+      "items": [
+        {
+          "icon": "🇨🇳",
+          "label": "The Market Leaders",
+          "value": "95%",
+          "note": "China, Europe, and the United States together account for roughly 95% of all global EV sales. The rest of the world is largely yet to adopt."
+        },
+        {
+          "icon": "📊",
+          "label": "Sales vs. Total Fleet",
+          "value": "25% of new sales",
+          "note": "While 1 in 4 new cars sold globally is now electric, they still make up only about 5% of the total vehicle stock on the world's roads — existing combustion engines take decades to retire."
+        },
+        {
+          "icon": "🇳🇴",
+          "label": "The Per-Capita Champion",
+          "value": "1 in 3",
+          "note": "Norway leads the world in EV density. Massive tax exemptions and toll discounts mean roughly 1 in 3 cars currently driving on Norwegian roads is electric."
+        }
+      ]
+    },
+    {
+      "type": "bar_chart",
+      "heading": "Electric Vehicles per 1,000 People — by Country",
+      "caption": "Countries vary enormously in EV density. Small, wealthy Nordic nations lead; large emerging economies have very low per-capita figures despite high absolute numbers.",
+      "x_label": "EVs per 1,000 people",
+      "bars": [
+        { "label": "Iceland",         "value": 384.6 },
+        { "label": "Norway",          "value": 136.4 },
+        { "label": "Sweden",          "value": 39.0  },
+        { "label": "Netherlands",     "value": 28.3  },
+        { "label": "China",           "value": 22.0  },
+        { "label": "Germany",         "value": 19.0  },
+        { "label": "United Kingdom",  "value": 17.6  },
+        { "label": "United States",   "value": 15.3  }
+      ]
+    },
+    {
+      "type": "bar_chart",
+      "heading": "Global Electric Car Stock — Growth 2015 to 2025",
+      "caption": "The world electric car fleet has grown from under 1 million in 2015 to around 70 million by 2025 — doubling roughly every two years through the early 2020s.",
+      "x_label": "Million electric vehicles in use (world total)",
+      "bars": [
+        { "label": "2015", "value": 1  },
+        { "label": "2018", "value": 5  },
+        { "label": "2020", "value": 10 },
+        { "label": "2022", "value": 25 },
+        { "label": "2025", "value": 70 }
+      ]
+    },
+    {
+      "type": "table",
+      "heading": "Country EV Snapshot (2025/2026)",
+      "columns": ["Country / Region", "Active EV Fleet", "EVs per 1,000 People", "New Sales Share"],
+      "rows": [
+        { "cells": ["Iceland",        "~150,000",    "384.6", "~62%"] },
+        { "cells": ["Norway",         "~750,000",    "136.4", "~97%"] },
+        { "cells": ["Sweden",         "~410,000",    "39.0",  "~61%"] },
+        { "cells": ["Netherlands",    "~510,000",    "28.3",  "~58%"] },
+        { "cells": ["China",          "~31,000,000", "22.0",  "~53%"] },
+        { "cells": ["Germany",        "~1,600,000",  "19.0",  "~24%"] },
+        { "cells": ["United Kingdom", "~1,200,000",  "17.6",  "~28%"] },
+        { "cells": ["United States",  "~5,200,000",  "15.3",  "~10%"] }
+      ]
+    },
+    {
+      "type": "sources",
+      "heading": "Data Sources",
+      "sources": [
+        {
+          "title": "Our World in Data — Electric Car Sales",
+          "description": "Electric car stock, new sales figures, and share of new cars sold by country, 2010–2025.",
+          "url": "https://ourworldindata.org/electric-car-sales"
+        }
+      ]
+    }
+  ],
+  "related_summary_ids": []
+}

@@ -4,7 +4,9 @@ import type { WeeklyPuzzle, KnowledgeSummary } from '@/types/puzzle';
 import puzzle_2026_w35 from '@/data/generated/puzzles/puzzle_2026_w35.json';
 import puzzle_2026_w36 from '@/data/generated/puzzles/puzzle_2026_w36.json';
 import puzzle_2026_w37 from '@/data/generated/puzzles/puzzle_2026_w37.json';
+import puzzle_2026_w38 from '@/data/generated/puzzles/puzzle_2026_w38.json';
 import summary_global_agriculture from '@/data/summaries/summary_global_agriculture.json';
+import summary_global_electric_vehicles from '@/data/summaries/summary_global_electric_vehicles.json';
 import summary_global_homelessness from '@/data/summaries/summary_global_homelessness.json';
 import summary_internet_access from '@/data/summaries/summary_internet_access.json';
 
@@ -12,10 +14,12 @@ const PUZZLES: WeeklyPuzzle[] = [
   puzzle_2026_w35 as WeeklyPuzzle,
   puzzle_2026_w36 as WeeklyPuzzle,
   puzzle_2026_w37 as WeeklyPuzzle,
+  puzzle_2026_w38 as WeeklyPuzzle,
 ];
 
 const SUMMARIES: KnowledgeSummary[] = [
   summary_global_agriculture as KnowledgeSummary,
+  summary_global_electric_vehicles as KnowledgeSummary,
   summary_global_homelessness as KnowledgeSummary,
   summary_internet_access as KnowledgeSummary,
 ];

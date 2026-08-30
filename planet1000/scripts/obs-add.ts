@@ -21,7 +21,7 @@
  *
  * Optional one-shot flags (all have defaults):
  *   --pop    all|adults|children   (default: all)
- *   --year   2023|2022             (default: 2023)
+ *   --year   2026|2023|2022        (default: 2026)
  */
 
 import * as fs from 'fs';
@@ -161,7 +161,7 @@ function suggestId(name: string): string {
     .replace(/^-+|-+$/g, '');
 }
 
-const WORLD_POP = 8_200_000_000;
+const WORLD_POP = 8_100_000_000;
 
 function per1kDisplay(value: number, metricId: string): string {
   if (
@@ -499,9 +499,9 @@ async function cmdAddInteractive(lookups: Lookups): Promise<void> {
   if (!popInput || popInput === 'all') console.log('  → all');
 
   // ── Time period ─────────────────────────────────────────────────────────────
-  const yearInput    = await ask('Time period [2023/2022] (default 2023): ');
-  const timePeriodId = yearInput === '2022' ? '2022' : '2023';
-  if (!yearInput || yearInput === '2023') console.log('  → 2023');
+  const yearInput    = await ask('Time period [2026/2023/2022] (default 2026): ');
+  const timePeriodId = ['2022', '2023', '2026'].includes(yearInput) ? yearInput : '2026';
+  if (!yearInput) console.log('  → 2026');
 
   // ── Confidence ──────────────────────────────────────────────────────────────
   let confidence = '';
@@ -647,7 +647,7 @@ async function cmdAddOneShot(flags: Flags, lookups: Lookups): Promise<void> {
   }
 
   const popGroupId   = flags.pop && ['all', 'adults', 'children'].includes(flags.pop) ? flags.pop : 'all';
-  const timePeriodId = flags.year === '2022' ? '2022' : '2023';
+  const timePeriodId = ['2022', '2023', '2026'].includes(flags.year ?? '') ? flags.year! : '2023';
 
   const fields: ObsFields = {
     id:          flags.id!,
@@ -724,7 +724,7 @@ One-shot (new entity):
 
 Optional one-shot flags (defaults shown):
   --pop    all|adults|children   (default: all)
-  --year   2023|2022             (default: 2023)
+  --year   2026|2023|2022        (default: 2026)
 
 New source flags (when --source value is not in sources.csv):
   --source-url   <url>
