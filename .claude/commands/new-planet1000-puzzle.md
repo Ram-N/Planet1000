@@ -60,9 +60,7 @@ Accept the default or the user's choice. Derive `domain` from the observation_id
 
 ```json
 {
-  "id": "puzzle_<YYYY_wNN>",
-  "week_id": "<target_week>",
-  "publish_date": "<YYYY-MM-DD>",
+  "id": "<observation_id>",
   "domain": "<domain>",
   "observation_id": "<observation_id>",
   "question": "<question>",
@@ -73,7 +71,17 @@ Accept the default or the user's choice. Derive `domain` from the observation_id
 
 > `[↵ write file]` — or describe a change.
 
-Write directly to `data/puzzles/puzzle_<YYYY_wNN>.json` — do NOT run the interactive `puzzle new` script.
+Write directly to `data/puzzles/<observation_id>.json` — do NOT run the interactive `puzzle new` script.
+
+Also add the week→puzzle mapping to `data/puzzle-schedule.json`:
+```json
+{
+  ...(existing entries),
+  "<target_week>": "<observation_id>"
+}
+```
+
+Write the updated `data/puzzle-schedule.json`.
 
 ---
 
@@ -109,7 +117,7 @@ After all types are covered, run `npm run fact-hunt -- hunt <observation_id>` an
 ## Phase 5 — Build and preview
 
 1. Run `npm run build:puzzles`.
-2. Run `npm run puzzle -- show puzzle_<YYYY_wNN>`.
+2. Run `npm run puzzle -- show <observation_id>`.
 
 **STOP**: Show the full output, then:
 > Does the puzzle look correct? Check answer value and that no hint gives away the answer.
@@ -173,8 +181,9 @@ If edits are needed, make them directly to the JSON file and re-validate.
 
 Stage and commit:
 ```
-data/puzzles/puzzle_<YYYY_wNN>.json
-data/generated/puzzles/puzzle_<YYYY_wNN>.json
+data/puzzle-schedule.json
+data/puzzles/<observation_id>.json
+data/generated/puzzles/<observation_id>.json
 data/summaries/<summary_id>.json
 data/canonical-facts/<domain>.csv
 lib/puzzle-loader.ts

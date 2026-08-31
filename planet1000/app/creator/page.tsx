@@ -2,8 +2,9 @@ import fs from 'fs';
 import path from 'path';
 import Link from 'next/link';
 
-const PUZZLES_DIR = path.join(process.cwd(), 'data', 'puzzles');
-const GENERATED_DIR = path.join(process.cwd(), 'data', 'generated', 'puzzles');
+const PUZZLES_DIR    = path.join(process.cwd(), 'data', 'puzzles');
+const GENERATED_DIR  = path.join(process.cwd(), 'data', 'generated', 'puzzles');
+const SCHEDULE_FILE  = path.join(process.cwd(), 'data', 'puzzle-schedule.json');
 
 // ── ISO week utilities ──────────────────────────────────────────────────────
 
@@ -38,9 +39,8 @@ function weekIdFromYearWeek(year: number, week: number): string {
   return `${year}-W${String(week).padStart(2, '0')}`;
 }
 
-function puzzleIdFromWeekId(weekId: string): string {
-  // "2026-W35" → "puzzle_2026_w35"
-  return 'puzzle_' + weekId.toLowerCase().replace('-w', '_w');
+function puzzleIdFromWeekId(weekId: string, schedule: Record<string, string>): string | undefined {
+  return schedule[weekId];
 }
 
 function firstNWords(text: string, n = 8): string {
@@ -81,8 +81,8 @@ function domainClasses(domain: string): string {
 
 interface ManifestPuzzle {
   id: string;
-  week_id: string;
-  publish_date: string;
+  week_id?: string;
+  publish_date?: string;
   domain: string;
   question: string;
   observation_id?: string;
@@ -112,6 +112,11 @@ export default function CreatorDashboard() {
   const { year, week } = getCurrentISOWeek();
   const baseMonday = getMondayOfISOWeek(year, week);
 
+  let schedule: Record<string, string> = {};
+  try {
+    schedule = JSON.parse(fs.readFileSync(SCHEDULE_FILE, 'utf-8')) as Record<string, string>;
+  } catch { /* schedule file may not exist */ }
+
   const rows = Array.from({ length: 21 }, (_, i) => {
     const monday = new Date(baseMonday);
     monday.setUTCDate(baseMonday.getUTCDate() + i * 7);
@@ -119,16 +124,16 @@ export default function CreatorDashboard() {
     const { year: wy, week: ww } = isoWeekFromDate(monday);
     const weekId = weekIdFromYearWeek(wy, ww);
     const publishDate = monday.toISOString().slice(0, 10);
-    const puzzleId = puzzleIdFromWeekId(weekId);
+    const puzzleId = puzzleIdFromWeekId(weekId, schedule);
 
-    const manifestPath = path.join(PUZZLES_DIR, `${puzzleId}.json`);
-    const generatedPath = path.join(GENERATED_DIR, `${puzzleId}.json`);
+    const manifestPath = puzzleId ? path.join(PUZZLES_DIR, `${puzzleId}.json`) : null;
+    const generatedPath = puzzleId ? path.join(GENERATED_DIR, `${puzzleId}.json`) : null;
 
-    const hasManifest = fs.existsSync(manifestPath);
-    const hasGenerated = fs.existsSync(generatedPath);
+    const hasManifest = manifestPath ? fs.existsSync(manifestPath) : false;
+    const hasGenerated = generatedPath ? fs.existsSync(generatedPath) : false;
 
-    const manifest = hasManifest ? readJson<ManifestPuzzle>(manifestPath) : null;
-    const generated = hasGenerated ? readJson<GeneratedPuzzle>(generatedPath) : null;
+    const manifest = hasManifest && manifestPath ? readJson<ManifestPuzzle>(manifestPath) : null;
+    const generated = hasGenerated && generatedPath ? readJson<GeneratedPuzzle>(generatedPath) : null;
 
     const data = generated ?? manifest;
     const status = getStatus(hasManifest, hasGenerated);

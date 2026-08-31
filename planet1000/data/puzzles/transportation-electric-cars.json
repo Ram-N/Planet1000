@@ -1,7 +1,5 @@
 {
-  "id": "puzzle_2026_w38",
-  "week_id": "2026-W38",
-  "publish_date": "2026-09-14",
+  "id": "transportation-electric-cars",
   "domain": "transportation",
   "observation_id": "transportation-electric-cars",
   "question": "Out of every 1,000 people on Earth, how many own an Electric Car?",

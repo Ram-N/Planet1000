@@ -5,7 +5,7 @@
  *   npx tsx scripts/puzzle.ts status
  *   npx tsx scripts/puzzle.ts show <puzzle-id>
  *   npx tsx scripts/puzzle.ts show next <n>
- *   npx tsx scripts/puzzle.ts new <week-id>
+ *   npx tsx scripts/puzzle.ts new <week-id> <observation-id>
  *
  * status
  *   Lists all puzzle manifests with week, publish date, domain, and question preview.
@@ -15,10 +15,9 @@
  *   Pretty-prints the resolved full puzzle (from data/generated/puzzles/).
  *   If the generated file doesn't exist, prompts you to run build:puzzles.
  *
- * new <week-id>
+ * new <week-id> <observation-id>
  *   Scaffolds a new slim puzzle manifest for the given ISO week (e.g. 2026-W36).
- *   Prompts for domain, observation_id, and question; lists available observations.
- *   Writes the manifest to data/puzzles/.
+ *   Uses observation-id as the filename and updates data/puzzle-schedule.json.
  *   Run npm run build:puzzles after to generate the full puzzle JSON.
  */
 
@@ -30,6 +29,7 @@ import * as readline from 'readline';
 
 const ROOT           = path.join(__dirname, '..');
 const PUZZLES_DIR    = path.join(ROOT, 'data', 'puzzles');
+const SCHEDULE_FILE  = path.join(ROOT, 'data', 'puzzle-schedule.json');
 const GENERATED_DIR  = path.join(ROOT, 'data', 'generated', 'puzzles');
 const SUMMARIES_DIR  = path.join(ROOT, 'data', 'summaries');
 const WORLD_MODEL    = path.join(ROOT, 'data', 'generated', 'world-model.json');
@@ -38,8 +38,6 @@ const WORLD_MODEL    = path.join(ROOT, 'data', 'generated', 'world-model.json');
 
 interface PuzzleSource {
   id: string;
-  week_id: string;
-  publish_date: string;
   domain: string;
   question: string;
   observation_id: string;
@@ -73,6 +71,65 @@ interface WorldObservation {
   entity?: { name: string };
   entity_id?: string;
   domain?: string;
+}
+
+// ── Schedule helpers ──────────────────────────────────────────────────────────
+
+function loadSchedule(): Record<string, string> {
+  if (!fs.existsSync(SCHEDULE_FILE)) return {};
+  try {
+    return JSON.parse(fs.readFileSync(SCHEDULE_FILE, 'utf-8')) as Record<string, string>;
+  } catch {
+    return {};
+  }
+}
+
+function saveSchedule(schedule: Record<string, string>): void {
+  fs.writeFileSync(SCHEDULE_FILE, JSON.stringify(schedule, null, 2) + '\n');
+}
+
+/** Reverse the schedule: puzzleId → week_id. */
+function invertSchedule(schedule: Record<string, string>): Map<string, string> {
+  const inv = new Map<string, string>();
+  for (const [weekId, puzzleId] of Object.entries(schedule)) {
+    inv.set(puzzleId, weekId);
+  }
+  return inv;
+}
+
+// ── ISO week helpers ──────────────────────────────────────────────────────────
+
+function getCurrentISOWeek(): { year: number; week: number } {
+  const d = new Date();
+  const utc = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  const dayOfWeek = utc.getUTCDay() || 7;
+  utc.setUTCDate(utc.getUTCDate() + 4 - dayOfWeek);
+  const yearStart = new Date(Date.UTC(utc.getUTCFullYear(), 0, 1));
+  const week = Math.ceil(((utc.getTime() - yearStart.getTime()) / 86400000 + 1) / 7);
+  return { year: utc.getUTCFullYear(), week };
+}
+
+function getMondayOfISOWeek(year: number, week: number): Date {
+  const jan4 = new Date(Date.UTC(year, 0, 4));
+  const dayOfWeek = jan4.getUTCDay() || 7;
+  const week1Monday = new Date(jan4);
+  week1Monday.setUTCDate(jan4.getUTCDate() - (dayOfWeek - 1));
+  const monday = new Date(week1Monday);
+  monday.setUTCDate(week1Monday.getUTCDate() + (week - 1) * 7);
+  return monday;
+}
+
+function parseWeekId(weekId: string): { year: number; week: number } | null {
+  const m = weekId.match(/^(\d{4})-W(\d{1,2})$/);
+  if (!m) return null;
+  const year = parseInt(m[1], 10);
+  const week = parseInt(m[2], 10);
+  if (week < 1 || week > 53) return null;
+  return { year, week };
+}
+
+function formatDate(d: Date): string {
+  return d.toISOString().slice(0, 10);
 }
 
 // ── File helpers ──────────────────────────────────────────────────────────────
@@ -119,56 +176,19 @@ function loadObservations(): WorldObservation[] {
   }
 }
 
-// ── ISO week helpers ──────────────────────────────────────────────────────────
-
-function getCurrentISOWeek(): { year: number; week: number } {
-  const d = new Date();
-  const utc = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
-  const dayOfWeek = utc.getUTCDay() || 7;
-  utc.setUTCDate(utc.getUTCDate() + 4 - dayOfWeek);
-  const yearStart = new Date(Date.UTC(utc.getUTCFullYear(), 0, 1));
-  const week = Math.ceil(((utc.getTime() - yearStart.getTime()) / 86400000 + 1) / 7);
-  return { year: utc.getUTCFullYear(), week };
-}
-
-function getMondayOfISOWeek(year: number, week: number): Date {
-  const jan4 = new Date(Date.UTC(year, 0, 4));
-  const dayOfWeek = jan4.getUTCDay() || 7;
-  const week1Monday = new Date(jan4);
-  week1Monday.setUTCDate(jan4.getUTCDate() - (dayOfWeek - 1));
-  const monday = new Date(week1Monday);
-  monday.setUTCDate(week1Monday.getUTCDate() + (week - 1) * 7);
-  return monday;
-}
-
-function parseWeekId(weekId: string): { year: number; week: number } | null {
-  const m = weekId.match(/^(\d{4})-W(\d{1,2})$/);
-  if (!m) return null;
-  const year = parseInt(m[1], 10);
-  const week = parseInt(m[2], 10);
-  if (week < 1 || week > 53) return null;
-  return { year, week };
-}
-
-function formatDate(d: Date): string {
-  return d.toISOString().slice(0, 10);
-}
-
-function puzzleIdFromWeek(year: number, week: number): string {
-  return `puzzle_${year}_w${String(week).padStart(2, '0')}`;
-}
-
 // ── STATUS command ────────────────────────────────────────────────────────────
 
 function cmdStatus(): void {
   const files = listManifestFiles();
+  const schedule = loadSchedule();
+  const puzzleToWeek = invertSchedule(schedule);
 
   console.log('\nPlanet1000 Weekly Puzzles');
   console.log('─'.repeat(70));
   console.log(`${files.length} puzzle${files.length === 1 ? '' : 's'} on file\n`);
 
   if (files.length === 0) {
-    console.log('  (none — create one with: puzzle new <week-id>)');
+    console.log('  (none — create one with: puzzle new <week-id> <observation-id>)');
     console.log('');
     return;
   }
@@ -187,7 +207,13 @@ function cmdStatus(): void {
       ? source.question.slice(0, 57) + '…'
       : source.question;
 
-    console.log(`  ${source.week_id}  ${source.publish_date}  [${source.domain}]  obs: ${source.observation_id}`);
+    // Get schedule info from generated file (injected by build) or from schedule map
+    const weekId     = generated?.week_id ?? puzzleToWeek.get(source.id) ?? '(unscheduled)';
+    const publishDate = generated?.publish_date ?? '';
+
+    const scheduleStr = publishDate ? `${weekId}  ${publishDate}` : weekId;
+    console.log(`  ${scheduleStr}  [${source.domain}]  obs: ${source.observation_id}`);
+    console.log(`    id: ${source.id}`);
     console.log(`    Q: ${question}`);
 
     if (generated) {
@@ -203,21 +229,30 @@ function cmdStatus(): void {
 
 function cmdShowNext(count: number): void {
   const { year, week } = getCurrentISOWeek();
+  const schedule = loadSchedule();
   console.log(`\nNext ${count} puzzle${count === 1 ? '' : 's'} from current week (${year}-W${String(week).padStart(2, '0')}):\n`);
 
   for (let i = 1; i <= count; i++) {
     let w = week + i;
     let y = year;
     if (w > 52) { w -= 52; y++; }
-    const id = puzzleIdFromWeek(y, w);
-    const { source } = loadManifest(id);
-    if (!source) {
-      const monday = getMondayOfISOWeek(y, w);
-      console.log(`── ${y}-W${String(w).padStart(2, '0')}  ${formatDate(monday)}  [${id}]`);
-      console.log(`   ✗ Not created yet — run: npm run puzzle -- new ${y}-W${String(w).padStart(2, '0')}`);
+    const weekId = `${y}-W${String(w).padStart(2, '0')}`;
+    const puzzleId = schedule[weekId];
+    const monday = getMondayOfISOWeek(y, w);
+
+    if (!puzzleId) {
+      console.log(`── ${weekId}  ${formatDate(monday)}`);
+      console.log(`   ✗ Not scheduled — add to data/puzzle-schedule.json`);
       console.log('');
     } else {
-      printPuzzle(source);
+      const { source } = loadManifest(puzzleId);
+      if (!source) {
+        console.log(`── ${weekId}  ${formatDate(monday)}  [${puzzleId}]`);
+        console.log(`   ✗ Manifest not found — run: npm run puzzle -- new ${weekId} <observation-id>`);
+        console.log('');
+      } else {
+        printPuzzle(source);
+      }
     }
   }
 }
@@ -226,7 +261,7 @@ function cmdShow(id: string, rest: string[] = []): void {
   if (!id) {
     console.error('\nUsage: puzzle show <puzzle-id>');
     console.error('       puzzle show next <n>');
-    console.error('  Examples: puzzle show puzzle_2026_w35');
+    console.error('  Examples: puzzle show housing-homeless');
     console.error('            puzzle show next 3');
     process.exit(1);
   }
@@ -256,9 +291,17 @@ function printPuzzle(source: PuzzleSource): void {
   const generated  = loadGenerated(source.id);
   const summaryOk = summaryExists(source.summary_id);
 
+  // Schedule info comes from the generated file (injected by build)
+  const weekId     = generated?.week_id ?? '(unscheduled)';
+  const publishDate = generated?.publish_date ?? '';
+
   console.log('');
   console.log(`── ${source.id} ─────────────────────────────────────────`);
-  console.log(`Week:       ${source.week_id}   (publishes ${source.publish_date})`);
+  if (publishDate) {
+    console.log(`Week:       ${weekId}   (publishes ${publishDate})`);
+  } else {
+    console.log(`Week:       ${weekId}`);
+  }
   console.log(`Domain:     ${source.domain}`);
   console.log(`Observation: ${source.observation_id}`);
   console.log('');
@@ -304,10 +347,10 @@ function printPuzzle(source: PuzzleSource): void {
 
 // ── NEW command ───────────────────────────────────────────────────────────────
 
-async function cmdNew(weekId: string): Promise<void> {
+async function cmdNew(weekId: string, observationId?: string): Promise<void> {
   if (!weekId) {
-    console.error('\nUsage: puzzle new <week-id>');
-    console.error('  Example: puzzle new 2026-W36');
+    console.error('\nUsage: puzzle new <week-id> [observation-id]');
+    console.error('  Example: puzzle new 2026-W39 people-literacy');
     process.exit(1);
   }
 
@@ -319,14 +362,14 @@ async function cmdNew(weekId: string): Promise<void> {
 
   const { year, week } = parsed;
   const normalised  = `${year}-W${String(week).padStart(2, '0')}`;
-  const puzzleId    = puzzleIdFromWeek(year, week);
   const monday      = getMondayOfISOWeek(year, week);
   const publishDate = formatDate(monday);
-  const outPath     = path.join(PUZZLES_DIR, `${puzzleId}.json`);
 
-  if (fs.existsSync(outPath)) {
-    console.error(`\n✗ Puzzle already exists: ${outPath}`);
-    console.error(`  Use: puzzle show ${puzzleId}`);
+  // Check if week already scheduled
+  const schedule = loadSchedule();
+  if (schedule[normalised]) {
+    console.error(`\n✗ Week ${normalised} is already scheduled to puzzle: ${schedule[normalised]}`);
+    console.error(`  Use: puzzle show ${schedule[normalised]}`);
     process.exit(1);
   }
 
@@ -337,8 +380,7 @@ async function cmdNew(weekId: string): Promise<void> {
   const ask = (q: string): Promise<string> =>
     new Promise(resolve => rl.question(q, a => resolve(a.trim())));
 
-  console.log(`\n── New Puzzle: ${puzzleId} ──`);
-  console.log(`Week:    ${normalised}`);
+  console.log(`\n── New Puzzle for ${normalised} ──`);
   console.log(`Publish: ${publishDate} (Monday)\n`);
 
   // Show available observations grouped by domain
@@ -360,47 +402,64 @@ async function cmdNew(weekId: string): Promise<void> {
     console.log('');
   }
 
+  const finalObservationId = observationId || await ask('observation_id (this becomes the puzzle id and filename): ');
+
+  if (!finalObservationId) {
+    console.error('\n✗ observation_id is required');
+    rl.close();
+    process.exit(1);
+  }
+
+  const outPath = path.join(PUZZLES_DIR, `${finalObservationId}.json`);
+
+  if (fs.existsSync(outPath)) {
+    console.error(`\n✗ Puzzle already exists: ${outPath}`);
+    console.error(`  Use: puzzle show ${finalObservationId}`);
+    rl.close();
+    process.exit(1);
+  }
+
+  // Validate observation_id
+  if (observations.length > 0 && !observations.find(o => o.id === finalObservationId)) {
+    console.warn(`\n⚠ observation_id "${finalObservationId}" not found in world-model.json`);
+    console.warn('  Check the ID above or run: npm run build:data to refresh the world model.');
+  }
+
   const domainOpts  = 'people/healthcare/education/food/water/energy/housing/transportation/money/environment';
   const domain         = await ask(`Domain [${domainOpts}]: `);
-  const observationId  = await ask('observation_id (from list above): ');
   const question       = await ask('Question (the "out of 1,000" prompt): ');
 
-  // Suggest summary_id from domain
-  const domainSlug       = domain.toLowerCase().replace(/[^a-z0-9]+/g, '_');
   const suggestedArtifact = `summary_global_<topic>`;
 
   rl.close();
 
   if (!fs.existsSync(PUZZLES_DIR)) fs.mkdirSync(PUZZLES_DIR, { recursive: true });
 
-  // Validate observation_id
-  if (observations.length > 0 && !observations.find(o => o.id === observationId)) {
-    console.warn(`\n⚠ observation_id "${observationId}" not found in world-model.json`);
-    console.warn('  Check the ID above or run: npm run build:data to refresh the world model.');
-  }
-
   const manifest: PuzzleSource = {
-    id:                 puzzleId,
-    week_id:            normalised,
-    publish_date:       publishDate,
+    id:                 finalObservationId,
     domain:             domain || '<domain>',
     question:           question || '<question>',
-    observation_id:     observationId || '<observation_id>',
+    observation_id:     finalObservationId,
     answer_explanation: '',
     summary_id:         suggestedArtifact,
   };
 
   fs.writeFileSync(outPath, JSON.stringify(manifest, null, 2) + '\n');
 
+  // Update schedule
+  schedule[normalised] = finalObservationId;
+  saveSchedule(schedule);
+
   console.log(`\n✓ Created: ${outPath}`);
+  console.log(`✓ Updated: ${SCHEDULE_FILE} (${normalised} → ${finalObservationId})`);
   console.log('\nNext steps:');
   console.log(`  1. Fill in answer_explanation in the manifest`);
-  console.log(`  2. Author facts in canonical-facts.csv for "${observationId || '<observation_id>'}":`);
+  console.log(`  2. Author facts in canonical-facts.csv for "${finalObservationId}":`);
   console.log(`       relationship, temporal, scale  (one row each, minimum)`);
   console.log(`     Verify: npm run fact-hunt -- status`);
   console.log(`  3. Build the full puzzle JSON:`);
   console.log(`       npm run build:puzzles`);
-  console.log(`  4. Preview: npm run puzzle -- show ${puzzleId}`);
+  console.log(`  4. Preview: npm run puzzle -- show ${finalObservationId}`);
   console.log(`  5. Create the summary:   npm run summary -- build ${suggestedArtifact}`);
   console.log(`  6. Set summary_id in the manifest to match the summary you create`);
   console.log(`  7. Rebuild: npm run build:puzzles\n`);
@@ -420,7 +479,7 @@ switch (command) {
     break;
 
   case 'new':
-    cmdNew(cmdArgs[0]).catch(err => { console.error(err); process.exit(1); });
+    cmdNew(cmdArgs[0], cmdArgs[1]).catch(err => { console.error(err); process.exit(1); });
     break;
 
   default:
@@ -428,26 +487,28 @@ switch (command) {
 puzzle — Planet1000 weekly puzzle manager
 
 Commands:
-  status              List all puzzle manifests with observation and build status
-  show <id>           Print full resolved puzzle (from generated files)
-  new <week-id>       Scaffold a new slim puzzle manifest for the given ISO week
+  status                    List all puzzle manifests with observation and build status
+  show <id>                 Print full resolved puzzle (from generated files)
+  new <week-id> [obs-id]    Scaffold a new slim puzzle manifest for the given ISO week
 
 Examples:
   npx tsx scripts/puzzle.ts status
-  npx tsx scripts/puzzle.ts show puzzle_2026_w35
-  npx tsx scripts/puzzle.ts new 2026-W36
-  npx tsx scripts/puzzle.ts new 2026-W37
+  npx tsx scripts/puzzle.ts show housing-homeless
+  npx tsx scripts/puzzle.ts new 2026-W39
+  npx tsx scripts/puzzle.ts new 2026-W39 people-literacy
 
-Week ID format: YYYY-WNN  (e.g. 2026-W36)
-Manifest files:  data/puzzles/<puzzle_id>.json       (slim — edit this)
-Generated files: data/generated/puzzles/<id>.json   (full — built by build:puzzles)
+Week ID format: YYYY-WNN  (e.g. 2026-W39)
+Puzzle ID:      observation_id  (e.g. housing-homeless)
+Manifest files:  data/puzzles/<observation-id>.json      (slim — edit this)
+Generated files: data/generated/puzzles/<id>.json        (full — built by build:puzzles)
+Schedule:        data/puzzle-schedule.json                (week → puzzle id mapping)
 
 Workflow:
-  1. puzzle new <week-id>            — create manifest
+  1. puzzle new <week-id> [observation-id]   — create manifest + update schedule
   2. Fill answer_explanation + author facts in canonical-facts.csv
-  3. npm run build:puzzles           — generate full puzzle JSON
-  4. puzzle show <id>                — verify resolved facts and answer
-  5. Register in lib/puzzle-loader.ts
+  3. npm run build:puzzles                   — generate full puzzle JSON
+  4. puzzle show <observation-id>            — verify resolved facts and answer
+  5. Create the summary JSON
 `);
     break;
 }

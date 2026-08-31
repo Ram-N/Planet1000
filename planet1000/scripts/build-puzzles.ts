@@ -5,9 +5,10 @@
  * Run with: npm run build:puzzles -- --allow-missing   (warn instead of error on missing facts)
  *
  * Reads:
- *   data/puzzles/*.json          — slim PuzzleSource manifests
+ *   data/puzzles/*.json              — slim PuzzleSource manifests (named by observation_id)
+ *   data/puzzle-schedule.json        — maps ISO week IDs to puzzle IDs
  *   data/generated/world-model.json  — observations (value, unit, etc.)
- *   data/canonical-facts.csv    — facts with source attribution
+ *   data/canonical-facts/            — facts with source attribution
  *
  * Writes:
  *   data/generated/puzzles/<id>.json  — full WeeklyPuzzle ready for puzzle-loader.ts
@@ -20,6 +21,7 @@ import path from 'path';
 
 const ROOT             = path.join(__dirname, '..');
 const PUZZLES_DIR      = path.join(ROOT, 'data', 'puzzles');
+const SCHEDULE_FILE    = path.join(ROOT, 'data', 'puzzle-schedule.json');
 const WORLD_MODEL_FILE = path.join(ROOT, 'data', 'generated', 'world-model.json');
 const CANONICAL_DIR    = path.join(ROOT, 'data', 'canonical-facts');
 const OUT_DIR          = path.join(ROOT, 'data', 'generated', 'puzzles');
@@ -30,8 +32,6 @@ const LOADER_FILE      = path.join(ROOT, 'lib', 'puzzle-loader.ts');
 
 interface PuzzleSource {
   id: string;
-  week_id: string;
-  publish_date: string;
   domain: string;
   question: string;
   observation_id: string;
@@ -141,6 +141,37 @@ function parseSource(raw: string): { source_label?: string; source_url?: string 
   return result;
 }
 
+// ── Schedule helpers ──────────────────────────────────────────────────────────
+
+/** Returns the Monday date string (YYYY-MM-DD) for a given ISO year+week. */
+function getMondayOfISOWeek(year: number, week: number): string {
+  const jan4 = new Date(Date.UTC(year, 0, 4));
+  const dayOfWeek = jan4.getUTCDay() || 7;
+  const monday = new Date(jan4);
+  monday.setUTCDate(jan4.getUTCDate() - (dayOfWeek - 1) + (week - 1) * 7);
+  return monday.toISOString().slice(0, 10);
+}
+
+/** Loads puzzle-schedule.json and returns a reverse map: puzzleId → { week_id, publish_date }. */
+function loadSchedule(): { schedule: Record<string, string>; puzzleSchedule: Map<string, { week_id: string; publish_date: string }> } {
+  let schedule: Record<string, string> = {};
+  if (fs.existsSync(SCHEDULE_FILE)) {
+    schedule = JSON.parse(fs.readFileSync(SCHEDULE_FILE, 'utf-8')) as Record<string, string>;
+  }
+
+  const puzzleSchedule = new Map<string, { week_id: string; publish_date: string }>();
+  for (const [weekId, puzzleId] of Object.entries(schedule)) {
+    const m = weekId.match(/^(\d{4})-W(\d{1,2})$/);
+    if (!m) continue;
+    const year = parseInt(m[1], 10);
+    const week = parseInt(m[2], 10);
+    const publish_date = getMondayOfISOWeek(year, week);
+    puzzleSchedule.set(puzzleId, { week_id: weekId, publish_date });
+  }
+
+  return { schedule, puzzleSchedule };
+}
+
 // ── Load world model ──────────────────────────────────────────────────────────
 
 function loadWorldModel(): WorldModel {
@@ -192,6 +223,7 @@ function buildPuzzle(
   factIndex: Map<string, Map<string, FactRow[]>>,
   worldPopulation: number,
   allowMissing: boolean,
+  puzzleSchedule: Map<string, { week_id: string; publish_date: string }>,
 ): WeeklyPuzzle | null {
   const obs = obsIndex.get(source.observation_id);
   if (!obs) {
@@ -202,6 +234,11 @@ function buildPuzzle(
   // Compute answer
   const answer_value_1k = Math.round(obs.value / worldPopulation * 1000);
   const answer_unit     = obs.unit?.symbol ?? obs.unit_id ?? 'people';
+
+  // Look up schedule info (inject from schedule, not from manifest)
+  const scheduled = puzzleSchedule.get(source.id);
+  const week_id     = scheduled?.week_id     ?? 'unknown';
+  const publish_date = scheduled?.publish_date ?? '';
 
   // Select facts
   const byType = factIndex.get(source.observation_id);
@@ -247,8 +284,8 @@ function buildPuzzle(
 
   return {
     id:               source.id,
-    week_id:          source.week_id,
-    publish_date:     source.publish_date,
+    week_id,
+    publish_date,
     domain:           source.domain,
     question:         source.question,
     answer_value_1k,
@@ -263,12 +300,17 @@ function buildPuzzle(
 
 // ── Loader generator ──────────────────────────────────────────────────────────
 
+/** Converts a hyphenated puzzle id to a valid JS variable name. */
+function toVarName(id: string): string {
+  return id.replace(/-/g, '_');
+}
+
 /**
  * Rewrites lib/puzzle-loader.ts based on whatever JSON files exist in
  * data/generated/puzzles/ — so the loader always matches the build output
  * without any manual edits.
  */
-function generateLoader(): void {
+function generateLoader(schedule: Record<string, string>): void {
   const generatedFiles = fs.existsSync(OUT_DIR)
     ? fs.readdirSync(OUT_DIR).filter((f) => f.endsWith('.json')).sort()
     : [];
@@ -296,16 +338,21 @@ function generateLoader(): void {
     `import type { WeeklyPuzzle, KnowledgeSummary } from '@/types/puzzle';`,
     ``,
     `// Static puzzle registry — regenerated by: npm run build:puzzles`,
-    ...puzzleIds.map((id) => `import ${id} from '@/data/generated/puzzles/${id}.json';`),
+    ...puzzleIds.map((id) => `import ${toVarName(id)} from '@/data/generated/puzzles/${id}.json';`),
     ...validSummaryIds.map((id) => `import ${id} from '@/data/summaries/${id}.json';`),
     ``,
     `const PUZZLES: WeeklyPuzzle[] = [`,
-    ...puzzleIds.map((id) => `  ${id} as WeeklyPuzzle,`),
+    ...puzzleIds.map((id) => `  ${toVarName(id)} as WeeklyPuzzle,`),
     `];`,
     ``,
     `const SUMMARIES: KnowledgeSummary[] = [`,
     ...validSummaryIds.map((id) => `  ${id} as KnowledgeSummary,`),
     `];`,
+    ``,
+    `/** Week-to-puzzle schedule (ISO week → puzzle id). */`,
+    `const SCHEDULE: Record<string, string> = {`,
+    ...Object.entries(schedule).map(([k, v]) => `  ${JSON.stringify(k)}: ${JSON.stringify(v)},`),
+    `};`,
     ``,
     `/** Returns the ISO week string for a given date, e.g. "2026-W35". */`,
     `function getISOWeekId(date: Date = new Date()): string {`,
@@ -328,15 +375,17 @@ function generateLoader(): void {
     ``,
     `/**`,
     ` * Returns the puzzle for the current ISO week.`,
-    ` * When no exact match exists, cycles through all puzzles in publish-date order`,
-    ` * so every week always has something to show.`,
+    ` * Looks up the week in the schedule; falls back to cycling when not found.`,
     ` */`,
     `export function getCurrentWeeklyPuzzle(): WeeklyPuzzle {`,
     `  const weekId = getISOWeekId();`,
-    `  const exact = PUZZLES.find((p) => p.week_id === weekId);`,
-    `  if (exact) return exact;`,
+    `  const puzzleId = SCHEDULE[weekId];`,
+    `  if (puzzleId) {`,
+    `    const match = PUZZLES.find((p) => p.id === puzzleId);`,
+    `    if (match) return match;`,
+    `  }`,
     ``,
-    `  // No puzzle authored for this week — cycle through available puzzles`,
+    `  // No puzzle scheduled for this week — cycle through available puzzles`,
     `  const sorted = [...PUZZLES].sort((a, b) => a.publish_date.localeCompare(b.publish_date));`,
     `  return sorted[getAbsoluteWeekIndex() % sorted.length];`,
     `}`,
@@ -360,7 +409,8 @@ function generateLoader(): void {
 function main(): void {
   const allowMissing = process.argv.includes('--allow-missing');
 
-  // Load data
+  // Load schedule and data
+  const { schedule, puzzleSchedule } = loadSchedule();
   const worldModel  = loadWorldModel();
   const obsIndex    = new Map(worldModel.observations.map((o) => [o.id, o]));
   const factIndex   = loadFactsByObsAndType();
@@ -381,7 +431,6 @@ function main(): void {
 
   let built = 0;
   let failed = 0;
-  const allWarnings: string[] = [];
 
   for (const file of files) {
     const filePath = path.join(PUZZLES_DIR, file);
@@ -400,8 +449,10 @@ function main(): void {
       continue;
     }
 
-    console.log(`  Building ${source.id} (obs: ${source.observation_id})…`);
-    const puzzle = buildPuzzle(source, obsIndex, factIndex, worldModel.world_population, allowMissing);
+    const scheduled = puzzleSchedule.get(source.id);
+    const weekLabel = scheduled ? ` (${scheduled.week_id})` : ' (unscheduled)';
+    console.log(`  Building ${source.id}${weekLabel} obs: ${source.observation_id}…`);
+    const puzzle = buildPuzzle(source, obsIndex, factIndex, worldModel.world_population, allowMissing, puzzleSchedule);
 
     if (!puzzle) {
       failed++;
@@ -421,7 +472,7 @@ function main(): void {
     process.exit(1);
   }
 
-  generateLoader();
+  generateLoader(schedule);
 }
 
 console.log('\nPlanet1000 — build:puzzles');

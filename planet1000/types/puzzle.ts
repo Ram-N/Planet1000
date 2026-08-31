@@ -5,8 +5,6 @@
  */
 export interface PuzzleSource {
   id: string;
-  week_id: string;
-  publish_date: string;
   domain: string;
   question: string;
   observation_id: string;
@@ -23,7 +21,7 @@ export interface PuzzleFact {
 
 /** A playable weekly Planet 1000 puzzle. */
 export interface WeeklyPuzzle {
-  id: string;            // e.g. "puzzle_2026_w35"
+  id: string;            // e.g. "housing-homeless"
   week_id: string;       // ISO week: "2026-W35"
   publish_date: string;  // "YYYY-MM-DD"
   domain: string;
