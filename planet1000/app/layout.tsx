@@ -34,12 +34,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               🌍 {siteTitle}
             </Link>
             <div className="flex items-center gap-4 text-sm">
-              <Link href="/play/planet1000" className="text-slate-600 hover:text-emerald-700 transition-colors">
-                Play
-              </Link>
-              <Link href="/play/chain-reaction" className="text-slate-600 hover:text-emerald-700 transition-colors">
-                Chain
-              </Link>
               <Link
                 href="/stats"
                 className="text-slate-600 hover:text-emerald-700 transition-colors"
